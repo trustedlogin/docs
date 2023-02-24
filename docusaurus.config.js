@@ -47,7 +47,12 @@ const config = {
         },
         items: [
           {
-            label: 'SDK Client',
+            label: 'Login Flow',
+            position: 'left',
+            href: '/flows',
+          },
+          {
+            label: 'Client SDK',
             position: 'left',
             href: '/Client/intro',
           },
