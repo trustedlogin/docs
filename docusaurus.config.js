@@ -45,7 +45,21 @@ const config = {
           src: 'img/TrustedLogin-Horizontal.svg',
           srcDark: 'img/TrustedLogin-Horizontal-White.svg',
         },
-        items: [],
+        items: [
+          {
+            label: 'SDK Client',
+            position: 'left',
+            href: '/Client/intro',
+          },
+          {
+            label: 'Self-Hosted Plugin',
+            href: '/Vendor/intro',
+          },
+          {
+            label: 'TrustedLogin SaaS',
+            href: '/SaaS/intro',
+          },
+        ],
       },
       footer: {
         style: 'dark',
