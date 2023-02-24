@@ -1,5 +1,5 @@
 ---
-sidebar_label: Access Diagrams
+sidebar_label: Login Flow Diagrams
 ---
 # Support Access Diagrams
 
