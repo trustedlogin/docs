@@ -18,18 +18,18 @@
 
 ### TrustedLogin Application {#trustedlogin-application}
 
-| Service            | URL                            | Description                               |
-|--------------------|--------------------------------|-------------------------------------------|
-| Platform.sh        | https://platform.sh            | Hosting                                   |
-| Digital Ocean      | https://www.digitalocean.com/  | Hosting                                   |
-| Cloudflare         | https://www.cloudflare.com/    | DNS and CDN                               |
-| Google Fonts       | https://fonts.google.com/      | Fonts                                     |
-| Mailgun            | https://mailgun.com/           | Email                                     |
-| ip2c.org           | https://ip2c.org/              | IP to Country                             |
-| Help Scout         | https://www.helpscout.net/     | Customer support and documentation        |
-| GitHub             | https://www.github.com         | Source code repository, automated testing |
-| Google Workspace   | https://workspace.google.com   | Organization email, docs, calendar        |
-| Oh Dear!           | https://www.ohdear.co/         | Uptime monitoring                         |
-| Better Uptime      | https://www.betteruptime.com   | Website monitoring                        |
-| Papertrail         | https://papertrailapp.com/     | Logs                                      |
-| EasyDMARC          | https://easydmarc.com          | Email DMARC report monitoring             |
+| Service          | URL                            | Description                               |
+|------------------|--------------------------------|-------------------------------------------|
+| Platform.sh      | https://platform.sh            | Hosting                                   |
+| Digital Ocean    | https://www.digitalocean.com/  | Hosting                                   |
+| Cloudflare       | https://www.cloudflare.com/    | DNS and CDN                               |
+| Google Fonts     | https://fonts.google.com/      | Fonts                                     |
+| Mailgun          | https://mailgun.com/           | Email                                     |
+| ip2c.org         | https://ip2c.org/              | IP to Country                             |
+| Help Scout       | https://www.helpscout.net/     | Customer support and documentation        |
+| GitHub           | https://www.github.com         | Source code repository, automated testing |
+| Google Workspace | https://workspace.google.com   | Organization email, docs, calendar        |
+| Oh Dear!         | https://www.ohdear.co/         | Uptime monitoring                         |
+| Better Uptime    | https://www.betteruptime.com   | Website monitoring                        |
+| Datadog          | https://www.datadoghq.com/     | Logs                                      |
+| EasyDMARC        | https://easydmarc.com          | Email DMARC report monitoring             |

@@ -8,7 +8,7 @@ sidebar_position: 2
 
 The TrustedLogin application is powered by Laravel and run on a Dockerized, high-availability, Kubernetes cluster. 
 
-The application handles account management, profiles, and billing. But most important, it receives and processes requests from the [Client SDK](/docs/Client/intro) and [Vendor plugin](/docs/Vendor/intro).
+The application handles account management, profiles, and billing. But most important, it receives and processes requests from the [Client SDK](/Client/intro) and [Vendor plugin](/Vendor/intro).
 
 ## What software powers TrustedLogin? {#what-software-powers-trustedlogin}
 
@@ -28,6 +28,7 @@ The application handles account management, profiles, and billing. But most impo
 | Kibana | https://www.elastic.co/products/kibana | Log analysis |
 | Velero | https://velero.io | Backup |
 | MySQL | https://www.mysql.com/ | Database |
+
 
 
 ## Additional information {#additional-information}
@@ -66,4 +67,4 @@ The Laravel Spark database uses MySQL. Account, profile, and and Stripe billing 
 
 ### [Elasticsearch](https://www.elastic.co/products/elasticsearch) {#elasticsearch}
 
-Logs stripped of PII are added to Elasticsearch for later analysis. [See Elasticsearch documentation](/docs/SaaS/elasticsearch) for more information.
+Logs stripped of PII are added to Elasticsearch for later analysis. [See Elasticsearch documentation](/SaaS/elasticsearch) for more information.

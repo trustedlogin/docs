@@ -17,9 +17,9 @@ The following PII (or potentially identifiable) data is stored in the MySQL data
 
 ## Application Logs {#application-logs}
 
-Logs are sent to [Papertrail](https://papertrailapp.com).
+Logs are sent to [Datadog](https://www.datadoghq.com/).
 
-PII sent to Papertrail includes: 
+The limited PII sent to Datadog includes: 
 
 - The URL of the website where access has been granted
   - The User ID of the user who granted access

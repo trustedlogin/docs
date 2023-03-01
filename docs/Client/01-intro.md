@@ -33,8 +33,7 @@ In the examples below, we're going to pretend your plugin or theme is named "Pro
 	  "vendor"
 	],
 	"psr-4": {
-	  "TrustedLogin\\": "src/",
-	  "KatzGrau\\KLogger\\": "src/"
+	  "TrustedLogin\\": "src/"
 	}
   },
   "extra": {
@@ -45,12 +44,6 @@ In the examples below, we're going to pretend your plugin or theme is named "Pro
 	  "packages": [
 		"trustedlogin/client"
 	  ],
-	  "exclude_from_prefix": {
-		"packages": [
-		  "paragonie/random_compat",
-		  "paragonie/sodium_compat"
-		]
-	  },
 	  "delete_vendor_files": false
 	}
   },
@@ -89,7 +82,7 @@ Here's an example of how GravityView (with a namespace of `gravityview`) allows 
 ```php
 add_filter( 'gravityview_noconflict_scripts', function ( $allowed_scripts = array() ) {
 
-	$allowed_scripts[] = 'trustedlogin-gravityview'; // GravityView's namespace is `gravityview`
+	$allowed_scripts[] = 'trustedlogin-gravityview'; // ⚠️ GravityView's namespace is `gravityview`
 
 	return $allowed_scripts;
 } );
@@ -127,4 +120,4 @@ We recommend disabling logging by default, but sometimes logs are necessary.
 
 ### Using your own logging library {#using-your-own-logging-library}
 
-If you add an action for `trustedlogin/{namespace}/logging/log`, TrustedLogin will let you handle logging. See hook description below.
+If you add an action for `trustedlogin/{namespace}/logging/log`, TrustedLogin will let you handle logging.
