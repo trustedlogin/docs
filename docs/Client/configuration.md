@@ -26,7 +26,9 @@ try {
 
     // Check class_exists() for sites running PHP 5.2.x
     if ( class_exists( '\ProBlockBuilder\TrustedLogin\Client') ) {
-        new \ProBlockBuilder\TrustedLogin\Client( $config );
+        new \ProBlockBuilder\TrustedLogin\Client( 
+            new \ProBlockBuilder\TrustedLogin\Config( $config )
+        );
     }
 
 } catch ( \Exception $exception ) {
