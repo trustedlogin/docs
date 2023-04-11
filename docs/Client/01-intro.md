@@ -24,10 +24,15 @@ In the examples below, we're going to pretend your plugin or theme is named "Pro
 
 1. Run `composer require trustedlogin/client:dev-main` to install the TrustedLogin Client SDK
 2. Run `composer require brianhenryie/strauss --dev` to install Strauss as a dev dependency. Strauss is used for namespacing the Client to prevent conflicts with other plugins or themes that are using TrustedLogin.
-3. Update your `composer.json` file to integrate with Strauss. Follow the instructions as detailed in the [Strauss documentation](https://github.com/BrianHenryIE/strauss#configuration) for namespacing your plugin and theme. See example below:
+3. Run `composer require scssphp/scssphp --dev` to install SCSS PHP as a dev dependency. This is used to generate and namespace the CSS used by TrustedLogin.
+4. Update your `composer.json` file to integrate with Strauss. Follow the instructions as detailed in the [Strauss documentation](https://github.com/BrianHenryIE/strauss#configuration) for namespacing your plugin and theme. See example below:
 
 ```json
   [...]
+  "require-dev": {
+    "brianhenryie/strauss": "dev-master",
+    "scssphp/scssphp": "^v1.11.0"
+  },
   "autoload": {
 	"classmap": [
 	  "vendor"
@@ -43,19 +48,23 @@ In the examples below, we're going to pretend your plugin or theme is named "Pro
 	  "classmap_prefix": "⚠️PBB_",
 	  "packages": [
 		"trustedlogin/client"
-	  ],
-	  "delete_vendor_files": false
+	  ]
 	}
   },
   "scripts": {
 	"strauss": [
       "@php vendor/brianhenryie/strauss/bin/strauss"
 	],
+   "namespace_tl_css": [
+      "@php vendor/bin/build-sass --namespace=️⚠️ProBlockBuilder"
+   ],
 	"post-install-cmd": [
-	  "@strauss"
+	  "@strauss",
+      "@namespace_tl_css"
 	],
 	"post-update-cmd": [
-	  "@strauss"
+	  "@strauss",
+      "@namespace_tl_css"
 	]
   }
   [...]
