@@ -172,7 +172,7 @@ support access to their site.
 
 ## Webhooks {#webhooks}
 
-If the `webhook_url` setting is set and is a valid URL, the URL will be pinged when creating a Support User, extending access, or revoking access.
+If the `webhook_url` setting is set and is a valid URL, the URL will be sent a `POST` request when creating a Support User, extending access, or revoking access.
 
 | Key          | Type            | Description                                                                                                                                                                      |
 |--------------|-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
