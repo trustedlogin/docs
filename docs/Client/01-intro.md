@@ -20,13 +20,13 @@ When you integrate TrustedLogin into your project (theme, plugin, or custom code
 In the examples below, we're going to pretend your plugin or theme is named "Pro Block Builder" and your business is named Widgets, Co. These should not be the names you use—make sure to update the sample code below to match your business and plugin/theme name!
 :::
 
-### Update your composer.json file
+### Install Strauss & update your composer.json file
 
-1. Run `composer require trustedlogin/client:dev-main` to install the TrustedLogin Client SDK
-1. Run `composer require scssphp/scssphp --dev` to install SCSS PHP as a dev dependency. This is used to generate and namespace the CSS used by TrustedLogin.
 1. [Install Strauss](https://github.com/BrianHenryIE/strauss#use). Strauss is used for namespacing the Client to prevent conflicts with other plugins or themes that are using TrustedLogin. We recommend installing via the `strauss.phar` method.
    1. `cd` into your plugin or theme directory
    1. Run `curl -o strauss.phar -L -C - https://github.com/BrianHenryIE/strauss/releases/latest/download/strauss.phar`
+1. Run `composer require trustedlogin/client:dev-main` to install the TrustedLogin Client SDK
+1. Run `composer require scssphp/scssphp --dev` to install SCSS PHP as a dev dependency. This is used to generate and namespace the CSS used by TrustedLogin.
 1. Update your `composer.json` file to integrate with Strauss. Follow the instructions as detailed in the [Strauss documentation](https://github.com/BrianHenryIE/strauss#configuration) for namespacing your plugin and theme. See example below. 
 
 ```json
