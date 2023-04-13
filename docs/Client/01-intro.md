@@ -23,9 +23,11 @@ In the examples below, we're going to pretend your plugin or theme is named "Pro
 ### Update your composer.json file
 
 1. Run `composer require trustedlogin/client:dev-main` to install the TrustedLogin Client SDK
-2. Run `composer require brianhenryie/strauss --dev` to install Strauss as a dev dependency. Strauss is used for namespacing the Client to prevent conflicts with other plugins or themes that are using TrustedLogin.
-3. Run `composer require scssphp/scssphp --dev` to install SCSS PHP as a dev dependency. This is used to generate and namespace the CSS used by TrustedLogin.
-4. Update your `composer.json` file to integrate with Strauss. Follow the instructions as detailed in the [Strauss documentation](https://github.com/BrianHenryIE/strauss#configuration) for namespacing your plugin and theme. See example below:
+1. Run `composer require scssphp/scssphp --dev` to install SCSS PHP as a dev dependency. This is used to generate and namespace the CSS used by TrustedLogin.
+1. [Install Strauss](https://github.com/BrianHenryIE/strauss#use). Strauss is used for namespacing the Client to prevent conflicts with other plugins or themes that are using TrustedLogin. We recommend installing via the `strauss.phar` method.
+   1. `cd` into your plugin or theme directory
+   1. Run `curl -o strauss.phar -L -C - https://github.com/BrianHenryIE/strauss/releases/latest/download/strauss.phar`
+1. Update your `composer.json` file to integrate with Strauss. Follow the instructions as detailed in the [Strauss documentation](https://github.com/BrianHenryIE/strauss#configuration) for namespacing your plugin and theme. See example below. 
 
 ```json
   [...]
@@ -53,18 +55,21 @@ In the examples below, we're going to pretend your plugin or theme is named "Pro
   },
   "scripts": {
 	"strauss": [
-      "@php vendor/brianhenryie/strauss/bin/strauss"
+      "@php strauss.phar"
 	],
-   "namespace_tl_css": [
+   "trustedlogin": [
       "@php vendor/bin/build-sass --namespace=️⚠️ProBlockBuilder"
+      "[ -d 'vendor/trustedlogin' ] && rm -rf vendor/trustedlogin || true && ",
+      "[ -d 'vendor/scssphp' ] && rm -rf vendor/scssphp || true",
+      "[ -d 'vendor/bin' ] && rm -rf vendor/bin/build-sass && rm -rf vendor/bin/pscss || true"
    ],
 	"post-install-cmd": [
 	  "@strauss",
-      "@namespace_tl_css"
+      "@trustedlogin"
 	],
 	"post-update-cmd": [
 	  "@strauss",
-      "@namespace_tl_css"
+      "@trustedlogin"
 	]
   }
   [...]
