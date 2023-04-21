@@ -58,7 +58,7 @@ In the examples below, we're going to pretend your plugin or theme is named "Pro
       "@php strauss.phar"
 	],
    "trustedlogin": [
-      "@php vendor/bin/build-sass --namespace=️⚠️ProBlockBuilder"
+      "@php vendor/bin/build-sass --namespace=️⚠️ProBlockBuilder",
       "[ -d 'vendor/trustedlogin' ] && rm -rf vendor/trustedlogin || true && ",
       "[ -d 'vendor/scssphp' ] && rm -rf vendor/scssphp || true",
       "[ -d 'vendor/bin' ] && rm -rf vendor/bin/build-sass && rm -rf vendor/bin/pscss || true"
