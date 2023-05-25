@@ -40,22 +40,19 @@ In the examples below, we're going to pretend your plugin or theme is named "Pro
     "scssphp/scssphp": "^v1.11.0"
   },
   "autoload": {
-	"classmap": [
-	  "vendor"
-	],
-	"psr-4": {
-	  "TrustedLogin\\": "src/"
-	}
+    "classmap": [
+      "vendor"
+    ]
   },
   "extra": {
-	"strauss": {
-	  "target_directory": "vendor-namespaced",
-	  "namespace_prefix": "⚠️ProBlockBuilder\\",
-	  "classmap_prefix": "⚠️PBB_",
-	  "packages": [
-		"trustedlogin/client"
-	  ]
-	}
+    "strauss": {
+      "target_directory": "vendor-namespaced",
+      "namespace_prefix": "⚠ProBlockBuilder\\",
+      "classmap_prefix": "⚠PBB_",
+      "packages": [
+        "trustedlogin/client"
+      ]
+    }
   },
   "scripts": {
 	"strauss": [
