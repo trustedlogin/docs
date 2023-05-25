@@ -30,6 +30,10 @@ In the examples below, we're going to pretend your plugin or theme is named "Pro
 1. Update your `composer.json` file to integrate with Strauss. Follow the instructions as detailed in the [Strauss documentation](https://github.com/BrianHenryIE/strauss#configuration) for namespacing your plugin and theme. See example below. 
 
 ```json
+  "require": {
+     [...]
+     "trustedlogin/client": "dev-main"
+  },
   [...]
   "require-dev": {
     "brianhenryie/strauss": "dev-master",
