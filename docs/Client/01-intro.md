@@ -30,11 +30,10 @@ In the examples below, we're going to pretend your plugin or theme is named "Pro
 1. Update your `composer.json` file to integrate with Strauss. Follow the instructions as detailed in the [Strauss documentation](https://github.com/BrianHenryIE/strauss#configuration) for namespacing your plugin and theme. See example below. 
 
 ```json
+[...]
   "require": {
-     [...]
-     "trustedlogin/client": "dev-main"
+    "trustedlogin/client": "dev-main"
   },
-  [...]
   "require-dev": {
     "brianhenryie/strauss": "dev-master",
     "scssphp/scssphp": "^v1.11.0"
@@ -55,22 +54,22 @@ In the examples below, we're going to pretend your plugin or theme is named "Pro
     }
   },
   "scripts": {
-	"strauss": [
+    "strauss": [
       "@php strauss.phar"
-	],
-	"post-install-cmd": [
-	  "@strauss",
+    ],
     "trustedlogin": [
       "@php vendor/bin/build-sass --namespace=️⚠ProBlockBuilder"
     ],
+    "post-install-cmd": [
+      "@strauss",
       "@trustedlogin"
-	],
-	"post-update-cmd": [
-	  "@strauss",
+    ],
+    "post-update-cmd": [
+      "@strauss",
       "@trustedlogin"
-	]
+    ]
   }
-  [...]
+[...]
 ```
 4. Run `composer update` to update your dependencies. Strauss should generate a `vendor-namespaced/` directory. If it doesn't, you may need to run `composer install` first.
 5. Include the autoloader in your code (if using the sample above, it would be located at `vendor-namepaced/autoload.php`); the code would be something like:
