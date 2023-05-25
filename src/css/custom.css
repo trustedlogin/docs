@@ -40,7 +40,8 @@ article a:active {
 }
 
 /** Give more space to the list items. */
-.markdown li+li {
+.markdown li+li,
+.markdown *[start] li {
   margin-bottom: calc( var( --ifm-list-item-margin ) * 3 );
 }
 
