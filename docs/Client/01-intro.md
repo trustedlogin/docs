@@ -61,14 +61,11 @@ In the examples below, we're going to pretend your plugin or theme is named "Pro
 	"strauss": [
       "@php strauss.phar"
 	],
-   "trustedlogin": [
-      "@php vendor/bin/build-sass --namespace=️⚠️ProBlockBuilder",
-      "[ -d 'vendor/trustedlogin' ] && rm -rf vendor/trustedlogin || true && ",
-      "[ -d 'vendor/scssphp' ] && rm -rf vendor/scssphp || true",
-      "[ -d 'vendor/bin' ] && rm -rf vendor/bin/build-sass && rm -rf vendor/bin/pscss || true"
-   ],
 	"post-install-cmd": [
 	  "@strauss",
+    "trustedlogin": [
+      "@php vendor/bin/build-sass --namespace=️⚠ProBlockBuilder"
+    ],
       "@trustedlogin"
 	],
 	"post-update-cmd": [
@@ -88,6 +85,30 @@ include_once trailingslashit( dirname( __FILE__ ) ) . 'vendor-namespaced/autoloa
 
 6. Follow [these directions to configure and instantiate the client](./configuration)
 
+### Vendor directory cleanup
+
+If you find the TrustedLogin directories in your `vendor/` directory to be undesirable for some reason, you may use this configuration for the `trustedlogin` script in Composer. 
+
+Replace this:
+
+```json
+"trustedlogin": [
+  "@php vendor/bin/build-sass --namespace=️⚠ProBlockBuilder"
+ ],
+```
+
+With this:
+
+```json
+"trustedlogin": [
+  "@php vendor/bin/build-sass --namespace=️⚠ProBlockBuilder",
+   "[ -d 'vendor/trustedlogin' ] && rm -rf vendor/trustedlogin || true",
+   "[ -d 'vendor/scssphp' ] && rm -rf vendor/scssphp || true",
+   "[ -d 'vendor/bin' ] && rm -rf vendor/bin/build-sass && rm -rf vendor/bin/pscss || true"
+ ],
+```
+
+The script modification will now remove the `trustedlogin`, `scssphp`, and TrustedLogin-related files inside `bin`.
 
 ### No-Conflict mode {#no-conflict-mode}
 
