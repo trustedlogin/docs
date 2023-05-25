@@ -48,6 +48,7 @@ In the examples below, we're going to pretend your plugin or theme is named "Pro
       "target_directory": "vendor-namespaced",
       "namespace_prefix": "⚠ProBlockBuilder\\",
       "classmap_prefix": "⚠PBB_",
+      "classmap_output": true,
       "packages": [
         "trustedlogin/client"
       ]
@@ -72,16 +73,18 @@ In the examples below, we're going to pretend your plugin or theme is named "Pro
 [...]
 ```
 4. Run `composer update` to update your dependencies. Strauss should generate a `vendor-namespaced/` directory. If it doesn't, you may need to run `composer install` first.
-5. Include the autoloader in your code (if using the sample above, it would be located at `vendor-namepaced/autoload.php`); the code would be something like:
+5. Follow [these directions to configure and instantiate the client](./configuration)
+
+#### To manually include the autoloader
+
+If you chose to set `classmap_output` to `false` in the Strauss configuration, you will need to include the autoloader in your code. If using the sample above, it would be located at `vendor-namepaced/autoload.php`; the code would be something like:
 
 ```php
 // For a plugin or theme:
 include_once trailingslashit( dirname( __FILE__ ) ) . 'vendor-namespaced/autoload.php';
 ```
 
-6. Follow [these directions to configure and instantiate the client](./configuration)
-
-### Vendor directory cleanup
+#### Vendor directory cleanup
 
 If you find the TrustedLogin directories in your `vendor/` directory to be undesirable for some reason, you may use this configuration for the `trustedlogin` script in Composer. 
 
