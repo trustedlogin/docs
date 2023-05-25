@@ -39,6 +39,11 @@ article a:active {
   color: var( --ifm-color-primary-darkest );
 }
 
+/** Give more space to the list items. */
+.markdown li+li {
+  margin-bottom: calc( var( --ifm-list-item-margin ) * 3 );
+}
+
 html[data-theme='dark'] article a:link,
 html[data-theme='dark'] article a:visited {
   color: var( --ifm-color-primary-light );
