@@ -2,7 +2,7 @@
 title: CSS Namespacing
 sidebar: auto
 ---
-# Namespacing the CSS files
+# Namespacing CSS Files
 
 TrustedLogin CSS files are namespaced so that they don't conflict with other plugins or themes that are using TrustedLogin. To namespace the files, you can use the `build-sass` script included with the TrustedLogin client inside the `bin/` directory. 
 
