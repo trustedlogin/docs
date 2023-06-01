@@ -21,7 +21,7 @@ See [the Docusaurus docs](https://docusaurus.io/docs/deployment#deploy) for more
 If you get the `[ERROR] Minimum Node.js version not met :(` error, you'll need to switch the Node version. Hopefully, you've already [installed nvm](https://github.com/nvm-sh/nvm#installing-and-updating). If not, do that first, then run:
 
 ```bash 
-nvm use 16.14
+nvm use 18
 ```
 
 ### Error: Running "git push" command failed.
