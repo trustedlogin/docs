@@ -26,7 +26,7 @@ In the examples below, we're going to pretend your plugin or theme is named "Pro
    1. `cd` into your plugin or theme directory
    1. Run `curl -o strauss.phar -L -C - https://github.com/BrianHenryIE/strauss/releases/latest/download/strauss.phar`
 1. Run `composer require trustedlogin/client:dev-main` to install the TrustedLogin Client SDK
-1. Run `composer require scssphp/scssphp --dev` to install SCSS PHP as a dev dependency. This is used to generate and namespace the CSS used by TrustedLogin. If you already have scssphp installed or are [using an alternative way to namespace the CSS](/Client/css.md), skip this step.
+1. Run `composer require scssphp/scssphp --dev` to install scssphp as a dev dependency. This is used to generate and namespace the CSS used by TrustedLogin. If you already have scssphp installed or are [using an alternative way to namespace the CSS](/Client/css-namespacing.md), skip this step.
 1. Update your `composer.json` file to integrate with Strauss. Follow the instructions as detailed in the [Strauss documentation](https://github.com/BrianHenryIE/strauss#configuration) for namespacing your plugin and theme. See example below. 
 
 ```json
