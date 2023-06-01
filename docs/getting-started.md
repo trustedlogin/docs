@@ -37,7 +37,7 @@ Here, for example, is how GravityView's settings are configured:
 
 ![GravityView settings configuration: Project Name, REST API URL, and Support URL.](https://d.pr/sXC5rL+)
 
-Don't close the tab! We'll be coming back here to grab the Account ID, Public Key, and Private Key in the next steap.
+Don't close the tab! We'll be coming back here to grab the Account ID, Public Key, and Private Key in the next step.
 
 ## 3. Install the TrustedLogin Vendor plugin {#3-install-the-trustedlogin-vendor-plugin}
 
