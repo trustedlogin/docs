@@ -27,18 +27,20 @@ php vendor-namesaced/trustedlogin/client/bin/build-sass --namespace=️⚠ProBlo
 
 This will generate the namespaced CSS files in the `vendor-namespaced/trustedlogin/client/src/assets/` directory. You can then copy the files to your plugin or theme directory.
 
+If this fails with a message `command not found: php`, then PHP isn't installed on your machine. [Install PHP](https://www.php.net/manual/en/install.php) and try again.
+
 ## Namespacing via an SCSS mixin
 
 If you'd like to use an SCSS mixin to namespace CSS files, you can use the following code:
 
 ```scss
-@import "vendor/trustedlogin/client/src/assets/src/variables"; // Variables used in the mixins (all !default)
-@import "vendor/trustedlogin/client/src/assets/src/auth"; // Mixins for authentication screen
-@import "vendor/trustedlogin/client/src/assets/src/buttons"; // Mixins for buttons
-@import "vendor/trustedlogin/client/src/assets/src/global";
+@import "vendor-namesaced/trustedlogin/client/src/assets/src/variables"; // Variables used in the mixins (all !default)
+@import "vendor-namesaced/trustedlogin/client/src/assets/src/auth"; // Mixins for authentication screen
+@import "vendor-namesaced/trustedlogin/client/src/assets/src/buttons"; // Mixins for buttons
+@import "vendor-namesaced/trustedlogin/client/src/assets/src/global";
 
 $namespace: "⚠ProBlockBuilder";
-$path: "vendor/trustedlogin/client/src/assets/"; // Path to assets directory (for loading and lock images)
+$path: "example/different/assets/path/"; // Path to assets directory (for loading and lock images)
 
 @include trustedlogin-auth( $namespace );
 @include trustedlogin-button( $namespace );
