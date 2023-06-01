@@ -144,7 +144,7 @@ Reference IDs can be passed via URL like so: `wp-login.php?action=trustedlogin&n
 
 When a Reference ID exists, users will see the reference while granting access:
 
-![Reference ID is shown below the footer links in the Grant Access screen](https://d.pr/2bVGbj+)
+![Reference ID is shown below the footer links in the Grant Access screen](/img/client/reference-id.png)
 
 ## Logging {#logging}
 

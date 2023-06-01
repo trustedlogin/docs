@@ -1,4 +1,4 @@
-# TrustedLogin Docusaurus Site
+# TrustedLogin Documentation Site
 
 This is the source for the TrustedLogin documentation site. It is built using [Docusaurus 2](https://v2.docusaurus.io/).
 
@@ -6,7 +6,9 @@ The docs themselves are inside the `/docs` folder.
 
 ## To release updates
 
-Run the following command to deploy the site to GitHub Pages:
+Updates are automatically released upon commit to the `main` branch.
+
+To release an update locally, run the following command:
 
 ```bash
 GIT_USER=<GITHUB_USERNAME> npx docusaurus deploy
@@ -14,9 +16,9 @@ GIT_USER=<GITHUB_USERNAME> npx docusaurus deploy
 
 See [the Docusaurus docs](https://docusaurus.io/docs/deployment#deploy) for more information.
 
-## Annoying errors
+### Annoying errors when deploying manually
 
-### Node.js version not met
+#### Node.js version not met
 
 If you get the `[ERROR] Minimum Node.js version not met :(` error, you'll need to switch the Node version. Hopefully, you've already [installed nvm](https://github.com/nvm-sh/nvm#installing-and-updating). If not, do that first, then run:
 
@@ -24,7 +26,7 @@ If you get the `[ERROR] Minimum Node.js version not met :(` error, you'll need t
 nvm use 18
 ```
 
-### Error: Running "git push" command failed.
+#### Error: Running "git push" command failed.
 
 > Does the GitHub user account you are using have push access to the repository?
 
