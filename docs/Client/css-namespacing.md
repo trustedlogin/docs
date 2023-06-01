@@ -15,7 +15,12 @@ The `build-sass` script accepts the following arguments:
 
 The default way to namespace files is [as a Composer script](/Client/01-intro.md), but this may not work with your build process: the default implementation shown adds the required SCSS package (`scssphp/scssphp`) to the `require-dev` array, which may not work with your release flow. If you move `scssphp/scssphp` to the `require` array, the scssphp library will be included in your autoloader, which adds bloat for something that should be used one-time.
 
-So here are alternate ways to namespace the CSS files:
+:::info
+### When you see ⚠️, make sure to replace with your own namespace!
+In the examples below, we're going to pretend your plugin or theme is named "Pro Block Builder" and your business is named Widgets, Co. These should not be the names you use—make sure to update the sample code below to match your business and plugin/theme name!
+:::
+
+Here are alternate ways to namespace the CSS files:
 
 ## Manually namespacing the CSS files
 
