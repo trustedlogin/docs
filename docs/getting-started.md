@@ -22,20 +22,20 @@ Let's get started!
 1. Visit [TrustedLogin.com to register](https://app.trustedlogin.com/register)
 1. When registering, For "Team Name", enter your project's name. You'll have the chance to add additional projects later.
 
-![Screenshot of the registration form](https://i.gravityview.co/MRT5fQ+)
+![Screenshot of the registration form](https://d.pr/MRT5fQ+)
 
 ## 2. Configure your team settings on TrustedLogin {#2-create-a-team}
 
 Each plugin, theme, or agency client may have its own team on TrustedLogin.
 
 1. Once logged-in to TrustedLogin's admin, click on the "Teams" link
-2. On the Teams page, click on the gear icon next to your Team ![Current Teams table with multiple icons displayed, including a gear icon](https://i.gravityview.co/efY3gY+)
+2. On the Teams page, click on the gear icon next to your Team ![Current Teams table with multiple icons displayed, including a gear icon](https://d.pr/efY3gY+)
 3. Fill in the details on the Team page
 4. Click on Update below each section
 
 Here, for example, is how GravityView's settings are configured:
 
-![GravityView settings configuration: Project Name, REST API URL, and Support URL.](https://i.gravityview.co/sXC5rL+)
+![GravityView settings configuration: Project Name, REST API URL, and Support URL.](https://d.pr/sXC5rL+)
 
 Don't close the tab! We'll be coming back here to grab the Account ID, Public Key, and Private Key in the next steap.
 
@@ -52,7 +52,7 @@ The TrustedLogin Vendor plugin is a WordPress plugin that you host on your own s
 3. Click the new "TrustedLogin" menu item in the sidebar menu
 4. Configure the plugin using the Account ID, Public Key, and Private Key values from the Team page
 
-![The TrustedLogin sidebar menu item](https://i.gravityview.co/vLLsD0+)
+![The TrustedLogin sidebar menu item](https://d.pr/vLLsD0+)
 
 ## 4. Integrate with your plugin or theme {#4-integrate-with-your-plugin-or-theme}
 
