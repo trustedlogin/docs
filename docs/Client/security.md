@@ -12,7 +12,7 @@ Also, secrets stored in the Vault contain expiration timestamps. If the secret i
 
 ## Capabilities {#capabilities}
 
-When creating a support user in TrustedLogin, it's not possible to assign these capabilities to the generated users:
+When creating a support user in TrustedLogin using the default `clone_role=true` configuration, it's not possible to assign these capabilities to the generated users:
 
 - `create_users`
 - `delete_users`
@@ -21,9 +21,7 @@ When creating a support user in TrustedLogin, it's not possible to assign these 
 - `delete_site`
 - `remove_users`
 
-In order to maintain a higher level of security, users created with TrustedLogin are not able to create other users. This will help prevent the possibility for support agents to create secret users for themselves.
-
-Also, it makes sense to not allow support to delete a site or delete other users!
+In order to maintain a higher level of security, users created by TrustedLogin with the `clone_role` configuration enabled are not able to create other users. This will help prevent the possibility for support agents to create secret users for themselves.
 
 ## Access control {#access-control}
 

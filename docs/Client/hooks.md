@@ -150,6 +150,13 @@ Toggles whether the reference ID, if set, is shown in the auth form. Since Versi
 | `$is_login_screen`   | `bool`   |    | Whether the auth form is being displayed on the login screen. Set by Admin::login_screen(). |
 | `$ref`               | `string` |    | The reference ID.                                                                           |
 
+### `trustedlogin/{namespace}/template/auth/terms_of_service/anchor`
+
+| Key       | Type     | Default            | Description                                   |
+|-----------|----------|--------------------|-----------------------------------------------|
+| `$anchor` | `string` | `Terms of Service` | The anchor text of the Terms of Service link. |
+
+
 ### `trustedlogin/{namespace}/template/auth/footer_links`
 
 Override the footer links shown below the auth form.
