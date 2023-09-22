@@ -2,6 +2,12 @@
 
 ## Actions
 
+### `trustedlogin/{namespace}/auth_screen` {#trustedloginnamespaceauthscreen}
+
+Renders the Grant Access/Revoke Access screen.
+
+Note: TrustedLogin uses the `20` priority to print the auth screen. 
+
 ### `trustedlogin/{namespace}/logging/log` {#trustedloginnamespacelogginglog}
 
 | Parameter  | Type     | Description                                                                                                                                                            |

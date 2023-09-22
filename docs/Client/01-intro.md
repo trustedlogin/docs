@@ -152,10 +152,11 @@ We recommend disabling logging by default, but sometimes logs are necessary.
 
 1. TrustedLogin creates a `trustedlogin-logs` directory inside the `wp-content/uploads/` directory.
 2. An empty `index.html` file is placed inside the directory to prevent browsing.
-3. New log files are created daily for each TrustedLogin namespace. The default log `filename` format is `trustedlogin-debug-{date}-{hash}`.
+3. New log files are created daily for each TrustedLogin namespace. The default log `filename` format is `client-{namespace}-{Y-m-d}-{hash}.log`
+   - `{namespace}` is the namespace of your business, plugin, or theme name
    - `{date}` is `YYYY-MM-DD` format
    - The hash is generated using `wp_hash()` using on the `vendor/namespace`, site `home_url()`, and the day of the year (`date('z')`). The point of the hash is to make log names harder to guess (security by obscurity).
 
 ### Using your own logging library {#using-your-own-logging-library}
 
-If you add an action for `trustedlogin/{namespace}/logging/log`, TrustedLogin will let you handle logging.
+If you add an action for `trustedlogin/{namespace}/logging/log`, TrustedLogin will let you handle logging. The `trustedlogin-logs` directory and log files will not be created.
