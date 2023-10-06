@@ -81,11 +81,11 @@ The **unsuccessful** response is:
 
 ![Site Access Key login form](/img/flows/login/step-01.png)
 
-The form submits a `POST` HTTP request via AJAX that is received by the [`TrustedLogin\Vendor\SiteKey_Login::handle_ajax()`](https://github.com/trustedlogin/trustedlogin-vendor/blob/develop/includes/class-trustedlogin-sitekey-login.php#L193) method.
+The form submits a `POST` HTTP request via AJAX that is received by the [`TrustedLogin\Vendor\AccessKeyLogin::handle()`](https://github.com/trustedlogin/vendor/blob/main/php/AccessKeyLogin.php#L106) method.
 
-Receiving that request, [`TrustedLogin\Vendor\SiteKey_Login::verify_grant_access_request()`](https://github.com/trustedlogin/trustedlogin-vendor/blob/develop/includes/class-trustedlogin-sitekey-login.php#L153) verifies that the nonce is valid and that the request is coming from inside the site.
+Receiving that request, [`TrustedLogin\Vendor\AccessKeyLogin::verifyGrantAccessRequest()`](https://github.com/trustedlogin/vendor/blob/main/php/AccessKeyLogin.php#L200) verifies that the nonce is valid and that the request is coming from inside the site.
 
-In addition, [`TrustedLogin\Vendor\Endpoint::auth_verify_user()`](https://github.com/trustedlogin/trustedlogin-vendor/blob/develop/includes/class-trustedlogin-endpoint.php#L795) checks to make sure the user is logged-in and has one or more of the roles that are required to access the site.
+In addition, [`TrustedLogin\Vendor\Traits\VerifyUser::verifyUserRole()`](https://github.com/trustedlogin/vendor/blob/develop/php/Traits/VerifyUser.php#L17) checks to make sure the user is logged-in and has one or more of the roles that are required to access the site.
 
 ### Step 2: Vendor Requests List of Matching Site IDs {#step-2-vendor-requests-list-of-matching-site-ids}
 
@@ -129,10 +129,10 @@ An array of Secret IDs is returned. These are not the envelope itself; Secret ID
 
 The Vendor plugin uses the Secret IDs to retrieve the envelopes from the Vault.
 
-In addition to the Bear token, the request generates a signed nonce in [`TrustedLogin\Vendor\Encryption::create_identity_nonce()`](https://github.com/trustedlogin/trustedlogin-vendor/blob/develop/includes/class-trustedlogin-encryption.php#L378). The method:
+In addition to the Bear token, the request generates a signed nonce in [`TrustedLogin\Vendor\Encryption::createIdentityNonce()`](https://github.com/trustedlogin/vendor/blob/develop/php/Encryption.php#L399). The method:
 
-- Generates a cryptographic nonce (in [`TrustedLogin\Vendor\Encryption::generate_nonce()`](https://github.com/trustedlogin/trustedlogin-vendor/blob/develop/includes/class-trustedlogin-encryption.php#L463) using `random_bytes()`), 
-- Signs the nonce with the `sign_private_key` pair (in [`TrustedLogin\Vendor\Encryption::sign()`](https://github.com/trustedlogin/trustedlogin-vendor/blob/develop/includes/class-trustedlogin-encryption.php#L492), using `sodium_crypto_sign_detached()`), and 
+- Generates a cryptographic nonce (in [`TrustedLogin\Vendor\Encryption::generateNonce()`](https://github.com/trustedlogin/vendor/blob/develop/php/Encryption.php#L485) using `random_bytes()`), 
+- Signs the nonce with the `sign_private_key` pair (in [`TrustedLogin\Vendor\Encryption::sign()`](https://github.com/trustedlogin/vendor/blob/develop/php/Encryption.php#L512), using `sodium_crypto_sign_detached()`), and 
 - Verifies that the signed nonce has been properly generated (using `sodium_crypto_sign_verify_detached()`)
 
 The nonce and signed nonce are both sent in the request, helping to verify that this site is indeed the sender of the data.
@@ -161,7 +161,7 @@ The site URL and the access parts are returned as an AJAX response, completing t
 
 ### Step 7: Vendor Plugin `POST`s to Client Site {#step-7-vendor-plugin-posts-to-client-site}
 
-A temporary form [is created using JavaScript](https://github.com/trustedlogin/trustedlogin-vendor/blob/develop/assets/trustedlogin-access-keys.js#L20-L28) with the Client Site URL set as the form `action` property. A `POST` request is submitted, preventing the submitted data from being logged. 
+A temporary form [is created using JavaScript](https://github.com/trustedlogin/vendor/blob/a62ec370bb5e715eed3524bf92c77482e785d273/src/components/AccessKeyForm.js#L259-L281) with the Client Site URL set as the form `action` property. A `POST` request is submitted, preventing the submitted data from being logged. 
 
 The form submits the following to the Client Site URL:
 
