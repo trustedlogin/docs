@@ -8,39 +8,17 @@ The Help Scout app currently supports Easy Digital Downloads Software Licensing.
 
 ---
 
-## First, contact Help Scout customer support
-
 :::tip
 
-Help Scout released a new Apps platform in August 2023. We are planning on supporting this in the near future, but for now, the TrustedLogin Help Scout integration requires the Legacy Dynamic Apps be enabled for your account.
+Help Scout released a new Apps platform in August 2023. We are planning on supporting this in the near future, but for now, the TrustedLogin Help Scout integration requires you [create a Legacy Dynamic App](https://secure.helpscout.net/apps/custom).
 
 :::
 
-To use the TrustedLogin Help Scout app, you will need Legacy Dynamic Apps enabled. To have them enabled, contact Help Scout support.
+## Create a [Custom Help Scout App](https://secure.helpscout.net/apps/custom)
 
-Here's how to contact Help Scout support:
+[Click this link to create a Legacy Dynamic App](https://secure.helpscout.net/apps/custom).
 
-1. In your Help Scout account, click the ? icon in the top-right corner.
-1. Click on Get Help to open the Beacon widget
-1. Click on the "Ask" tab in the Beacon
-1. Click on either Email or Chat to start a new conversation 
-1. Write "Please enable Legacy Dynamic Apps for my account."
-
-Once Help Scout has confirmed that your account has been enabled, continue with the instructions!
-
-## Go to Help Scout Apps
-
-In Help Scout, open the Manage menu.
-
-Click on the Apps submenu.
-
-![Screenshot of the Help Scout Manage dropdown with the Apps menu highlighted](/img/vendor/help-scout/step-01.png)
-
-Click on the Create button in the top-right of the page.
-
-![A button labeled Create next to Quick Search](/img/vendor/help-scout/step-02.png)
-
-On the new page, click on the Create App button.
+On this page, click on the Create App button.
 
 ![Create App button in the left sidebar](/img/vendor/help-scout/step-03.png)
 
@@ -62,11 +40,11 @@ Copy the Secret Key and Callback URL from the "Configure Help Desk" popup.
 
 After switching back to Help Scout, paste the Secret Key and Callback URL into the Help Scout Custom App inputs of the same name:
 
-!["Custom App" form with App Name, Content Type, Callback URL, Secret Key, Debug Mode, and Mailboxes fields](/img/vendor/help-scout/step-06.png)
+!["Custom App" form with App Name, Content Type, Callback URL, Secret Key, Debug Mode, and Inboxes fields](/img/vendor/help-scout/step-06.png)
 
 :::caution
 
-If you don't see the "Content Type" dropdown, Help Scout is not running Legacy Dynamic Apps. Contact Help Scout support to enable.
+If you don't see the "Content Type" dropdown, Help Scout is not running Legacy Dynamic Apps. Make sure you're using [this link](https://secure.helpscout.net/apps/custom) to create your Help Scout App.
 
 :::
 
