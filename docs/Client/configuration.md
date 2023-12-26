@@ -8,6 +8,10 @@ The following is a minimal configuration. It has all the _required_ settings, bu
 
 ```php
 
+// Include the Composer autoloader.
+// See
+include_once trailingslashit( dirname( __FILE__ ) ) . 'vendor/autoload.php';
+
 $config = [
     'auth' => [
         'api_key' => '1234567890',

@@ -4,7 +4,7 @@ sidebar_position: 1
 ---
 # TrustedLogin Vendor Plugin
 
-Plugin to interact with TrustedLogin's encrypted storage infrastructure to redirect support staff into an authenticated session on client installations.
+A plugin to connect TrustedLogin's encrypted storage infrastructure using encrypted access keys.
 
 ## Why it's used
 
@@ -20,9 +20,7 @@ The plugin generates a list of licenses that are connected to that email address
 
 In this way, the SaaS knows nothing about the customer being supported, only the request for matching Secret IDs.
 
-:::info
-Articles showing setup and documenting the help desk functionality are in progress. Only developer docs are currently available.
-:::
+#### [Read how to configure the Help Scout integration](./help-scout).
 
 ## See developer docs:
 

@@ -7,7 +7,7 @@ Plugin to interact with TrustedLogin's encrypted storage infrastructure to redir
 
 ## To Compile {#to-compile}
 
-The repo lacks the `/vendor/` directory; you'll need to build first. Here's how:
+The plugin will need to be built. Here's how:
 
 1. Change directories to the plugin directory (`cd /path/to/directory`)
 1. Run `composer install --no-dev`
@@ -29,7 +29,6 @@ A [docker-compose](https://docs.docker.com/samples/wordpress/)-based local devel
 - Run WP CLI command:
     - `docker-compose run wp cli wp ...`
 	- `docker-compose run wpcli wp db reset`
-
 
 In the local development container, the constant `DOING_TL_VENDOR_TESTS` is set to true, as is `WP_DEBUG`.
 
