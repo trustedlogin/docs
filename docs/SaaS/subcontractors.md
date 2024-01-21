@@ -20,7 +20,6 @@
 
 | Service          | URL                            | Description                               |
 |------------------|--------------------------------|-------------------------------------------|
-| Platform.sh      | https://platform.sh            | Hosting                                   |
 | Digital Ocean    | https://www.digitalocean.com/  | Hosting                                   |
 | Cloudflare       | https://www.cloudflare.com/    | DNS and CDN                               |
 | Google Fonts     | https://fonts.google.com/      | Fonts                                     |

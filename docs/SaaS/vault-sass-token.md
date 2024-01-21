@@ -22,16 +22,8 @@ VAULT_TOKEN=trustedlogin
 Make sure the `VAULT_TOKEN` variable is set to be "inheritable" and "sensitive".
 :::
 
-To change the SaaS token(s) on the production and testing servers, you must be logged into Platform.sh and have proper permissions to edit environment variables. Edit the `env:VAULT_TOKEN` variable. Make sure it is set to be "inheritable" and "sensitive".
-
 GitHub Actions has local `VAULT_TOKEN` and `VAULT_URL` environment variables and do not need to be modified.
-
-#### Links {#links}
-* 
-* [Master environment variables settings](https://console.platform.sh/trustedlogin/xfssqruuoi5as/master/settings/variables)
-* [Travis CI environment variable settings](https://travis-ci.com/trustedlogin/trustedlogin-ecommerce/settings)
-* [Platform.sh Environment Variables Documentation](https://docs.platform.sh/development/variables.html#environment-variables)
 
 #### Notes {#notes}
 
-Access to environmental variables is limited.
+Access to environmental secrets is limited.

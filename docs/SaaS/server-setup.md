@@ -6,7 +6,7 @@ sidebar_position: 2
 
 # TrustedLogin SaaS (Hosted Application)
 
-The TrustedLogin application is powered by Laravel and run on a Dockerized, high-availability, Kubernetes cluster. 
+The TrustedLogin application is powered by Laravel and run on a Dockerized, high-availability, Kubernetes cluster.
 
 The application handles account management, profiles, and billing. But most important, it receives and processes requests from the [Client SDK](/Client/intro) and [Vendor plugin](/Vendor/intro).
 
@@ -28,6 +28,8 @@ The application handles account management, profiles, and billing. But most impo
 | Kibana | https://www.elastic.co/products/kibana | Log analysis |
 | Velero | https://velero.io | Backup |
 | MySQL | https://www.mysql.com/ | Database |
+| Datadog | https://www.datadoghq.com/| Log Aggregation |
+| Redis | https://redis.io/| Caching |
 
 
 
@@ -43,11 +45,11 @@ The application is hosted on [managed DigitalOcean Kubernetes](https://www.digit
 
 ### [Traefik](https://traefik.io) {#traefik}
 
-Traefik acts as a reverse-proxy load balancer. 
+Traefik acts as a reverse-proxy load balancer.
 
 - Redirects requests from http to https
 - To restrict access based on IP addresses
-- Balances traffic between Kubernetes services and nodes
+- Routes traffic various services within kubernetes account to url requested
 
 ### [Hashicorp Vault](https://www.vaultproject.io) {#hashicorp-vault}
 
@@ -63,8 +65,12 @@ The eCommerce and public-facing UI are powered by Laravel Spark.
 
 ### [MySQL](https://www.mysql.com) {#mysql}
 
-The Laravel Spark database uses MySQL. Account, profile, and and Stripe billing metadata are stored in MySQL. 
+The Laravel Spark database uses Digital Ocean Managed MySQL with High Availability. Account, profile, and and Stripe billing metadata are stored in MySQL.
 
 ### [Elasticsearch](https://www.elastic.co/products/elasticsearch) {#elasticsearch}
 
 Logs stripped of PII are added to Elasticsearch for later analysis. [See Elasticsearch documentation](/SaaS/elasticsearch) for more information.
+
+### [Redis](https://redis.io/) {#redis}
+
+Laravel uses redis as a caching mechanism for temporary data storage to speed up the process of performing database queries and getting feedback, which will, in turn, reduce the amount of time spent pulling up data. Our applicaiton relies on Digital Ocean fully managed redis instance in high availability mode.
