@@ -26,13 +26,11 @@ GitHub Actions has local `VAULT_TOKEN` and `VAULT_URL` environment variables and
 
 #### Links {#links}
 
-* [Master environment variables settings]
-https://github.com/trustedlogin/trustedlogin-ecommerce/settings/secrets/actions
-Secrets are stored in github secrets which are eventually pulled into kubernetes secrets during deployment through helm charts.
-https://github.com/trustedlogin/trustedlogin-ecommerce/blob/master/.github/workflows/on-merge-deploy-to-prod.yml#L75
+* [Storing environment variables in GitHub Secrets](https://github.com/trustedlogin/trustedlogin-ecommerce/settings/secrets/actions) Application secrets, including the Vault SaaS token, are stored in GitHub secrets, which are pulled into Kubernetes during deployment.
+* [Setting variables using Helm](https://github.com/trustedlogin/trustedlogin-ecommerce/blob/master/.github/workflows/on-merge-deploy-to-prod.yml#L75) Environment variables are defined by Helm charts during deployment.
 
-Only project admin can modify the above secrets.
+Only project admin can modify GitHub secrets.
 
 #### Notes {#notes}
 
-Access to environmental secrets is limited.
+Access to environment secrets is limited to GitHub admins.

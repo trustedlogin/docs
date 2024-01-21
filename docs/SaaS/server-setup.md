@@ -12,24 +12,25 @@ The application handles account management, profiles, and billing. But most impo
 
 ## What software powers TrustedLogin? {#what-software-powers-trustedlogin}
 
-| Software | URL | Description |
-| --- | --- | --- |
-| Helm | https://helm.sh/ | Kubernetes deployment |
-| Docker | https://www.docker.com/ | Container management |
-| Kubernetes | https://kubernetes.io/ | Container orchestration |
-| Traefik | https://traefik.io/ | Load balancing & reverse proxy |
-| Jetstack Cert Manager | https://github.com/jetstack/cert-manager | Kubernetes certificate management |
-| Laravel | https://laravel.com/ | Web application framework |
-| Laravel Spark | https://spark.laravel.com/ | Billing & portal |
-| Laravel Dusk | https://dusk.laravel.com/ | Acceptance tests |
-| Guzzle | https://packagist.org/packages/kozz/laravel-guzzle-provider | HTTP client |
-| Hashicorp Vault | https://www.vaultproject.io/ | Key management |
-| Elasticsearch | https://www.elastic.co/products/elasticsearch | Log search |
-| Kibana | https://www.elastic.co/products/kibana | Log analysis |
-| Velero | https://velero.io | Backup |
-| MySQL | https://www.mysql.com/ | Database |
-| Datadog | https://www.datadoghq.com/| Log Aggregation |
-| Redis | https://redis.io/| Caching |
+| Software              | URL                                                         | Description                       |
+|-----------------------|-------------------------------------------------------------|-----------------------------------|
+| Helm                  | https://helm.sh/                                            | Kubernetes deployment             |
+| Docker                | https://www.docker.com/                                     | Container management              |
+| Kubernetes            | https://kubernetes.io/                                      | Container orchestration           |
+| Traefik               | https://traefik.io/                                         | Load balancing & reverse proxy    |
+| Jetstack Cert Manager | https://github.com/jetstack/cert-manager                    | Kubernetes certificate management |
+| Laravel               | https://laravel.com/                                        | Web application framework         |
+| Laravel Spark         | https://spark.laravel.com/                                  | Billing & portal                  |
+| Laravel Dusk          | https://dusk.laravel.com/                                   | Acceptance tests                  |
+| Guzzle                | https://packagist.org/packages/kozz/laravel-guzzle-provider | HTTP client                       |
+| Hashicorp Vault       | https://www.vaultproject.io/                                | Key management                    |
+| Elasticsearch         | https://www.elastic.co/products/elasticsearch               | Log search                        |
+| Kibana                | https://www.elastic.co/products/kibana                      | Log analysis                      |
+| Velero                | https://velero.io                                           | Backup                            |
+| MySQL                 | https://www.mysql.com/                                      | Database                          |
+| Datadog               | https://www.datadoghq.com/                                  | Log aggregation                   |
+| Redis                 | https://redis.io/                                           | Caching                           |
+| Prometheus            | https://prometheus.io/                                      | Metrics & alerting                |
 
 
 
@@ -41,7 +42,7 @@ The TrustedLogin Kubernetes deployment is structured using Helm.
 
 ### [Kubernetes](https://kubernetes.io/) {#kubernetes}
 
-The application is hosted on [managed DigitalOcean Kubernetes](https://www.digitalocean.com/products/kubernetes/).
+The application is hosted on [managed DigitalOcean Kubernetes](https://www.digitalocean.com/products/kubernetes/) ("DOKS").
 
 ### [Traefik](https://traefik.io) {#traefik}
 
@@ -49,7 +50,7 @@ Traefik acts as a reverse-proxy load balancer.
 
 - Redirects requests from http to https
 - To restrict access based on IP addresses
-- Routes traffic various services within kubernetes account to url requested
+- Routes traffic various services within Kubernetes account to url requested
 
 ### [Hashicorp Vault](https://www.vaultproject.io) {#hashicorp-vault}
 
