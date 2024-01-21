@@ -4,7 +4,7 @@ When accessing Vault, this application uses a special, highly privileged token, 
 
 ## Using The SaaS Token {#using-the-saas-token}
 
-The SaaS token is stored in the environment variable `VAULT_TOKEN` in Platform. In PHP code it can be accessed like this:
+The SaaS token is stored in the environment variable `VAULT_TOKEN` in Kubernetes secrets. In PHP code it can be accessed like this:
 
 ```php
 $token = env('VAULT_TOKEN');
@@ -22,16 +22,15 @@ VAULT_TOKEN=trustedlogin
 Make sure the `VAULT_TOKEN` variable is set to be "inheritable" and "sensitive".
 :::
 
-To change the SaaS token(s) on the production and testing servers, you must be logged into Platform.sh and have proper permissions to edit environment variables. Edit the `env:VAULT_TOKEN` variable. Make sure it is set to be "inheritable" and "sensitive".
-
 GitHub Actions has local `VAULT_TOKEN` and `VAULT_URL` environment variables and do not need to be modified.
 
 #### Links {#links}
-* 
-* [Master environment variables settings](https://console.platform.sh/trustedlogin/xfssqruuoi5as/master/settings/variables)
-* [Travis CI environment variable settings](https://travis-ci.com/trustedlogin/trustedlogin-ecommerce/settings)
-* [Platform.sh Environment Variables Documentation](https://docs.platform.sh/development/variables.html#environment-variables)
+
+* [Storing environment variables in GitHub Secrets](https://github.com/trustedlogin/trustedlogin-ecommerce/settings/secrets/actions) Application secrets, including the Vault SaaS token, are stored in GitHub secrets, which are pulled into Kubernetes during deployment.
+* [Setting variables using Helm](https://github.com/trustedlogin/trustedlogin-ecommerce/blob/master/.github/workflows/on-merge-deploy-to-prod.yml#L75) Environment variables are defined by Helm charts during deployment.
+
+Only project admin can modify GitHub secrets.
 
 #### Notes {#notes}
 
-Access to environmental variables is limited.
+Access to environment secrets is limited to GitHub admins.
