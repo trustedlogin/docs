@@ -129,7 +129,7 @@ An array of Secret IDs is returned. These are not the envelope itself; Secret ID
 
 The Vendor plugin uses the Secret IDs to retrieve the envelopes from the Vault.
 
-In addition to the Bear token, the request generates a signed nonce in [`TrustedLogin\Vendor\Encryption::createIdentityNonce()`](https://github.com/trustedlogin/vendor/blob/develop/php/Encryption.php#L399). The method:
+In addition to the Bearer token, the request generates a signed nonce in [`TrustedLogin\Vendor\Encryption::createIdentityNonce()`](https://github.com/trustedlogin/vendor/blob/develop/php/Encryption.php#L399). The method:
 
 - Generates a cryptographic nonce (in [`TrustedLogin\Vendor\Encryption::generateNonce()`](https://github.com/trustedlogin/vendor/blob/develop/php/Encryption.php#L485) using `random_bytes()`), 
 - Signs the nonce with the `sign_private_key` pair (in [`TrustedLogin\Vendor\Encryption::sign()`](https://github.com/trustedlogin/vendor/blob/develop/php/Encryption.php#L512), using `sodium_crypto_sign_detached()`), and 
