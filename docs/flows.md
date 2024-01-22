@@ -155,7 +155,7 @@ The envelope with encrypted credentials is returned to the Vendor.
 
 The Vendor plugin receives the envelope. It includes the Site URL associated with the Site Access Key but not the endpoint, which is required to log in.
 
-The Vendor plugin decrypts the envelope and extracts the credentials, then cryptographically generates the URL to access Client site (using `TrustedLogin\Vendor\Endpoint::envelope_to_url()`).
+The Vendor plugin decrypts the envelope and extracts the credentials, then cryptographically generates the URL to access Client site (using [`TrustedLogin\Vendor\TrustedLoginService::envelopeToUrl()`](https://github.com/trustedlogin/vendor/blob/a62ec370bb5e715eed3524bf92c77482e785d273/php/TrustedLoginService.php#L395)).
 
 The site URL and the access parts are returned as an AJAX response, completing the request started in Step 1.
 
