@@ -217,7 +217,7 @@ Possible error responses are indicated using the HTTP status codes `423` and `40
 
 ### Step 10: Client Logs User In {#step-10-client-logs-user-in}
 
-If the security checks pass in Step 10 and 11, the SDK calls `{Client}\TrustedLogin\Endpoint::login()` to log the support user in. 
+If the security checks pass in Step 8 and 9, the SDK calls `{Client}\TrustedLogin\Endpoint::login()` to log the support user in. 
 
 The user is logged-in by calling `wp_set_current_user()`, `wp_set_auth_cookie()` and `do_action( 'wp_login' )`.
 
