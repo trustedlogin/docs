@@ -16,7 +16,7 @@ When you integrate TrustedLogin into your project (theme, plugin, or custom code
 ## Including in your plugin or theme {#including-in-your-plugin-or-theme}
 
 :::info
-### When you see ⚠️, make sure to replace with your own namespace!
+### When you see `ProBlockBuilder`, make sure to replace with your own namespace!
 In the examples below, we're going to pretend your plugin or theme is named "Pro Block Builder" and your business is named Widgets, Co. These should not be the names you use—make sure to update the sample code below to match your business and plugin/theme name!
 :::
 
@@ -46,8 +46,8 @@ In the examples below, we're going to pretend your plugin or theme is named "Pro
   "extra": {
     "strauss": {
       "target_directory": "vendor-namespaced",
-      "namespace_prefix": "⚠ProBlockBuilder\\",
-      "classmap_prefix": "⚠PBB_",
+      "namespace_prefix": "ProBlockBuilder\\",
+      "classmap_prefix": "ProBlockBuilder_",
       "classmap_output": true,
       "packages": [
         "trustedlogin/client"
@@ -59,7 +59,7 @@ In the examples below, we're going to pretend your plugin or theme is named "Pro
       "@php strauss.phar"
     ],
     "trustedlogin": [
-      "@php vendor/bin/build-sass --namespace=️⚠ProBlockBuilder"
+      "@php vendor/bin/build-sass --namespace=ProBlockBuilder"
     ],
     "post-install-cmd": [
       "@strauss",
@@ -92,7 +92,7 @@ Replace this:
 
 ```json
 "trustedlogin": [
-  "@php vendor/bin/build-sass --namespace=️⚠ProBlockBuilder"
+  "@php vendor/bin/build-sass --namespace=ProBlockBuilder"
  ],
 ```
 
@@ -100,7 +100,7 @@ With this:
 
 ```json
 "trustedlogin": [
-  "@php vendor/bin/build-sass --namespace=️⚠ProBlockBuilder",
+  "@php vendor/bin/build-sass --namespace=ProBlockBuilder",
    "[ -d 'vendor/trustedlogin' ] && rm -rf vendor/trustedlogin || true",
    "[ -d 'vendor/scssphp' ] && rm -rf vendor/scssphp || true",
    "[ -d 'vendor/bin' ] && rm -rf vendor/bin/build-sass && rm -rf vendor/bin/pscss || true"
