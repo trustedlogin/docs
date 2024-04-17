@@ -6,7 +6,7 @@ sidebar_position: 1
 
 # TrustedLogin SaaS (Hosted Application)
 
-The application handles account management, profiles, and billing. The SaaS receives and **processes login and validation requests** from the [Client SDK](../Client/intro) and [Vendor plugin](../Vendor/intro).
+The application handles account management, profiles, and billing. The SaaS receives and **processes login and validation requests** from the [Client SDK](../Client/intro) and [TrustedLogin Connector plugin](../Connector/intro).
 
 ## SLA {#service-level-agreement}
 
