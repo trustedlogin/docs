@@ -48,22 +48,20 @@ const config = {
         },
         items: [
           {
-            label: 'Login Flow',
-            position: 'left',
-            href: '/flows',
-          },
-          {
+            type: 'doc',
             label: 'Client SDK',
             position: 'left',
-            href: '/Client/intro',
+            docId: 'Client/intro',
           },
           {
-            label: 'Self-Hosted Plugin',
-            href: '/Vendor/intro',
+            type: 'doc',
+            label: 'Self-Hosted WordPress Plugin',
+            docId: 'Connector/intro',
           },
           {
+            type: 'doc',
             label: 'TrustedLogin SaaS',
-            href: '/SaaS/intro',
+            docId: 'SaaS/intro',
           },
         ],
       },

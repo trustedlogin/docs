@@ -4,7 +4,7 @@ sidebar: auto
 sidebar_position: 2
 ---
 
-# TrustedLogin SaaS (Hosted Application)
+# TrustedLogin SaaS Server Setup
 
 The TrustedLogin application is powered by Laravel and run on a Dockerized, high-availability, Kubernetes cluster.
 
