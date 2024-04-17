@@ -7,7 +7,7 @@ When instantiating the TrustedLogin `Client` class, you need to pass a valid `Co
 The following is a minimal configuration. It has all the _required_ settings, but not all **recommended** settings!
 
 :::info
-### When you see `ProBlockBuilder`, make sure to replace with your own namespace!
+### When you see `ProBlockBuilder`, make sure to replace with your own namespace! {#when-you-see-problockbuilder-make-sure-to-replace-with-your-own-namespace}
 In the examples below, we're going to pretend your plugin or theme is named "Pro Block Builder" and your business is named Widgets, Co. These should not be the names you use—make sure to update the sample code below to match your business and plugin/theme name!
 :::
 

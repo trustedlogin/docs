@@ -14,7 +14,7 @@ Help Scout released a new Apps platform in August 2023. We are planning on suppo
 
 :::
 
-## Create a [Custom Help Scout App](https://secure.helpscout.net/apps/custom)
+## Create a [Custom Help Scout App](https://secure.helpscout.net/apps/custom) {#create-a-custom-help-scout-app}
 
 [Click this link to create a Legacy Dynamic App](https://secure.helpscout.net/apps/custom).
 
@@ -24,7 +24,7 @@ On this page, click on the Create App button.
 
 Now, switch to your website where you're running the TrustedLogin Connector plugin.
 
-## Grab the configuration values from the TrustedLogin plugin
+## Grab the configuration values from the TrustedLogin plugin {#grab-the-configuration-values-from-the-trustedlogin-plugin}
 
 If you haven't added any teams to the TrustedLogin Connector plugin yet, [do that first!](../01-intro)
 
@@ -36,7 +36,7 @@ Copy the Secret Key and Callback URL from the "Configure Help Desk" popup.
 
 ![A modal showing the Secret Key and Callback URL fields, both with copy icons next to them](/img/vendor/help-scout/step-05.png)
 
-## Switch back to Help Scout
+## Switch back to Help Scout {#switch-back-to-help-scout}
 
 After switching back to Help Scout, paste the Secret Key and Callback URL into the Help Scout Custom App inputs of the same name:
 
@@ -50,7 +50,7 @@ If you don't see the "Content Type" dropdown, Help Scout is not running Legacy D
 
 Save the app and navigate to a Help Scout ticket.
 
-## The TrustedLogin widget
+## The TrustedLogin widget {#the-trustedlogin-widget}
 
 Now, in the sidebar, you'll see the TrustedLogin widget.
 

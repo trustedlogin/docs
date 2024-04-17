@@ -26,7 +26,7 @@ Whenever you push to a branch containing an open pull request:
 1. GitHub Actions will run tests using PHPUnit. These include unit/integration tests as well as browser tests using Dusk.
 2. Platform will deploy an environment that you can use for manual QA and testing.
 
-## Kubernetes + Github Actions
+## Kubernetes + Github Actions {#kubernetes--github-actions}
 
 We utilize GitHub Actions in conjunction with Helm to deploy application code to a production-grade Kubernetes cluster. Upon creating a pull request, a new QA environment is generated, and its URL is accessible based on your GitHub branch name. Developers conduct testing in the dev/test environment, undergo peer review.
 

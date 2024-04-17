@@ -229,7 +229,7 @@ After login, the SDK triggers the following WordPress action: `trustedlogin/{nam
 
 The SDK hooks into the action to run any webhooks configured in the [Config array](./Client/configuration#webhooks).
 
-### Revoke Login
+### Revoke Login {#revoke-login}
 
 At any time, a website administrator may revoke TrustedLogin access. When access is revoked, the Client sends a HTTP `DELETE` request to the `sites/{secret_id}` endpoint along with a `X-TL-TOKEN` header.
 

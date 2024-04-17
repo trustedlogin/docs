@@ -2,7 +2,7 @@
 sidebar_label: Troubleshooting
 ---
 
-### If the CSS isn't loading on the Grant Support Access page 
+### If the CSS isn't loading on the Grant Support Access page {#if-the-css-isnt-loading-on-the-grant-support-access-page}
 
 If you have [modified the CSS namespacing](/Client/css-namespacing.md), that is the likley culprit.
 
