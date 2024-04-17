@@ -1,8 +1,8 @@
 ---
-title: Vendor Plugin
+title: TrustedLogin Connector Plugin
 sidebar_position: 1
 ---
-# TrustedLogin Vendor Plugin
+# TrustedLogin Connector Plugin
 
 A plugin to connect TrustedLogin's encrypted storage infrastructure using encrypted access keys.
 
@@ -10,11 +10,11 @@ A plugin to connect TrustedLogin's encrypted storage infrastructure using encryp
 
 ### Incomplete information
 
-The [design of TrustedLogin](/flows) ensures that no site access data stored in the SaaS is sensitive: every access requires that the SaaS and Vendor agree that the credentials are valid.
+The [design of TrustedLogin](/flows) ensures that no site access data stored in the SaaS is sensitive: every access requires that the SaaS and Connector agree that the credentials are valid.
 
 ### Help Desk integration
 
-The Vendor plugin is the bridge used for support desk integrations: when providing customer support in Help Scout, for example, the email address is sent to the Vendor plugin.
+The Connector plugin is the bridge used for support desk integrations: when providing customer support in Help Scout, for example, the email address is sent to the Connector plugin.
 
 The plugin generates a list of licenses that are connected to that email address, generate hashes that are used as Secret IDs, then and ask the SaaS for a list of any matching Secret IDs.
 

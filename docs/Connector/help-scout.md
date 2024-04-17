@@ -22,11 +22,11 @@ On this page, click on the Create App button.
 
 ![Create App button in the left sidebar](/img/vendor/help-scout/step-03.png)
 
-Now, switch to your website where you're running the Vendor plugin.
+Now, switch to your website where you're running the TrustedLogin Connector plugin.
 
 ## Grab the configuration values from the TrustedLogin plugin
 
-If you haven't added any teams to the Vendor plugin yet, [do that first!](../01-intro)
+If you haven't added any teams to the TrustedLogin Connector plugin yet, [do that first!](../01-intro)
 
 Then, on the TrustedLogin Teams page, click on the Configure Help Desk link.
 

@@ -78,8 +78,8 @@ const config = {
                 to: '/docs/Client/intro',
               },
               {
-                label: 'Vendor Plugin',
-                to: '/docs/Vendor/intro',
+                label: 'Connector Plugin',
+                to: '/docs/Connector/intro',
               },
               {
                 label: 'SaaS Application',

@@ -243,11 +243,11 @@ array!
 ### `trustedlogin/{namespace}/vendor/public_key/website`
 
 :::caution
-Only use this filter if the `vendor/website` setting is not the same as the website where the TrustedLogin Vendor plugin
+Only use this filter if the `vendor/website` setting is not the same as the website where the TrustedLogin Connector plugin
 is running.
 :::caution
 
-If the `vendor/website` setting and the website running the TrustedLogin Vendor plugin are not the same, use this
+If the `vendor/website` setting and the website running the TrustedLogin Connector plugin are not the same, use this
 filter.
 
 For example, if the `vendor/website` setting is `https://www.parentcompany.com` but TrustedLogin is running on
@@ -255,7 +255,7 @@ the `https://child.parentcompany.com`, you would use this filter to point to `ht
 
 | Key                   | Type     | Default                                    | Description                                                     |
 |-----------------------|----------|--------------------------------------------|-----------------------------------------------------------------|
-| `$public_key_website` | `string` | The `vendor/website` configuration setting | The root URL of the website where the Vendor plugin is running. |
+| `$public_key_website` | `string` | The `vendor/website` configuration setting | The root URL of the website where the Connector plugin is running. |
 
 ### `trustedlogin/{namespace}/vendor/public_key/endpoint`
 
@@ -314,7 +314,7 @@ Override the public key functions. Encryption will break if this is changed.
 
 | Key           | Type                  | Default                                   |
 |---------------|-----------------------|-------------------------------------------|
-| `$remote_key` | `string`              | Varies                                    | The signature key returned by the Vendor plugin's REST API endpoint, acessible at https://www.example.com/wp-json/trustedlogin/v1/signature_key |
+| `$remote_key` | `string`              | Varies                                    | The signature key returned by the Connector plugin's REST API endpoint, acessible at https://www.example.com/wp-json/trustedlogin/v1/signature_key |
 | `$config`     | `TrustedLogin\Config` | Current TrustedLogin configuration object |
 
 :::warning

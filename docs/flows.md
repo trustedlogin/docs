@@ -10,7 +10,7 @@ Below are simplified visualizations of the flow of data between the various comp
 **The three parts of TrustedLogin:**
 
 1. [**TrustedLogin service**](Saas/intro), running on [app.trustedlogin.com](https://app.trustedlogin.com)
-2. [**Vendor plugin**](Vendor/intro), running on the software provider's website
+2. [**Connector plugin**](Connector/intro), running on the software provider's website
 3. [**Client**](Client/intro), either as a stand-alone TrustedLogin plugin or the SDK integrated with a WordPress plugin or theme
 
 Together, these three components allow for site access to be granted securely and with minimal effort.
@@ -41,7 +41,7 @@ The public key is fetched by default from the [URL defined in the `vendor/websit
 
 ### Step 3: Public Key is Generated {#step-3-public-key-is-generated}
 
-The public key request is handled by [`\TrustedLogin\Vendor\Endpoints\PublicKey::get()`](https://github.com/trustedlogin/vendor/blob/aac75e18d21728155b76537f908031fc17cd562a/php/Endpoints/PublicKey.php#L20), which uses [`\TrustedLogin\Vendor\Encryption::generateKeys()`](https://github.com/trustedlogin/vendor/blob/aac75e18d21728155b76537f908031fc17cd562a/php/Encryption.php#L100) to generate two sets of encryption keys (`crypto_sign` and `crypto_box` key pairs) but only returns the `crypto_box` public key.
+The public key request is handled by [`\TrustedLogin\Vendor\Endpoints\PublicKey::get()`](https://github.com/trustedlogin/trustedlogin-connector/blob/aac75e18d21728155b76537f908031fc17cd562a/php/Endpoints/PublicKey.php#L20), which uses [`\TrustedLogin\Vendor\Encryption::generateKeys()`](https://github.com/trustedlogin/trustedlogin-connector/blob/aac75e18d21728155b76537f908031fc17cd562a/php/Encryption.php#L100) to generate two sets of encryption keys (`crypto_sign` and `crypto_box` key pairs) but only returns the `crypto_box` public key.
 
 ### Step 4: Envelope Created & Encrypted {#step-4-envelope-created--encrypted}
 
@@ -81,15 +81,15 @@ The **unsuccessful** response is:
 
 ![Site Access Key login form](/img/flows/login/step-01.png)
 
-The form submits a `POST` HTTP request via AJAX that is received by the [`TrustedLogin\Vendor\AccessKeyLogin::handle()`](https://github.com/trustedlogin/vendor/blob/main/php/AccessKeyLogin.php#L106) method.
+The form submits a `POST` HTTP request via AJAX that is received by the [`TrustedLogin\Vendor\AccessKeyLogin::handle()`](https://github.com/trustedlogin/trustedlogin-connector/blob/main/php/AccessKeyLogin.php#L106) method.
 
-Receiving that request, [`TrustedLogin\Vendor\AccessKeyLogin::verifyGrantAccessRequest()`](https://github.com/trustedlogin/vendor/blob/main/php/AccessKeyLogin.php#L200) verifies that the nonce is valid and that the request is coming from inside the site.
+Receiving that request, [`TrustedLogin\Vendor\AccessKeyLogin::verifyGrantAccessRequest()`](https://github.com/trustedlogin/trustedlogin-connector/blob/main/php/AccessKeyLogin.php#L200) verifies that the nonce is valid and that the request is coming from inside the site.
 
-In addition, [`TrustedLogin\Vendor\Traits\VerifyUser::verifyUserRole()`](https://github.com/trustedlogin/vendor/blob/develop/php/Traits/VerifyUser.php#L17) checks to make sure the user is logged-in and has one or more of the roles that are required to access the site.
+In addition, [`TrustedLogin\Vendor\Traits\VerifyUser::verifyUserRole()`](https://github.com/trustedlogin/trustedlogin-connector/blob/develop/php/Traits/VerifyUser.php#L17) checks to make sure the user is logged-in and has one or more of the roles that are required to access the site.
 
 ### Step 2: Vendor Requests List of Matching Site IDs {#step-2-vendor-requests-list-of-matching-site-ids}
 
-The Vendor plugin requests a list of Site IDs that match that access key by sending a `POST` request to the `accounts/{$account_id}/sites/` SaaS endpoint. 
+The Connector plugin requests a list of Site IDs that match that access key by sending a `POST` request to the `accounts/{$account_id}/sites/` SaaS endpoint. 
 
 The request includes an `Authorization: Bearer {hashed private key}` header as well as the following body:
 
@@ -125,14 +125,14 @@ An array of Secret IDs is returned. These are not the envelope itself; Secret ID
 }
 ```
 
-### Step 4: Vendor Plugin Requests Matching Envelope(s) from SaaS {#step-4-vendor-plugin-requests-matching-envelopes-from-saas}
+### Step 4: Connector Plugin Requests Matching Envelope(s) from SaaS {#step-4-connector-plugin-requests-matching-envelopes-from-saas}
 
-The Vendor plugin uses the Secret IDs to retrieve the envelopes from the Vault.
+The Connector plugin uses the Secret IDs to retrieve the envelopes from the Vault.
 
-In addition to the Bearer token, the request generates a signed nonce in [`TrustedLogin\Vendor\Encryption::createIdentityNonce()`](https://github.com/trustedlogin/vendor/blob/develop/php/Encryption.php#L399). The method:
+In addition to the Bearer token, the request generates a signed nonce in [`TrustedLogin\Vendor\Encryption::createIdentityNonce()`](https://github.com/trustedlogin/trustedlogin-connector/blob/develop/php/Encryption.php#L399). The method:
 
-- Generates a cryptographic nonce (in [`TrustedLogin\Vendor\Encryption::generateNonce()`](https://github.com/trustedlogin/vendor/blob/develop/php/Encryption.php#L485) using `random_bytes()`), 
-- Signs the nonce with the `sign_private_key` pair (in [`TrustedLogin\Vendor\Encryption::sign()`](https://github.com/trustedlogin/vendor/blob/develop/php/Encryption.php#L512), using `sodium_crypto_sign_detached()`), and 
+- Generates a cryptographic nonce (in [`TrustedLogin\Vendor\Encryption::generateNonce()`](https://github.com/trustedlogin/trustedlogin-connector/blob/develop/php/Encryption.php#L485) using `random_bytes()`), 
+- Signs the nonce with the `sign_private_key` pair (in [`TrustedLogin\Vendor\Encryption::sign()`](https://github.com/trustedlogin/trustedlogin-connector/blob/develop/php/Encryption.php#L512), using `sodium_crypto_sign_detached()`), and 
 - Verifies that the signed nonce has been properly generated (using `sodium_crypto_sign_verify_detached()`)
 
 The nonce and signed nonce are both sent in the request, helping to verify that this site is indeed the sender of the data.
@@ -151,17 +151,17 @@ Inside `getEnvelope()`, the `X-TL-TOKEN` token is verified against the Vendor's 
 
 The envelope with encrypted credentials is returned to the Vendor.
 
-### Step 6: Vendor Plugin Receives & Decrypts Envelope {#step-6-vendor-plugin-receives--decrypts-envelope}
+### Step 6: Connector Plugin Receives & Decrypts Envelope {#step-6-connector-plugin-receives--decrypts-envelope}
 
-The Vendor plugin receives the envelope. It includes the Site URL associated with the Site Access Key but not the endpoint, which is required to log in.
+The Connector plugin receives the envelope. It includes the Site URL associated with the Site Access Key but not the endpoint, which is required to log in.
 
-The Vendor plugin decrypts the envelope and extracts the credentials, then cryptographically generates the URL to access Client site (using [`TrustedLogin\Vendor\TrustedLoginService::envelopeToUrl()`](https://github.com/trustedlogin/vendor/blob/a62ec370bb5e715eed3524bf92c77482e785d273/php/TrustedLoginService.php#L395)).
+The Connector plugin decrypts the envelope and extracts the credentials, then cryptographically generates the URL to access Client site (using [`TrustedLogin\Vendor\TrustedLoginService::envelopeToUrl()`](https://github.com/trustedlogin/trustedlogin-connector/blob/a62ec370bb5e715eed3524bf92c77482e785d273/php/TrustedLoginService.php#L395)).
 
 The site URL and the access parts are returned as an AJAX response, completing the request started in Step 1.
 
-### Step 7: Vendor Plugin `POST`s to Client Site {#step-7-vendor-plugin-posts-to-client-site}
+### Step 7: Connector Plugin `POST`s to Client Site {#step-7-connector-plugin-posts-to-client-site}
 
-A temporary form [is created using JavaScript](https://github.com/trustedlogin/vendor/blob/a62ec370bb5e715eed3524bf92c77482e785d273/src/components/AccessKeyForm.js#L259-L281) with the Client Site URL set as the form `action` property. A `POST` request is submitted, preventing the submitted data from being logged. 
+A temporary form [is created using JavaScript](https://github.com/trustedlogin/trustedlogin-connector/blob/a62ec370bb5e715eed3524bf92c77482e785d273/src/components/AccessKeyForm.js#L259-L281) with the Client Site URL set as the form `action` property. A `POST` request is submitted, preventing the submitted data from being logged. 
 
 The form submits the following to the Client Site URL:
 

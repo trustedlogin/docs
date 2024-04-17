@@ -1,6 +1,6 @@
 # Remote User Authentication
 
-In the [Vendor plugin](../vendor/) (the support-side plugin), users must log into the SaaS app. This document explains how.
+In the [TrustedLogin Connector plugin](../Connector/) (the support-side plugin), users must log into the SaaS app. This document explains how.
 
 ## Get The Account's ClientId and Client Secret {#get-the-accounts-clientid-and-client-secret}
 
