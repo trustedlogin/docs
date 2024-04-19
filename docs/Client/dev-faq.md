@@ -1,5 +1,23 @@
 # Developer FAQ
 
+## How do I render the authorization screen? {#how-do-i-render-the-authorization-screen}
+
+You can trigger the `trustedlogin/{namespace}/auth_screen` action to render the authorization screen. The proper JS and CSS files will be enqueued automatically:
+
+```php
+<h1>My Plugin</h1>
+
+<p>This is a page inside my plugin.</p>
+
+<?php
+
+// Render the TrustedLogin Grant Support Access screen.
+do_action( 'trustedlogin/{namespace}/auth_screen' );
+?>
+
+<p>More content here.</p>
+```
+
 ## What happens if TrustedLogin service is down? {#what-happens-if-trustedlogin-service-is-down}
 
 If the TrustedLogin service is down, the user will be presented with a button to contact support. That button points to the the Support URL (`vendor/support_url`) setting passed to the [`Config` object](configuration/). 
