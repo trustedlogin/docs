@@ -64,6 +64,10 @@ It is only displayed on the Grant Auth screen, not on the `wp-login.php` screen.
 </header>
 ```
 
+#### Screenshots
+
+![A screenshot of the Grant Support Access form with the header highlighted.](/img/client/form/header.png)
+
 ### `{{intro}}` placeholder
 
 The `{{intro}}` placeholder is the introductory text displayed at the top of the Grant Support Access form.
@@ -77,6 +81,10 @@ Based on the context, the `{{intro}}` placeholder will be replaced with one of t
 - **On the Grant Support Access screen:**<br />
 `Grant <a href="{{vendor/website}}">Vendor Display Name</a> access to this site.`
 
+#### Screenshots
+
+![A screenshot of the Grant Support Access form with the intro highlighted.](/img/client/form/intro.png)
+
 ### `{{auth_header}}` placeholder
 
 If there are no active Support Users, this placeholder will not be rendered.
@@ -85,7 +93,7 @@ If there are, the auth header shows the display name of the Support User, inform
 
 #### Screenshot
 
-![A screenshot of the Grant Support Access form with the placeholder parts highlighted.](/img/client/form-auth-header.png)
+![A screenshot of the Grant Support Access form with the placeholder parts highlighted.](/img/client/form/auth-header.png)
 
 ### `{{details}}` placeholder
 
@@ -93,7 +101,7 @@ The `{{details}}` placeholder contains the bulk of the content of the Grant Supp
 
 #### Screenshot
 
-![A screenshot of the Grant Support Access form with the placeholder parts highlighted.](/img/client/form-details.png)
+![A screenshot of the Grant Support Access form with the placeholder parts highlighted.](/img/client/form/details.png)
 
 ```html
 <p><span class="dashicons dashicons-info-outline dashicons--small"></span> This will allow <strong>{{name}}</strong> to:</p>
@@ -120,7 +128,7 @@ When cloning roles is enabled, `{{roles_summary}}` is replaced by `Create a user
 
 #### Screenshot
 
-![The capabilities display, showing additional capabilities that have been added or removed from the cloned role.](/img/client/form-caps.png)
+![The capabilities display, showing additional capabilities that have been added or removed from the cloned role.](/img/client/form/caps.png)
 
 ### `{{notices}}` placeholder
 
@@ -130,7 +138,7 @@ It is disabled when `wp_get_environment_type()` is "staging" or "production", so
 
 #### Screenshot
 
-![A screenshot of the Grant Support Access form with the notice circled with a green border.](/img/client/form-notices.png)
+![A screenshot of the Grant Support Access form with the notice circled with a green border.](/img/client/form/notices.png)
 
 #### Settings available
 
@@ -155,7 +163,7 @@ Here is sample HTML output for the button:
 <a href="{{vendor/support_url}}" class="button button-hero authlink button-primary tl-client-grant-button button-trustedlogin-{{ns}}" data-access="grant">Grant [Vendor Display Name] Support Access</a>
 ```
 
-![A screenshot of the Grant Support Access form with the button circled with a green border.](/img/client/form-button.png)
+![A screenshot of the Grant Support Access form with the button circled with a green border.](/img/client/form/button.png)
 
 ### `{{reference}}` placeholder
 
@@ -167,7 +175,7 @@ If reference IDs are being displayed (controlled by the [`trustedlogin/{namespac
 
 #### Screenshots
 
-![A screenshot of the Grant Support Access form with the reference ID section circled with a green border.](/img/client/form-reference.png)
+![A screenshot of the Grant Support Access form with the reference ID section circled with a green border.](/img/client/form/reference.png)
 
 #### Filters available
 
@@ -191,7 +199,7 @@ If there is a URL defined for Terms of Service, a link to terms of service will 
 
 #### Screenshots
 
-![A screenshot of the Grant Support Access form with the Terms of Service link circled with a green border.](/img/client/form-tos.png)
+![A screenshot of the Grant Support Access form with the Terms of Service link circled with a green border.](/img/client/form/tos.png)
 
 #### Available filters
 
@@ -201,9 +209,15 @@ If there is a URL defined for Terms of Service, a link to terms of service will 
 
 The "Secured by TrustedLogin" text.
 
+#### HTML output
+
 ```html
 <p class="tl-{{ns}}-auth__secured_by">{{secured_by_trustedlogin}}</p>
 ```
+
+#### Screenshots
+
+![A screenshot of the Grant Support Access form with the "Secured by TrustedLogin" text circled with a green border.](/img/client/form/secured-by.png)
 
 ### `{{admin_debug}}` placeholder
 
@@ -217,9 +231,13 @@ The admin debug output. Only displayed if the user has `manage_options` capabili
 - Webhook URL: The URL to the webhook endpoint, if set. `Empty` if not set.
 - Vendor Public Key: The public encryption key of the vendor, with a link to verify the key
 
+#### Screenshots
+
+![A screenshot of the Grant Support Access form with the admin debug section circled with a green border.](/img/client/form/admin-debug.png)
+
 ## Examples of Customization
 
-### Customizing the Grant Support Access Form
+### Removing the Header
 
 To customize the Grant Support Access form, you can use the `trustedlogin/{{ns}}/template/auth` filter.
 
