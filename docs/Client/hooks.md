@@ -119,33 +119,6 @@ Override the structure of the auth form HTML.
 |-------------------------|----------|------------------------------------|----------------------------------------------------------|
 | `$auth_screen_template` | `string` | HTML with placeholders (see below) | The structure for the auth form HTML, with placeholders. |
 
-```html
-
-<div class="tl-{{ns}}-auth tl-{{ns}}-{{has_access_class}}">
-    {{header}}
-    <section class="tl-{{ns}}-auth__body">
-        <h2 class="tl-{{ns}}-auth__intro">{{intro}}</h2>
-        <div class="tl-{{ns}}-auth__content">
-            <header class="tl-{{ns}}-auth__header">
-                {{auth_header}}
-            </header>
-            <div class="tl-{{ns}}-auth__details">
-                {{details}}
-            </div>
-            <div class="tl-{{ns}}-auth__response" aria-live="assertive"></div>
-            {{notices}}
-            <div class="tl-{{ns}}-auth__actions">
-                {{button}}
-            </div>
-        </div>
-        <div class="tl-{{ns}}-auth__secured_by">{{secured_by_trustedlogin}}</div>
-    </section>
-    <footer class="tl-{{ns}}-auth__footer">
-        {{footer}}
-        {{reference}}
-    </footer>
-</div>
-```
 
 ### `trustedlogin/{namespace}/template/auth/display_reference` {#trustedloginnamespacetemplateauthdisplay_reference}
 
