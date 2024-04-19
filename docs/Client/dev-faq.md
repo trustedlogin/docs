@@ -9,12 +9,12 @@ You can trigger the `trustedlogin/{namespace}/auth_screen` action to render the 
 
 <p>This is a page inside my plugin.</p>
 
-// highlight-start
 <?php
-// Render the TrustedLogin Grant Support Access screen.
-do_action( 'trustedlogin/{namespace}/auth_screen' );
+    // highlight-start
+    // Render the TrustedLogin Grant Support Access screen.
+    do_action( 'trustedlogin/{namespace}/auth_screen' );
+    // highlight-end
 ?>
-// highlight-end
 
 <p>More content here.</p>
 ```
