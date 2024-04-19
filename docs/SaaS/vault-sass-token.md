@@ -18,7 +18,7 @@ For local development, edit you `.env` file:
 VAULT_TOKEN=trustedlogin
 ```
 
-:::caution
+:::warning
 Make sure the `VAULT_TOKEN` variable is set to be "inheritable" and "sensitive".
 :::
 

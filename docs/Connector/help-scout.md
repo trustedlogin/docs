@@ -42,7 +42,7 @@ After switching back to Help Scout, paste the Secret Key and Callback URL into t
 
 !["Custom App" form with App Name, Content Type, Callback URL, Secret Key, Debug Mode, and Inboxes fields](/img/vendor/help-scout/step-06.png)
 
-:::caution
+:::warning
 
 If you don't see the "Content Type" dropdown, Help Scout is not running Legacy Dynamic Apps. Make sure you're using [this link](https://secure.helpscout.net/apps/custom) to create your Help Scout App.
 

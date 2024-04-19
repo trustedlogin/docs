@@ -222,9 +222,8 @@ This filter exists to modify parameters added to that URL.
 Adds custom metadata to be synced via TrustedLogin and stored in the Envelope. **Limited to 1MB.**
 
 :::warning
-Metadata is transferred and stored in plain text. **Do not add any unencrypted sensitive data or identifiable
-information**!
-:::warning
+Metadata is transferred and stored in plain text. **Do not add any unencrypted sensitive data or identifiable information**!
+:::
 
 | Key         | Type                  | Default                                   |
 |-------------|-----------------------|-------------------------------------------|
@@ -242,10 +241,10 @@ array!
 
 ### `trustedlogin/{namespace}/vendor/public_key/website` {#trustedloginnamespacevendorpublic_keywebsite}
 
-:::caution
+:::warning
 Only use this filter if the `vendor/website` setting is not the same as the website where the TrustedLogin Connector plugin
 is running.
-:::caution
+:::
 
 If the `vendor/website` setting and the website running the TrustedLogin Connector plugin are not the same, use this
 filter.
@@ -259,9 +258,9 @@ the `https://child.parentcompany.com`, you would use this filter to point to `ht
 
 ### `trustedlogin/{namespace}/vendor/public_key/endpoint` {#trustedloginnamespacevendorpublic_keyendpoint}
 
-:::caution
+:::warning
 Only use this filter if the REST API endpoint has changed on the Vendor website.
-:::caution
+:::
 
 Override the path to TrustedLogin's WordPress REST API endpoint. If there have been customizations to the REST API
 endpoint structure on the Vendor, the path may need to be modified.
@@ -278,7 +277,7 @@ to change the REST API URL from `/wp-json/`, you will need to update the endpoin
 :::warning
 These filters should not be used in production code. They are included here as helpful developer reference only, and
 they may change.
-:::warning
+:::
 
 ### 🚫 You really don't need these filters! 🚫 {#-you-really-dont-need-these-filters-}
 
@@ -306,7 +305,7 @@ Modifies the endpoint URL for the TrustedLogin service. This allows pointing req
 :::warning
 These filters should not be used in production code. They are included here as helpful developer reference only, and
 they may change.
-:::warning
+:::
 
 ### `trustedlogin/{namespace}/vendor_public_key` {#trustedloginnamespacevendor_public_key}
 
@@ -320,7 +319,7 @@ Override the public key functions. Encryption will break if this is changed.
 :::warning
 These filters should not be used in production code. They are included here as helpful developer reference only, and
 they may change.
-:::warning
+:::
 
 ### `trustedlogin/{namespace}/options/endpoint` {#trustedloginnamespaceoptionsendpoint}
 

@@ -242,7 +242,7 @@ To get that token from Vault:
 ## Request Access Logs For A Site {#request-access-logs-for-a-site}
 To get access logs for a specific site, app can make a this request to Vault:
 
-:::caution
+:::warning
 This documentation is incomplete. We are working on it.
 :::
 
