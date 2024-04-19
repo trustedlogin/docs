@@ -15,7 +15,7 @@ By removing placeholders you don't need, or replacing the placeholders with your
 
 ## The Grant Support Access Template
 
-You can modify the Grant Support Access auth form by using the [`trustedlogin/{{ns}}/template/auth` filter](hooks#trustedloginnamespacetemplateauth).
+You can modify the Grant Support Access auth form by using the [`trustedlogin/{namespace}/template/auth` filter](hooks#trustedloginnamespacetemplateauth).
 
 This is the default HTML structure of the Grant Support Access form:
 
@@ -179,7 +179,7 @@ If reference IDs are being displayed (controlled by the [`trustedlogin/{namespac
 
 #### Filters available
 
-- [`trustedlogin/{{ns}}/template/auth/display_reference`](hooks#trustedloginnamespacetemplateauthdisplay_reference) filter to control whether the reference ID is displayed.
+- [`trustedlogin/{namespace}/template/auth/display_reference`](hooks#trustedloginnamespacetemplateauthdisplay_reference) filter to control whether the reference ID is displayed.
 
 ### `{{terms_of_service}}` placeholder
 
@@ -203,7 +203,7 @@ If there is a URL defined for Terms of Service, a link to terms of service will 
 
 #### Available filters
 
-- [`trustedlogin/{{ns}}/template/auth/terms_of_service/anchor`](hooks#trustedloginnamespacetemplateauthterms_of_serviceanchor) filter to modify the "Terms of Service" anchor text.
+- [`trustedlogin/{namespace}/template/auth/terms_of_service/anchor`](hooks#trustedloginnamespacetemplateauthterms_of_serviceanchor) filter to modify the "Terms of Service" anchor text.
 
 ### `{{secured_by_trustedlogin}}` placeholder
 
@@ -239,13 +239,13 @@ The admin debug output. Only displayed if the user has `manage_options` capabili
 
 ### Removing the Header
 
-To customize the Grant Support Access form, you can use the `trustedlogin/{{ns}}/template/auth` filter.
+To customize the Grant Support Access form, you can use the `trustedlogin/{namespace}/template/auth` filter.
 
 Here is an example of how to customize the Grant Support Access form:
 
 ```php
-// Replace `{{ns}}` with the namespace of your configuration.
-add_filter( 'trustedlogin/{{ns}}/template/auth', 'RENAME_THIS_FUNCTION_remove_header', 10 );
+// Replace `{namespace}` with the namespace of your configuration.
+add_filter( 'trustedlogin/{namespace}/template/auth', 'RENAME_THIS_FUNCTION_remove_header', 10 );
 
 /**
  * Remove the header, including the logo, from the Grant Support Access form.
