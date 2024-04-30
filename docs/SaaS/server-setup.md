@@ -8,7 +8,7 @@ sidebar_position: 2
 
 The TrustedLogin application is powered by Laravel and run on a Dockerized, high-availability, Kubernetes cluster.
 
-The application handles account management, profiles, and billing. But most important, it receives and processes requests from the [Client SDK](/Client/intro) and [TrustedLogin Connector plugin](/Vendor/intro).
+The application handles account management, profiles, and billing. But most important, it receives and processes requests from the [Client SDK](/Client/intro) and [TrustedLogin Connector plugin](/Connector/intro).
 
 ## What software powers TrustedLogin? {#what-software-powers-trustedlogin}
 
