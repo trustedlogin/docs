@@ -3,6 +3,21 @@ title: Troubleshooting
 sidebar_label: Troubleshooting
 ---
 
+## Redirects happen from the Connector plugin, but logins aren't happening.
+
+This can be caused by Client SDK initialization that is either too late, or initialization that doesn't occur on the front-end. (such as `admin_init`).
+
+- Check to make sure your initialization hook is early enough in the process. `init` is a good default. The `template_redirect` hook is the last possible hook you can use. [Here is an ordered list of WordPress hooks](https://developer.wordpress.org/apis/hooks/action-reference/).
+- Make sure your initialization hook is also running on the front-end. If you are using `admin_init`, it will not run on the front-end. Use `init` instead.
+
+### Check the TrustedLogin SDK log
+
+- Enable [logging in the configuration array](/Client/configuration) by setting `logging/enabled` to `true` and `logging/threshold` to `debug`.
+- Attempt a login.
+- Check the log file (the default location of the log is located at `wp-content/uploads/trustedlogin-logs/trustedlogin-client-debug-{date}-{hash}-.log`)
+
+If there are no new log items, then the Client SDK is not being initialized, likely due to the initialization hook not being early enough in the process or not running on the front-end.
+
 ## Troubleshooting the Grant Support Access screen
 
 First things first: make sure you have the [latest version of TrustedLogin](/Client/updating.md) installed.

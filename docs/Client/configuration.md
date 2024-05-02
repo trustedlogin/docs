@@ -39,6 +39,12 @@ try {
 }
 ```
 
+:::warning
+Make sure initialization happens before headers are sent. `init` is a good hook to use.
+
+**The hook must run on the front-end!** For example, don't use `admin_init`, since it will not run on the front-end.
+:::
+
 ## All configuration options {#all-options}
 
 | Key                     | Type                    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | Default                                                                                                                                                  | Required? |
