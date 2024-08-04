@@ -27,7 +27,7 @@ Here are alternate ways to namespace the CSS files:
 If you'd like to manually namespace the CSS files (for instance, in a GitHub Actions workflow), first `cd` into your plugin or theme directory. Then use the following command (update it to match your namespace and path to TrustedLogin client directory):
 
 ```bash
-php vendor-namesaced/trustedlogin/client/bin/build-sass --namespace=️ProBlockBuilder
+php vendor-namespaced/trustedlogin/client/bin/build-sass --namespace=️ProBlockBuilder
 ```
 
 This will generate the namespaced CSS files in the `vendor-namespaced/trustedlogin/client/src/assets/` directory. You can then copy the files to your plugin or theme directory.
