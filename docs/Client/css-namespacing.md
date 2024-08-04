@@ -39,10 +39,10 @@ If this fails with a message `command not found: php`, then PHP isn't installed 
 If you'd like to use an SCSS mixin to namespace CSS files, you can use the following code:
 
 ```scss
-@import "vendor-namesaced/trustedlogin/client/src/assets/src/variables"; // Variables used in the mixins (all !default)
-@import "vendor-namesaced/trustedlogin/client/src/assets/src/auth"; // Mixins for authentication screen
-@import "vendor-namesaced/trustedlogin/client/src/assets/src/buttons"; // Mixins for buttons
-@import "vendor-namesaced/trustedlogin/client/src/assets/src/global";
+@import "vendor-namespaced/trustedlogin/client/src/assets/src/variables"; // Variables used in the mixins (all !default)
+@import "vendor-namespaced/trustedlogin/client/src/assets/src/auth"; // Mixins for authentication screen
+@import "vendor-namespaced/trustedlogin/client/src/assets/src/buttons"; // Mixins for buttons
+@import "vendor-namespaced/trustedlogin/client/src/assets/src/global";
 
 $namespace: "ProBlockBuilder";
 $path: "example/different/assets/path/"; // Path to assets directory (for loading and lock images)
