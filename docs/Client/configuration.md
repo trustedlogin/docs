@@ -1,3 +1,9 @@
+---
+title: Configuring the TrustedLogin Client SDK
+sidebar_label: Client Configuration
+sidebar_position: 5
+---
+
 # Client Configuration
 
 ## Minimal configuration {#minimal-configuration}
@@ -6,16 +12,7 @@ When instantiating the TrustedLogin `Client` class, you need to pass a valid `Co
 
 The following is a minimal configuration. It has all the _required_ settings, but not all **recommended** settings!
 
-:::info
-### When you see `ProBlockBuilder`, make sure to replace with your own namespace! {#when-you-see-problockbuilder-make-sure-to-replace-with-your-own-namespace}
-In the examples below, we're going to pretend your plugin or theme is named "Pro Block Builder" and your business is named Widgets, Co. These should not be the names you use—make sure to update the sample code below to match your business and plugin/theme name!
-:::
-
 ```php
-
-// Include the Composer autoloader.
-include_once trailingslashit( dirname( __FILE__ ) ) . 'vendor/autoload.php';
-
 $config = [
     'auth' => [
         'api_key' => '1234567890',
@@ -29,35 +26,57 @@ $config = [
     ],
     'role' => 'editor',
 ];
-
-try {
-    new \ProBlockBuilder\TrustedLogin\Client( 
-        new \ProBlockBuilder\TrustedLogin\Config( $config )
-    );
-} catch ( \Exception $exception ) {
-    error_log( $exception->getMessage() );
-}
 ```
 
-:::warning
-Make sure initialization happens before headers are sent. `init` is a good hook to use.
-
-**The hook must run on the front-end!** For example, don't use `admin_init`, since it will not run on the front-end.
+:::note
+### When you see `ProBlockBuilder`, this is a placeholder. Make sure to replace with your own namespace! {#when-you-see-problockbuilder-make-sure-to-replace-with-your-own-namespace}
+In the examples on this page, we're going to pretend your plugin or theme is named "Pro Block Builder" and your business is named Widgets, Co. These should not be the names you use—make sure to update the sample code below to match your business and plugin/theme name!
 :::
+
+## A more complete configuration {#a-more-complete-configuration}
+
+The following is a more complete configuration. It includes all the settings that can be configured.
+
+```php
+$config = [
+    'auth' => [
+        'api_key' => '12345678',
+    ],
+    'vendor' => [
+        'namespace' => 'pro-block-builder',
+        'title' => 'Pro Block Builder',
+        'email' => 'support@example.com',
+        'website' => 'https://example.com',
+        'support_url' => 'https://help.example.com',
+        'logo_url' => plugins_url( 'path/to/logo/image/logo.svg', EXAMPLE_PBB_PLUGIN_FILE_PATH ),
+    ],
+    'role' => 'editor',
+    'clone_role' => false,
+    'menu' => [
+        'slug' => 'example', // This is the `page` attribute of top-level menu item (eg: `admin.php?page=example`).
+        'title' => esc_html__( 'Grant Site Access', 'pro-block-builder' ),
+    ],
+    'webhook' => [
+        'url' => 'https://hooks.zapier.com/hooks/catch/12345/example/silent/', // Zapier webhook URL.
+        'debug_data' => true,
+        'create_ticket' => true,
+    ],
+];
+```
 
 ## All configuration options {#all-options}
 
 | Key                     | Type                    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | Default                                                                                                                                                  | Required? |
 |-------------------------|-------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|:---------:|
-| `auth/api_key`          | `string`                | The TrustedLogin key for the vendor, found in "API Keys" on https://app.trustedlogin.com.                                                                                                                                                                                                                                                                                                                                                                                                                          | `null`                                                                                                                                                   |     ✅    |
+| `auth/api_key`          | `string`                | The TrustedLogin key for the vendor, found in "API Keys" on https://app.trustedlogin.com.                                                                                                                                                                                                                                                                                                                                                                                                                          | `null`                                                                                                                                                   |     ✅     |
 | `auth/license_key`      | `string`, `null`        | If enabled, the license key for the current client. This is used as a lookup value when integrating with help desk support widgets. If not defined, a cryptographic hash will be generated to use as the Access Key.                                                                                                                                                                                                                                                                                               | `null`                                                                                                                                                   |           |
-| `role`                  | `string`                | The role to clone when creating a new Support User.                                                                                                                                                                                                                                                                                                                                                                                                                                                                | `editor`                                                                                                                                                 |     ✅    |
+| `role`                  | `string`                | The role to clone when creating a new Support User.                                                                                                                                                                                                                                                                                                                                                                                                                                                                | `editor`                                                                                                                                                 |     ✅     |
 | `clone_role`            | `bool`                  | If true, create a new role with the same capabilites as the `role` setting. If false, use the defined `role` setting.                                                                                                                                                                                                                                                                                                                                                                                              | `true`                                                                                                                                                   |           |
-| `vendor/namespace`      | `string`                | Slug for vendor. Must be unique. Must be shorter than 96 characters. Must not be a reserved namespace: `trustedlogin`, `client`, `vendor`, `admin`, `wordpress`                                                                                                                                                                                                                                                                                                                                                    | `null`                                                                                                                                                   |     ✅    |
-| `vendor/title`          | `string`                | Name of the vendor company. Used in text such as `Visit the %s website`                                                                                                                                                                                                                                                                                                                                                                                                                                            | `null`                                                                                                                                                   |     ✅    |
-| `vendor/email`          | `string`                | Email address for support. Used when creating usernames. Recommended: use `{hash}` dynamic replacement ([see below](#email-hash)).                                                                                                                                                                                                                                                                                                                                                                                 | `null`                                                                                                                                                   |     ✅    |
-| `vendor/website`        | `string`                | URL to the vendor website. Must be a valid URL.                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | `null`                                                                                                                                                   |     ✅    |
-| `vendor/support_url`    | `string`                | URL to the vendor support page. Shown to users in the Grant Access form and also serves as a backup to redirect users if the TrustedLogin server is unreachable. Must be a valid URL.                                                                                                                                                                                                                                                                                                                              | `null`                                                                                                                                                   |     ✅    |
+| `vendor/namespace`      | `string`                | Slug for vendor. Must be unique. Must be shorter than 96 characters. Cannot be a reserved namespace. ([learn more about the vendor namespace setting below](#vendor-namespace))                                                                                                                                                                                                                                                                                                                                    | `null`                                                                                                                                                   |     ✅     |
+| `vendor/title`          | `string`                | Name of the vendor company. Used in text such as `Visit the %s website`                                                                                                                                                                                                                                                                                                                                                                                                                                            | `null`                                                                                                                                                   |     ✅     |
+| `vendor/email`          | `string`                | Email address for support. Used when creating usernames. Recommended: use `{hash}` dynamic replacement ([see below](#email-hash)).                                                                                                                                                                                                                                                                                                                                                                                 | `null`                                                                                                                                                   |     ✅     |
+| `vendor/website`        | `string`                | URL to the vendor website. Must be a valid URL.                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | `null`                                                                                                                                                   |     ✅     |
+| `vendor/support_url`    | `string`                | URL to the vendor support page. Shown to users in the Grant Access form and also serves as a backup to redirect users if the TrustedLogin server is unreachable. Must be a valid URL.                                                                                                                                                                                                                                                                                                                              | `null`                                                                                                                                                   |     ✅     |
 | `vendor/display_name`   | `string`                | Optional. Display name for the support team. See "Display Name vs Title" below.                                                                                                                                                                                                                                                                                                                                                                                                                                    | `null`                                                                                                                                                   |           |
 | `vendor/logo_url`       | `string`                | Optional. URL to the vendor logo. Displayed in the Grant Access form. May be inline SVG. Must be local to comply with WordPress.org.                                                                                                                                                                                                                                                                                                                                                                               | `null`                                                                                                                                                   |           |
 | `caps/add`              | `array`                 | An array of additional capabilities to be granted to the Support User after their user role is cloned based on the `role` setting.<br/><br/>The key is the capability slug and the value is the reason why it is needed. Example: `[ 'gf_full_access' => 'Support will need to see and edit the forms, entries, and Gravity Forms settings on your site.' ]`                                                                                                                                                       | `[]`                                                                                                                                                     |           |
@@ -67,8 +86,8 @@ Make sure initialization happens before headers are sent. `init` is a good hook 
 | `menu/title`            | `string`                | The title of the submenu in the sidebar menu.                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | `Grant Support Access`                                                                                                                                   |           |
 | `menu/icon_url`         | `string`                | The URL to the icon to be used for this menu. The value is passed as `$icon_url` to the [`add_menu_page()` function](https://developer.wordpress.org/reference/functions/add_menu_page/).                                                                                                                                                                                                                                                                                                                          | `''` (empty string)                                                                                                                                      |           |
 | `menu/priority`         | `int`                   | The priority of the `admin_menu` action used by TrustedLogin.                                                                                                                                                                                                                                                                                                                                                                                                                                                      | `100`                                                                                                                                                    |           |
-| `menu/position`         | `int`                   | The `$position` argument passed to the [`add_submenu_page()` function](https://developer.wordpress.org/reference/functions/add_submenu_page/) function.                                                                                                                                                                                                                                                                                                                                                            | `null`                                                                                                                                                   |           |
-| `logging/enabled`       | `bool`                  | If enabled, logs are stored in `wp-content/uploads/trustedlogin-logs`                                                                                                                                                                                                                                                                                                                                                                                                                                                      | `false`                                                                                                                                                  |           |
+| `menu/position`         | `int`, `float`, `null`  | The `$position` argument passed to the [`add_submenu_page()` function](https://developer.wordpress.org/reference/functions/add_submenu_page/) function.                                                                                                                                                                                                                                                                                                                                                            | `null`                                                                                                                                                   |           |
+| `logging/enabled`       | `bool`                  | If enabled, logs are stored in `wp-content/uploads/trustedlogin-logs`                                                                                                                                                                                                                                                                                                                                                                                                                                              | `false`                                                                                                                                                  |           |
 | `logging/directory`     | `null`,`string`         | Override the directory where logs are stored. See [Logging](logging/) for more information.                                                                                                                                                                                                                                                                                                                                                                                                                        | `null`                                                                                                                                                   |           |
 | `logging/threshold`     | `string`                | Define what [PSR log level](https://www.php-fig.org/psr/psr-3/#5-psrlogloglevel) should be logged. To log everything, set the threshold to `debug`.                                                                                                                                                                                                                                                                                                                                                                | `notice`                                                                                                                                                 |           |
 | `logging/options`       | `array`                 | Array of [KLogger Additional Options](https://github.com/katzgrau/klogger#additional-options)                                                                                                                                                                                                                                                                                                                                                                                                                      | `['extension' => 'log', 'dateFormat' => 'Y-m-d G:i:s.u', 'filename' => null, 'flushFrequency' => false, 'logFormat' => false, 'appendContext' => true ]` |           |
@@ -84,14 +103,29 @@ Make sure initialization happens before headers are sent. `init` is a good hook 
 
 ## Logging {#logging}
 
+**We recommend disabling logging.** 
+
+When logging is enabled, TrustedLogin logs to the `wp-content/uploads/trustedlogin-logs/` directory by default.
+
+1. TrustedLogin creates a `trustedlogin-logs` directory inside the `wp-content/uploads/` directory.
+2. An empty `index.html` file is placed inside the directory to prevent browsing.
+3. New log files are created daily for each TrustedLogin namespace. The default log `filename` format is `client-debug-{Y-m-d}-{hash}.log`
+    - `{namespace}` is the namespace of your business, plugin, or theme name
+    - `{date}` is `YYYY-MM-DD` format
+    - The hash is generated using `wp_hash()` using on the `vendor/namespace`, site `home_url()`, and the day of the year (`date('z')`). The point of the hash is to make log names harder to guess (security by obscurity).
+
+### Using your own logging library {#using-your-own-logging-library}
+
+If you add an action for `trustedlogin/{namespace}/logging/log`, TrustedLogin will let you handle logging. The `trustedlogin-logs` directory and log files will not be created.
+
 ### Default settings: {#default-settings}
 ```php
-'logging' => array(
+'logging' => [
     'enabled' => false,
     'directory' => null,
     'threshold' => 'debug',
-    'options' => array(),
-),
+    'options' => [],
+],
 ```
 
 ### logging/enabled {#loggingenabled}
@@ -103,17 +137,17 @@ Whether to enable logging TrustedLogin activity to a file. Helpful for debugging
 To enable logging in TrustedLogin, the minimum configuration necessary is:
 
 ```php
-'logging' => array(
+'logging' => [
     'enabled' => true,
-),
+],
 ```
 
 ### `logging/directory` {#loggingdirectory}
 
 _Optional._ Default: `null`
 
-If `null`, TrustedLogin will generate its own directory inside the `wp-uploads/` directory. The path for logs is
-`/wp-uploads/trustedlogin-logs/`. Created directories are protected by an index.html file to prevent browsing.
+If `null`, TrustedLogin will generate its own directory inside the `wp-content/uploads/` directory. The path for logs is
+`/wp-content/uploads/trustedlogin-logs/`. Created directories are protected by an `index.html` file to prevent browsing.
 
 ### `logging/threshold` {#loggingthreshold}
 
@@ -151,6 +185,33 @@ There is one log file generated per day. Log file names use a hash to make them 
 `trustedlogin-debug-{{Date in Y-m-d format}}-{{hash}}.log`
 
 Example: `trustedlogin-debug-2020-07-27-39dabe12636f200938bbe8790c0aef94.log`
+
+## Vendor namespaces {#vendor-namespace}
+
+Namespaces are used to isolate your TrustedLogin configuration from other plugins or themes that may also use TrustedLogin. They must be unique.
+
+Some of the places the namespace is used include:
+
+- The default dashboard URL for the Grant Access page: `/wp-admin/admin.php?page=grant-{namespace}-access`
+- The WP Login Grant access URL: `wp-login.php?action=trustedlogin&ns={namespace}`
+- The user role created for support access: `{namespace}-support`
+- The CSS classes used in the Grant Access form
+- Actions and filters (eg: `trustedlogin/{namespace}/access/created`)
+- The name of the constant to disable TrustedLogin (eg: `TRUSTEDLOGIN_DISABLE_{NAMESPACE}`)
+- As part of a hash for the log file name
+
+### Reserved namespaces {#reserved-namespaces}
+
+The following namespaces are reserved and cannot be used:
+
+- `trustedlogin`
+- `trusted-login`
+- `client`
+- `vendor`
+- `admin`
+- `administrator`
+- `wordpress`
+- `support`
 
 ## Display Name vs Title {#display-name-vs-title}
 

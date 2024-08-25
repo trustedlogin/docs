@@ -1,6 +1,6 @@
 ---
 title: Template Customization
-sidebar: auto
+sidebar: none
 ---
 
 # Customizing the TrustedLogin Template

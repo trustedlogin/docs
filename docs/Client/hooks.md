@@ -1,5 +1,7 @@
 # Hooks
 
+Below are all hooks available in the TrustedLogin Client. These hooks can be used to customize the behavior of the Client.
+
 ## Actions {#actions}
 
 ### `trustedlogin/{namespace}/auth_screen` {#trustedloginnamespaceauthscreen}

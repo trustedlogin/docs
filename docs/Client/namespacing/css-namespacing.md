@@ -1,6 +1,7 @@
 ---
 title: CSS Namespacing
 sidebar: auto
+sidebar_position: 3
 ---
 # Namespacing CSS Files
 
@@ -9,9 +10,8 @@ TrustedLogin CSS files are namespaced so that they don't conflict with other plu
 The `build-sass` script accepts the following arguments:
 
 - `--namespace`: The namespace to use for the CSS files. This is required.
-- `--path`: The path to the TrustedLogin client directory. This is optional, and defaults to `vendor/trustedlogin/client/src/assets/`.
-- `--export_dir`: The path to the output directory. This is optional, and defaults to `vendor/trustedlogin/client/src/assets/`.
-- `--relative_images_dir`: The path to the images directory, relative to the output directory. This is optional, and defaults to `./`.
+- `--assets_dir`: The path to the TrustedLogin client directory. This is optional, and defaults to `(vendor-namespaced|vendor-prefixed)/trustedlogin/client/src/assets/`.
+- `--export_dir`: The path to the output directory. This is optional, and defaults to `(vendor-namespaced|vendor-prefixed)/trustedlogin/client/src/assets/`.
 
 The default way to namespace files is [as a Composer script](/Client/01-intro.md), but this may not work with your build process: the default implementation shown adds the required SCSS package (`scssphp/scssphp`) to the `require-dev` array, which may not work with your release flow. If you move `scssphp/scssphp` to the `require` array, the scssphp library will be included in your autoloader, which adds bloat for something that should be used one-time.
 
@@ -45,7 +45,6 @@ If you'd like to use an SCSS mixin to namespace CSS files, you can use the follo
 @import "vendor-namespaced/trustedlogin/client/src/assets/src/global";
 
 $namespace: "ProBlockBuilder";
-$path: "example/different/assets/path/"; // Path to assets directory (for loading and lock images)
 
 @include trustedlogin-auth( $namespace );
 @include trustedlogin-button( $namespace );

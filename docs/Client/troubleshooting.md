@@ -67,3 +67,20 @@ $config = [
 ```
 
 If those are not the same, the CSS rules will not match the HTML generated and won't be applied.
+
+### If scripts aren't loading, check for a No-Conflict mode {#no-conflict-mode}
+
+Some plugins like Gravity Forms and GravityView have a "no-conflict mode" to limit script and style conflicts. If you see
+scripts and styles not loading on your Grant Support Access page, that's what's going on.
+
+The WordPress script and style handles registered by TrustedLogin are formatted as `trustedlogin-{namespace}`.
+Here's an example of how GravityView (with a namespace of `gravityview`) allows TrustedLogin scripts:
+
+```php
+add_filter( 'gravityview_noconflict_scripts', function ( $allowed_scripts = array() ) {
+
+	$allowed_scripts[] = 'trustedlogin-gravityview'; // ⚠️ GravityView's namespace is `gravityview`
+
+	return $allowed_scripts;
+} );
+```
