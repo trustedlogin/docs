@@ -10,8 +10,8 @@ TrustedLogin CSS files are namespaced so that they don't conflict with other plu
 The `build-sass` script accepts the following arguments:
 
 - `--namespace`: The namespace to use for the CSS files. This is required.
-- `--assets_dir`: The path to the TrustedLogin client directory. This is optional, and defaults to `(vendor-namespaced|vendor-prefixed)/trustedlogin/client/src/assets/`.
-- `--export_dir`: The path to the output directory. This is optional, and defaults to `(vendor-namespaced|vendor-prefixed)/trustedlogin/client/src/assets/`.
+- `--assets_dir`: The path to the TrustedLogin client directory, used locate the SCSS source files. Optional. Default: `(vendor-namespaced|vendor-prefixed)/trustedlogin/client/src/assets/`.
+- `--export_dir`: The path to the output directory where the generated CSS will be saved. Optional. Default: to `(vendor-namespaced|vendor-prefixed)/trustedlogin/client/src/assets/`.
 
 The default way to namespace files is [as a Composer script](/Client/01-intro.md), but this may not work with your build process: the default implementation shown adds the required SCSS package (`scssphp/scssphp`) to the `require-dev` array, which may not work with your release flow. If you move `scssphp/scssphp` to the `require` array, the scssphp library will be included in your autoloader, which adds bloat for something that should be used one-time.
 
