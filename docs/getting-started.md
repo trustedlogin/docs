@@ -7,11 +7,11 @@ sidebar: Home
 
 # Getting Started
 
-Adding TrustedLogin to your project involves:
+## Adding TrustedLogin to your project involves:
 
 1. Setting up an account on [trustedlogin.com](https://app.trustedlogin.com)
 2. Configure your settings on TrustedLogin
-3. Install the TrustedLogin Connector plugin
+3. Install and configure the TrustedLogin Connector plugin
 4. Including and configuring the client SDK ("Software Development Kit")
 
 Let's get started!
@@ -21,24 +21,47 @@ Let's get started!
 ## 1. Create an Account on [TrustedLogin.com](https://app.trustedlogin.com/register) {#1-create-an-account-on-trustedlogincom}
 
 1. Visit [TrustedLogin.com to register](https://app.trustedlogin.com/register)
-1. When registering, For "Team Name", enter your project's name. You'll have the chance to add additional projects later.
 
 ![Screenshot of the registration form](/img/saas/registration-form.png)
 
+You will be sent an email to verify your email address. Once you've verified your email address, you can log in to TrustedLogin.
+
+Note: Two-Factor Authentication (2FA) is required for all users with access to TrustedLogin.com. There is no way to disable 2FA.
+
 ## 2. Configure your team settings on TrustedLogin {#2-create-a-team}
 
-Each plugin, theme, or agency client may have its own team on TrustedLogin.
+When you register, a starter team is created for you. You can create additional teams for each plugin, theme, or client you are working with.
 
-1. Once logged-in to TrustedLogin's admin, click on the "Teams" link
-2. On the Teams page, click on the gear icon next to your Team ![Current Teams table with multiple icons displayed, including a gear icon](/img/saas/current-teams.png)
-3. Fill in the details on the Team page
-4. Click on Update below each section
+### Once logged-in to TrustedLogin's admin, click on the "Team Settings" link
+
+![TrustedLogin menu with the Team Settings link highlighted](/img/saas/team-settings-sidebar.png)
+
+#### Name
+
+Enter the name of your team. This could be the name of your plugin, theme, or client.
+
+#### REST API Endpoint
+
+Enter the full REST API URL path to the website where you will run the TrustedLogin Connector plugin.
+
+This URL should include the path to the JSON REST API endpoint. For example, if your website is `https://example.com`, the REST API URL is, by default, `https://example.com/wp-json/`.
+
+#### Support URL
+
+Enter the URL to the support page for your plugin, theme, or client.
+
+### Save your settings
+
+## 3. Install the TrustedLogin Connector plugin {#3-install-the-trustedlogin-connector-plugin}
+
 
 Here, for example, is how GravityView's settings are configured:
 
-![GravityView settings configuration: Project Name, REST API URL, and Support URL.](/img/saas/gravityview-settings.png)
+![GravityView settings configuration: Project Name, REST API URL, and Support URL.](/img/saas/team-settings.png)
 
+:::info
 Don't close the tab! We'll be coming back here to grab the Account ID, Public Key, and Private Key in the next step.
+:::
 
 ## 3. Install the TrustedLogin Connector plugin {#3-install-the-trustedlogin-connector-plugin}
 
@@ -47,11 +70,34 @@ The TrustedLogin Connector plugin is a WordPress plugin that you host on your ow
 1. [Download the Connector plugin](https://github.com/trustedlogin/trustedlogin-connector/releases/download/v1.1.1.0/trustedlogin-connector-1.1.1.zip)
 2. Upload the plugin to your WordPress installation
 3. Click the new "TrustedLogin" menu item in the sidebar menu
-4. Configure the plugin using the Account ID, Public Key, and Private Key values from the Team page
 
-![The TrustedLogin sidebar menu item](/img/saas/vendor-sidebar.png)
+![The TrustedLogin sidebar menu item](/img/vendor/trustedlogin-sidebar-menu.png)
 
-## 4. Integrate with your plugin or theme {#4-integrate-with-your-plugin-or-theme}
+### Enter the Account ID, Public Key, and Private Key from TrustedLogin.com
 
-- See [SDK Integration](client/intro) for instructions on how to integrate with your plugin or theme.
-- See [Client Configuration](client/configuration) for settings options available when configuring the client SDK.
+Now configure the plugin using the Account ID, Public Key, and Private Key values from the TrustedLogin.com Team page.
+
+In addition, select the WordPress user roles that should be able to use TrustedLogin. A common configuration is to allow Administrators and Editors to use TrustedLogin. These settings can be updated later.
+
+![A screenshot of the Add Team screen in TrustedLogin Connector plugin. There is a form showing the described fields.](/img/vendor/add-team.png)
+
+When a connection is successfully established, you will see "All Teams Connected" and see your team in a list.
+
+![The Teams screen, showing Pro Block Builder as a team row and an All Teams Connected badge at the top.](/img/vendor/teams-screen.png)
+
+### If you don't see "All Teams Connected", enable logging
+
+If you don't see "All Teams Connected", enable logging in the TrustedLogin Connector plugin settings. This will help you troubleshoot any issues.
+
+1. Go to the TrustedLogin menu, click Settings, enable Debug Logging. 
+2. Then try connecting again.
+3. Go back to Settings and copy the path to the log file.
+4. Open the log file in your browser to see what's going on.
+
+:::warning
+Make sure to disable logging when you're done troubleshooting. The log file can contain sensitive information.
+:::
+
+## 4. You're ready to integrate with your plugin or theme!{#4-integrate-with-your-plugin-or-theme}
+
+Now check out the [Client SDK Integration](client/installation) instructions for how to integrate with your plugin or theme.
