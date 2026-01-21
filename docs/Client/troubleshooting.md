@@ -10,6 +10,31 @@ This can be caused by Client SDK initialization that is either too late, or init
 - Check to make sure your initialization hook is early enough in the process. `init` is a good default. The `template_redirect` hook is the last possible hook you can use. [Here is an ordered list of WordPress hooks](https://developer.wordpress.org/apis/hooks/action-reference/).
 - Make sure your initialization hook is also running on the front-end. If you are using `admin_init`, it will not run on the front-end. Use `init` instead.
 
+### Nginx: Login requests fail with 301 redirect
+
+If you're using Nginx and login attempts fail silently, the issue may be a trailing slash redirect. Nginx (or WordPress) may be 301-redirecting requests to your TrustedLogin endpoint to add a trailing slash.
+
+The problem: 301 redirects convert POST requests to GET requests, which loses the authentication data needed for login.
+
+**How to diagnose:** Check your server logs or browser network tab for a 301 redirect on the login request URL. The URL will be redirected from a path without a trailing slash to one with a trailing slash.
+
+**The fix:** Add a 307 redirect rule to your Nginx configuration for the path being redirected. Unlike 301, a 307 redirect preserves the original HTTP method (POST stays POST).
+
+```nginx
+# Replace "/your-path" with the actual path being 301-redirected
+# This could be a subdirectory where WordPress is installed,
+# or the TrustedLogin endpoint path itself
+location = /your-path {
+    return 307 /your-path/;
+}
+```
+
+After adding this rule, reload Nginx:
+
+```bash
+sudo nginx -t && sudo nginx -s reload
+```
+
 ### Check the TrustedLogin SDK log
 
 - Enable [logging in the configuration array](/Client/configuration) by setting `logging/enabled` to `true` and `logging/threshold` to `debug`.
