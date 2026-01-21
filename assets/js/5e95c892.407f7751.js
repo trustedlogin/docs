@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunktrustedlogin_docs=self.webpackChunktrustedlogin_docs||[]).push([[647],{7121:(e,s,r)=>{r.r(s),r.d(s,{default:()=>l});r(6540);var t=r(8215),u=r(1003),c=r(7559),d=r(2831),n=r(781),a=r(4848);function l(e){return(0,a.jsx)(u.e3,{className:(0,t.A)(c.G.wrapper.docsPages),children:(0,a.jsx)(n.A,{children:(0,d.v)(e.route.routes)})})}}}]);
