@@ -20,7 +20,7 @@ If there are no new log items, then the Client SDK is not being initialized, lik
 
 ## Troubleshooting the Grant Support Access screen
 
-First things first: make sure you have the [latest version of TrustedLogin](/Client/updating.md) installed.
+First things first: make sure you have the [latest version of TrustedLogin](https://github.com/trustedlogin/client/releases) installed.
 
 Make sure you are logged in as an administrator and then add `&debug=true` to the end of the URL. That will activate Debug Mode, which shows more information about what's happening behind the scenes.
 
@@ -41,7 +41,7 @@ If access keys are generated, but the keys aren't working to log into a site, it
 
 ### If the CSS isn't loading on the Grant Support Access page {#if-the-css-isnt-loading-on-the-grant-support-access-page}
 
-If you have [modified the CSS namespacing](/Client/css-namespacing.md), that is the likley culprit.
+If you have [modified the CSS namespacing](/Client/namespacing/css-namespacing), that is the likley culprit.
 
 Otherwise, this is likely an issue with the `build-sass` script not being passed the same `namespace` flag as the Client is using.
 

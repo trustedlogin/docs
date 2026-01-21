@@ -14,7 +14,7 @@ Run `composer require trustedlogin/client:dev-main` to install the TrustedLogin 
 
 Run `composer require scssphp/scssphp --dev` to install `scssphp` as a dev dependency.
 
-This is used to generate and namespace the CSS used by TrustedLogin. If you already have `scssphp` installed, or are [using an alternative way to namespace the CSS](/Client/css-namespacing.md), skip this step.
+This is used to generate and namespace the CSS used by TrustedLogin. If you already have `scssphp` installed, or are [using an alternative way to namespace the CSS](/Client/namespacing/css-namespacing), skip this step.
 
 ### 3. Namespace the SDK using [Strauss](/Client/namespacing/strauss) or [PHP-Scoper](/Client/namespacing/php-scoper).
 
@@ -29,7 +29,7 @@ We support two namespacing tools: Strauss and PHP-Scoper. Choose the one that be
 
 TrustedLogin CSS files are namespaced so that they don't conflict with other plugins or themes that are using TrustedLogin. 
 
-Follow the [CSS Namespacing](/Client/css-namespacing.md) guide.
+Follow the [CSS Namespacing](/Client/namespacing/css-namespacing) guide.
 
 ### 4. Include the autoloader
 

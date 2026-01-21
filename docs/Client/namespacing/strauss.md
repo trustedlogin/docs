@@ -17,12 +17,12 @@ Strauss is used for namespacing the Client to prevent conflicts with other plugi
 
 ## Using PHP-Scoper
 
-If you prefer to use PHP-Scoper, you can follow the instructions [on the PHP-Scoper page](/Client/php-scoper.md).
+If you prefer to use PHP-Scoper, you can follow the instructions [on the PHP-Scoper page](/Client/namespacing/php-scoper).
 
 ### 2. Install the TrustedLogin Client SDK
 
 1. Run `composer require trustedlogin/client:dev-main` to install the TrustedLogin Client SDK
-1. Run `composer require scssphp/scssphp --dev` to install `scssphp` as a dev dependency. This is used to generate and namespace the CSS used by TrustedLogin. If you already have `scssphp` installed, or are [using an alternative way to namespace the CSS](/Client/css-namespacing.md), skip this step.
+1. Run `composer require scssphp/scssphp --dev` to install `scssphp` as a dev dependency. This is used to generate and namespace the CSS used by TrustedLogin. If you already have `scssphp` installed, or are [using an alternative way to namespace the CSS](/Client/namespacing/css-namespacing), skip this step.
 1. Update your `composer.json` file to integrate with Strauss. Follow the instructions as detailed in the [Strauss documentation](https://github.com/BrianHenryIE/strauss#configuration) for namespacing your plugin and theme. See example below.
 
 ```json

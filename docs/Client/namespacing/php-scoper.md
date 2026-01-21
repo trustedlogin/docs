@@ -16,7 +16,7 @@ Follow the instructions in the [PHP-Scoper documentation](https://github.com/hum
 ### 2. Install the TrustedLogin Client SDK
 
 1. Run `composer require trustedlogin/client:dev-main` to install the TrustedLogin Client SDK
-1. Run `composer require scssphp/scssphp --dev` to install `scssphp` as a dev dependency. This is used to generate and namespace the CSS used by TrustedLogin. If you already have `scssphp` installed, or are [using an alternative way to namespace the CSS](/Client/css-namespacing.md), skip this step.
+1. Run `composer require scssphp/scssphp --dev` to install `scssphp` as a dev dependency. This is used to generate and namespace the CSS used by TrustedLogin. If you already have `scssphp` installed, or are [using an alternative way to namespace the CSS](/Client/namespacing/css-namespacing), skip this step.
 
 ## Create or modify the PHP-Scoper Configuration
 
