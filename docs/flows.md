@@ -49,7 +49,7 @@ The envelope is generated and encrypted using Vendor public keys.
 
 The Client [`\TrustedLogin\Client\Envelope::get()`](https://github.com/trustedlogin/client/blob/main/src/Envelope.php#L60) uses [`\TrustedLogin\Client\Encryption::generate_keys()`](https://github.com/trustedlogin/client/blob/main/src/Encryption.php#L351), [`\TrustedLogin\Client\Encryption::encrypt()`](https://github.com/trustedlogin/client/blob/main/src/Encryption.php#L273), [`\TrustedLogin\Client\Encryption::get_vendor_public_key()`](https://github.com/trustedlogin/client/blob/main/src/Encryption.php#L176).
 
-The Vendor's public key is stored in the Client using WordPress transients.
+The Vendor's public key is stored in the Client using the WordPress options table. The key expires after 10 minutes and will be re-fetched.
 
 ### Step 5: Client `POST`s Envelope to SaaS {#step-5-client-posts-envelope-to-saas}
 
