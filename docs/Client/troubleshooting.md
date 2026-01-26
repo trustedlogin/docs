@@ -10,6 +10,136 @@ This can be caused by Client SDK initialization that is either too late, or init
 - Check to make sure your initialization hook is early enough in the process. `init` is a good default. The `template_redirect` hook is the last possible hook you can use. [Here is an ordered list of WordPress hooks](https://developer.wordpress.org/apis/hooks/action-reference/).
 - Make sure your initialization hook is also running on the front-end. If you are using `admin_init`, it will not run on the front-end. Use `init` instead.
 
+### Connector cannot reach Client site (staging/development environments) {#connector-cannot-reach-client}
+
+If you're testing TrustedLogin on a staging or development server that uses a production domain name, you may need to configure your hosts file to override DNS resolution.
+
+#### Why this happens
+
+When the Connector plugin attempts to log into a Client site, it makes a POST request to the domain name stored in the Client's WordPress configuration (from `get_site_url()`). If you're testing on a server at a different IP address than what public DNS resolves to, the login will fail because your browser connects to the wrong server.
+
+**Common scenarios:**
+- Testing on staging server (e.g., `192.168.1.100`) while DNS points to production (e.g., `203.0.113.10`)
+- Server migration testing before DNS cutover
+- Local development environment (Local, DDEV, Docker) using production domain
+- Accessing backup server at different IP than primary
+
+#### How to diagnose
+
+**Check the browser console** in the Connector plugin when attempting login. Recent versions of the Connector will show:
+
+```
+✗ Site connectivity test failed for: www.example.com
+```
+
+This indicates your machine cannot reach the Client site at the domain WordPress is configured to use.
+
+**Verify DNS resolution:**
+
+```bash
+# Check where DNS currently points
+nslookup www.example.com
+
+# Compare with your staging/dev server IP
+# If they don't match, you need hosts file override
+```
+
+#### The www vs non-www distinction
+
+**Critical:** DNS treats `www.example.com` and `example.com` as completely different hostnames. Your hosts file entry must match the **exact** domain that WordPress is configured to use.
+
+```bash
+# Check WordPress site URL
+wp option get siteurl
+# Example output: https://www.example.com
+```
+
+If WordPress returns `https://www.example.com` (with www), your hosts file must include the www. If it returns `https://example.com` (without www), your hosts file must match that exactly.
+
+#### The fix
+
+**Add the Client site domain to your hosts file on the machine running the Connector plugin** (your support machine):
+
+**Mac/Linux:**
+```bash
+sudo nano /etc/hosts
+```
+
+**Windows:**
+```
+C:\Windows\System32\drivers\etc\hosts
+```
+
+**Add this line (adjust IP and domain):**
+```
+192.168.1.100 example.com www.example.com
+```
+
+:::tip Best Practice
+Include **both** www and non-www variants to ensure it works regardless of WordPress configuration:
+```
+192.168.1.100 example.com www.example.com
+```
+:::
+
+**Replace:**
+- `192.168.1.100` with your staging/dev server's actual IP address
+- `example.com` with the Client site's domain
+
+#### Example scenario
+
+**Production setup:**
+- Domain: `www.example.com`
+- Production IP: `203.0.113.10` (what DNS returns)
+- WordPress configured as: `https://www.example.com`
+
+**Staging/testing setup:**
+- Same domain: `www.example.com`
+- Staging IP: `192.168.1.100` (different server)
+- WordPress still configured as: `https://www.example.com`
+
+**Without hosts file:**
+1. Connector gets access key from Client on staging
+2. Access key contains: `https://www.example.com`
+3. Connector POSTs to `www.example.com`
+4. DNS resolves to `203.0.113.10` (production)
+5. POST goes to production server ❌
+6. Login fails (wrong server)
+
+**With hosts file on support machine:**
+```
+192.168.1.100 example.com www.example.com
+```
+
+1. Connector gets access key from Client on staging
+2. Access key contains: `https://www.example.com`
+3. Connector POSTs to `www.example.com`
+4. **Hosts file overrides DNS** → resolves to `192.168.1.100` (staging)
+5. POST goes to staging server ✓
+6. Login succeeds
+
+#### Verifying your configuration
+
+After adding the hosts file entry:
+
+```bash
+# Test resolution (should show your staging IP)
+ping www.example.com
+
+# Test HTTP connection (should connect to your staging server)
+curl -I https://www.example.com
+
+# Check TLS certificate (should match your staging server)
+openssl s_client -connect www.example.com:443 -servername www.example.com
+```
+
+#### Important notes
+
+- **Hosts file only affects YOUR machine**, not the servers
+- Other team members need their own hosts file entries to test
+- Remove the entry when done testing or it will prevent accessing production
+- Recent Connector versions automatically detect this issue and provide specific guidance in error messages
+
 ### Nginx: Login requests fail with 301 redirect
 
 If you're using Nginx and login attempts fail silently, the issue may be a trailing slash redirect. Nginx (or WordPress) may be 301-redirecting requests to your TrustedLogin endpoint to add a trailing slash.
@@ -92,6 +222,44 @@ $config = [
 ```
 
 If those are not the same, the CSS rules will not match the HTML generated and won't be applied.
+
+## Security plugins blocking webhook requests {#security-plugins-blocking-webhooks}
+
+Some security plugins like Wordfence may block TrustedLogin webhook POST requests, flagging them as potential XSS attacks. This happens because the form-encoded POST body can trigger false positives in firewall rules.
+
+### Symptoms
+
+- Webhooks aren't being received by your endpoint
+- Wordfence logs show "XSS: Cross Site Scripting in POST body" blocks
+- The webhook URL is correct but no data arrives
+
+### Solution: Use JSON format
+
+Set the `webhook/format` configuration option to `'json'`. This sends the webhook data as JSON with a proper `Content-Type: application/json` header, which is less likely to trigger security plugin false positives.
+
+```php
+$config = [
+    // ...
+    'webhook' => [
+        'url'    => 'https://hooks.example.com/webhook/',
+        'format' => 'json', // Use JSON format to avoid security plugin blocks
+    ],
+];
+```
+
+Alternatively, use the filter:
+
+```php
+add_filter( 'trustedlogin/your-namespace/webhook/request_args', function( $args, $webhook_url, $data, $format ) {
+    $args['body'] = wp_json_encode( $data );
+    $args['headers']['Content-Type'] = 'application/json';
+    return $args;
+}, 10, 4 );
+```
+
+:::note
+If your webhook endpoint is already configured to receive form-encoded data, you may need to update it to parse JSON instead when switching formats.
+:::
 
 ### If scripts aren't loading, check for a No-Conflict mode {#no-conflict-mode}
 
