@@ -10,135 +10,34 @@ This can be caused by Client SDK initialization that is either too late, or init
 - Check to make sure your initialization hook is early enough in the process. `init` is a good default. The `template_redirect` hook is the last possible hook you can use. [Here is an ordered list of WordPress hooks](https://developer.wordpress.org/apis/hooks/action-reference/).
 - Make sure your initialization hook is also running on the front-end. If you are using `admin_init`, it will not run on the front-end. Use `init` instead.
 
-### Connector cannot reach Client site (staging/development environments) {#connector-cannot-reach-client}
+### Testing on staging/development servers {#testing-staging}
 
-If you're testing TrustedLogin on a staging or development server that uses a production domain name, you may need to configure your hosts file to override DNS resolution.
-
-#### Why this happens
-
-When the Connector plugin attempts to log into a Client site, it makes a POST request to the domain name stored in the Client's WordPress configuration (from `get_site_url()`). If you're testing on a server at a different IP address than what public DNS resolves to, the login will fail because your browser connects to the wrong server.
-
-**Common scenarios:**
-- Testing on staging server (e.g., `192.168.1.100`) while DNS points to production (e.g., `203.0.113.10`)
-- Server migration testing before DNS cutover
-- Local development environment (Local, DDEV, Docker) using production domain
-- Accessing backup server at different IP than primary
-
-#### How to diagnose
-
-**Check the browser console** in the Connector plugin when attempting login. Recent versions of the Connector will show:
-
-```
-✗ Site connectivity test failed for: www.example.com
-```
-
-This indicates your machine cannot reach the Client site at the domain WordPress is configured to use.
-
-**Verify DNS resolution:**
-
-```bash
-# Check where DNS currently points
-nslookup www.example.com
-
-# Compare with your staging/dev server IP
-# If they don't match, you need hosts file override
-```
-
-#### The www vs non-www distinction
-
-**Critical:** DNS treats `www.example.com` and `example.com` as completely different hostnames. Your hosts file entry must match the **exact** domain that WordPress is configured to use.
-
-```bash
-# Check WordPress site URL
-wp option get siteurl
-# Example output: https://www.example.com
-```
-
-If WordPress returns `https://www.example.com` (with www), your hosts file must include the www. If it returns `https://example.com` (without www), your hosts file must match that exactly.
-
-#### The fix
-
-**Add the Client site domain to your hosts file on the machine running the Connector plugin** (your support machine):
-
-**Mac/Linux:**
-```bash
-sudo nano /etc/hosts
-```
-
-**Windows:**
-```
-C:\Windows\System32\drivers\etc\hosts
-```
-
-**Add this line (adjust IP and domain):**
-```
-192.168.1.100 example.com www.example.com
-```
-
-:::tip Best Practice
-Include **both** www and non-www variants to ensure it works regardless of WordPress configuration:
-```
-192.168.1.100 example.com www.example.com
-```
+:::note Development/Testing Only
+This section is only relevant if you're testing TrustedLogin on a staging or development server. Production use cases don't require this configuration.
 :::
 
-**Replace:**
-- `192.168.1.100` with your staging/dev server's actual IP address
-- `example.com` with the Client site's domain
+If you see "Cannot reach [domain]" errors when testing TrustedLogin on a staging server that uses a production domain name, you may need to configure your hosts file.
 
-#### Example scenario
+**Quick fix:**
 
-**Production setup:**
-- Domain: `www.example.com`
-- Production IP: `203.0.113.10` (what DNS returns)
-- WordPress configured as: `https://www.example.com`
+Edit your hosts file on the machine running the Connector plugin (the support person's computer):
 
-**Staging/testing setup:**
-- Same domain: `www.example.com`
-- Staging IP: `192.168.1.100` (different server)
-- WordPress still configured as: `https://www.example.com`
+**Mac/Linux:** `sudo nano /etc/hosts`
+**Windows:** `C:\Windows\System32\drivers\etc\hosts`
 
-**Without hosts file:**
-1. Connector gets access key from Client on staging
-2. Access key contains: `https://www.example.com`
-3. Connector POSTs to `www.example.com`
-4. DNS resolves to `203.0.113.10` (production)
-5. POST goes to production server ❌
-6. Login fails (wrong server)
-
-**With hosts file on support machine:**
+Add:
 ```
 192.168.1.100 example.com www.example.com
 ```
 
-1. Connector gets access key from Client on staging
-2. Access key contains: `https://www.example.com`
-3. Connector POSTs to `www.example.com`
-4. **Hosts file overrides DNS** → resolves to `192.168.1.100` (staging)
-5. POST goes to staging server ✓
-6. Login succeeds
+Replace `192.168.1.100` with your staging server IP and `example.com` with the actual domain.
 
-#### Verifying your configuration
+**Why:** When staging uses a production domain name but runs on a different IP address than DNS points to, your browser needs to be told where to connect. The hosts file overrides DNS on your local machine only.
 
-After adding the hosts file entry:
-
-```bash
-# Test resolution (should show your staging IP)
-ping www.example.com
-
-# Test HTTP connection (should connect to your staging server)
-curl -I https://www.example.com
-
-# Check TLS certificate (should match your staging server)
-openssl s_client -connect www.example.com:443 -servername www.example.com
-```
-
-#### Important notes
-
-- **Hosts file only affects YOUR machine**, not the servers
-- Other team members need their own hosts file entries to test
-- Remove the entry when done testing or it will prevent accessing production
-- Recent Connector versions automatically detect this issue and provide specific guidance in error messages
+**Important:**
+- Include both www and non-www (DNS treats them as different hosts)
+- Remove this entry when done testing to access production normally
+- Each team member needs their own hosts file entry
 
 ### Nginx: Login requests fail with 301 redirect
 
