@@ -19,6 +19,10 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
       - name: Build website
+        env:
+          ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
+          ALGOLIA_SEARCH_KEY: ${{ secrets.ALGOLIA_SEARCH_KEY }}
+          ALGOLIA_INDEX_NAME: ${{ secrets.ALGOLIA_INDEX_NAME }}
         run: yarn build
 
       # Popular action to deploy to GitHub Pages:
@@ -36,3 +40,23 @@ jobs:
           # You can swap them out with your own user credentials.
           user_name: github-actions[bot]
           user_email: 41898282+github-actions[bot]@users.noreply.github.com
+
+  index:
+    name: Refresh Algolia index
+    # Runs after deploy so the scraper sees the freshly-published site.
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run DocSearch scraper
+        env:
+          APPLICATION_ID: ${{ secrets.ALGOLIA_APP_ID }}
+          API_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
+        run: |
+          # Wait a moment for GitHub Pages to publish the new build.
+          sleep 30
+          docker run --rm \
+            -e APPLICATION_ID \
+            -e API_KEY \
+            -e "CONFIG=$(cat docsearch-config.json)" \
+            algolia/docsearch-scraper

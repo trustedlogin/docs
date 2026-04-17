@@ -13,9 +13,10 @@ When you paste a password into a Help Scout reply, it lives in that ticket forev
 
 TrustedLogin's secret sharing works differently:
 
-- The secret is **viewable exactly once** — after the recipient sees it, it's permanently destroyed.
-- Your WordPress site **never stores the readable version**. The decryption key only exists in the URL you share.
-- There's a full **audit trail** so you can see when (and if) the recipient opened it.
+- You choose the lifetime: **single-use** (destroyed the moment the recipient reveals it) or **reusable** (available to anyone with the link until it expires — for credentials multiple teammates need).
+- Every secret has a hard **expiration** between 1 hour and 30 days. After that the link becomes unusable, whether it was opened or not.
+- Your WordPress site **never stores the readable version**. The decryption key only exists in the URL fragment — the part after `#` — which your server never receives.
+- There's a full **audit trail** so you can see when the link was opened and from what IP (the recipient is anonymous — the link carries no identity).
 
 ## How to Share a Secret
 
@@ -66,6 +67,24 @@ Below the creation form, you'll see a table of your recent secrets with their st
 - **Viewed** — the recipient successfully saw the secret.
 - **Expired** — the secret expired before anyone opened it.
 - **Burned** — you (or the system) destroyed it before it was viewed.
+
+## Running Behind a Proxy or CDN
+
+If your site is behind Cloudflare, a reverse proxy, or a load balancer, tell TrustedLogin which proxies to trust so rate-limit buckets and the audit log can show the real client IP instead of the edge.
+
+Without this, every request from the same edge collapses into a single rate-limit bucket, which means one abusive recipient can trip the limit for everyone else sitting behind the same CDN — and `actor_ip` values in **TrustedLogin → Secrets → History** will all look like the edge.
+
+Add the filter from your theme's `functions.php`, a must-use plugin, or a site-specific plugin:
+
+```php
+add_filter( 'trustedlogin/connector/trusted-proxies', function ( $ips ) {
+    return array_merge( $ips, [
+        '192.0.2.10',  // your reverse proxy / load balancer
+    ] );
+} );
+```
+
+The filter expects **exact `REMOTE_ADDR` matches**, not CIDR ranges. For Cloudflare, pull [the current edge IP list](https://www.cloudflare.com/ips/) and expand it. Forwarded headers (`X-Forwarded-For`, `CF-Connecting-IP`) are only read when `REMOTE_ADDR` matches an entry here — this prevents unauthenticated clients from spoofing their IP to sidestep rate limits.
 
 ## Hardening (Optional)
 

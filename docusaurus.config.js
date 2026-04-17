@@ -5,6 +5,23 @@ const {themes} = require('prism-react-renderer');
 const lightCodeTheme = themes.github;
 const darkCodeTheme = themes.dracula;
 
+// Algolia DocSearch — only wire it up when all three credentials are
+// present so local builds without a .env file don't fail theme validation.
+// Set ALGOLIA_APP_ID / ALGOLIA_SEARCH_KEY / ALGOLIA_INDEX_NAME in
+// `.env.local` (gitignored) or in the hosting project settings.
+const algoliaConfig =
+  process.env.ALGOLIA_APP_ID &&
+  process.env.ALGOLIA_SEARCH_KEY &&
+  process.env.ALGOLIA_INDEX_NAME
+    ? {
+        appId: process.env.ALGOLIA_APP_ID,
+        apiKey: process.env.ALGOLIA_SEARCH_KEY,
+        indexName: process.env.ALGOLIA_INDEX_NAME,
+        contextualSearch: true,
+        searchPagePath: 'search',
+      }
+    : undefined;
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'TrustedLogin Docs',
@@ -110,6 +127,7 @@ const config = {
         darkTheme: darkCodeTheme,
         additionalLanguages: ['php', 'bash']
       },
+      ...(algoliaConfig ? { algolia: algoliaConfig } : {}),
     }),
 };
 
