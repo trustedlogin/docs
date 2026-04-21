@@ -103,6 +103,42 @@ A support user has logged-in to a site.
 | `$url`    | `string` | The site URL from where the webhook was triggered, as returned by `get_site_url()` |
 | `$action` | `string` | Set to `logged_in`                                                                 
 
+### `trustedlogin/{namespace}/logging/log_{level}` {#trustedloginnamespaceloggingloglevel}
+
+Per-level variant of [`trustedlogin/{namespace}/logging/log`](#trustedloginnamespacelogginglog). Fires after the base `logging/log` action, using the PSR-3 level as a dynamic suffix (e.g. `logging/log_error`, `logging/log_warning`). Useful if you only want to observe a single level without filtering inside a generic handler.
+
+| Parameter  | Type     | Description                                                                      |
+|------------|----------|:---------------------------------------------------------------------------------|
+| `$message` | `string` | Message to log. Pre-processed to convert `WP_Error` and exceptions into strings. |
+| `$method`  | `string` | Method that called the hook.                                                     |
+| `$data`    | `array`  | Additional error data.                                                           |
+
+### `trustedlogin/{namespace}/access/revoke` {#trustedloginnamespaceaccessrevoke}
+
+Fires when the revoke endpoint is hit but **before** the support user is actually deleted. Use this to run cleanup that must precede user removal. If revocation fails, the companion [`trustedlogin/{namespace}/admin/access_revoked`](#trustedloginnamespaceadminaccess_revoked) does NOT fire — so a listener on this hook is the last guaranteed signal that revocation was attempted.
+
+:::note
+Distinct from [`trustedlogin/{namespace}/access/revoked`](#trustedloginnamespaceaccessrevoked), which fires once per webhook event after successful revocation.
+:::
+
+| Key                | Type     | Description                                                             |
+|--------------------|----------|-------------------------------------------------------------------------|
+| `$user_identifier` | `string` | Unique ID for the support user, or the literal string `"all"`. |
+
+### `trustedlogin/{namespace}/admin/access_revoked` {#trustedloginnamespaceadminaccess_revoked}
+
+Fires **only** when revocation triggered from the admin revoke link has fully succeeded — the support user no longer exists with the given identifier. Does not fire if user deletion failed.
+
+| Key                | Type     | Description                                                             |
+|--------------------|----------|-------------------------------------------------------------------------|
+| `$user_identifier` | `string` | Unique ID for the support user, or the literal string `"all"`. |
+
+### `trustedlogin/{namespace}/lockdown/after` {#trustedloginnamespacelockdownafter}
+
+Fires after the site enters lockdown mode due to repeated failed login attempts. Use this hook to notify administrators, trigger additional security measures, or log security events beyond the built-in TrustedLogin reporting.
+
+Lockdown is triggered by the brute-force detection in `SecurityChecks`; this action runs after the lockdown transient has been set and the vendor has been notified (when configured). It passes no arguments — call `SecurityChecks` directly if you need lockdown metadata.
+
 ## Filters {#filters}
 
 ### `trustedlogin/{namespace}/admin/menu/menu_slug` {#trustedloginnamespaceadminmenuslug}
@@ -192,6 +228,31 @@ This filter exists to modify parameters added to that URL.
 | `query_args/message` | `string`         | `Could not create TrustedLogin access.` | What error message should be appended to the support URL. |
 | `query_args/ref`     | `string`, `null` | `null`                                  | A sanitized reference ID, if passed. Otherwise, null.     |
 
+### `trustedlogin/{namespace}/login_feedback/allowed_referer_urls` {#trustedloginnamespaceloginfeedbackallowedrefererurls}
+
+Trusted URLs whose **hosts** are accepted as the `Referer` of a failed support-login POST. When a match is found, the matched URL — not the raw Referer — is rendered as the "Go back" link on the feedback screen, so an attacker who forges a matching host still can't control the path or query string.
+
+Vendors with multiple surfaces (marketing site, support portal, white-label domains, staging) should add their additional URLs here.
+
+:::tip
+Return an empty array to disable the "Go back" link entirely.
+:::
+
+| Key             | Type                  | Default                                                                  | Description                                                                              |
+|-----------------|-----------------------|--------------------------------------------------------------------------|------------------------------------------------------------------------------------------|
+| `$default_urls` | `string[]`            | `[ 'vendor/website', 'vendor/support_url', home_url() ]` (non-empty values only) | Allowed URLs. Only the host component is compared; full URL is rendered as the link. |
+| `$config`       | `TrustedLogin\Config` | Current TrustedLogin configuration object                                | Useful for namespace-aware extension.                                                    |
+
+#### Example: allow a support portal on a different domain
+
+```php
+add_filter( 'trustedlogin/pro-block-builder/login_feedback/allowed_referer_urls', function( $urls, $config ) {
+    $urls[] = 'https://help.problockbuilder.com';
+    $urls[] = 'https://status.problockbuilder.com';
+    return $urls;
+}, 10, 2 );
+```
+
 ### `trustedlogin/{namespace}/envelope/meta` {#trustedloginnamespaceenvelopemeta}
 
 Adds custom metadata to be synced via TrustedLogin and stored in the Envelope. **Limited to 1MB.**
@@ -213,6 +274,36 @@ array!
 | Key           | Type   | Default | Description                                             |
 |---------------|--------|---------|---------------------------------------------------------|
 | `$is_enabled` | `bool` | `false` | Whether debug logging is enabled in TrustedLogin Client |
+
+### `trustedlogin/{namespace}/webhook/request_args` {#trustedloginnamespacewebhookrequest_args}
+
+Filter the arguments passed to `wp_remote_post()` when the Client sends a webhook. Added in 1.9.1.
+
+Since 1.9.1 the Client JSON-encodes the webhook body and sends `Content-Type: application/json` by default. This avoids false-positive XSS blocks from security plugins (Wordfence, etc.) that flagged the legacy `debug_data=…` form-encoded body. The TrustedLogin Connector's REST endpoint accepts both shapes, so the change is drop-in. Use this filter if your custom webhook receiver requires a different shape or additional headers (e.g. a bearer token).
+
+| Key            | Type     | Default                                                                                                  | Description                                                                                     |
+|----------------|----------|----------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|
+| `$args`        | `array`  | `[ 'body' => wp_json_encode($data), 'headers' => [ 'Content-Type' => 'application/json; charset=utf-8' ] ]` | Request arguments passed to `wp_remote_post()`.                                                |
+| `$webhook_url` | `string` |                                                                                                          | The webhook URL being posted to.                                                                |
+| `$data`        | `array`  |                                                                                                          | The original data array being sent to the webhook.                                              |
+
+#### Example: revert to legacy form encoding for a custom receiver that reads `$_POST` {#webhook-form-filter-example}
+
+```php
+add_filter( 'trustedlogin/pro-block-builder/webhook/request_args', function ( $args, $webhook_url, $data ) {
+    // Pre-1.9.1 shape: WP form-encodes the array body automatically.
+    return array( 'body' => $data );
+}, 10, 3 );
+```
+
+#### Example: add a bearer token for an authenticated receiver {#webhook-auth-filter-example}
+
+```php
+add_filter( 'trustedlogin/pro-block-builder/webhook/request_args', function ( $args, $webhook_url, $data ) {
+    $args['headers']['Authorization'] = 'Bearer ' . getenv( 'MY_WEBHOOK_TOKEN' );
+    return $args;
+}, 10, 3 );
+```
 
 ### `trustedlogin/{namespace}/vendor/public_key/website` {#trustedloginnamespacevendorpublic_keywebsite}
 
@@ -305,3 +396,17 @@ carefully.** It is one of the two parts required to log in.
 |----------------|-----------------------|-------------------------------------------|
 | `$option_name` | `string`              | `tl_{namespace}_endpoint`                 | The name for storing the endpoint value in the options table |
 | `$config`      | `TrustedLogin\Config` | Current TrustedLogin configuration object |
+
+:::warning
+These filters should not be used in production code. They are included here as helpful developer reference only, and
+they may change.
+:::
+
+### `trustedlogin/{namespace}/options/vendor_public_key` {#trustedloginnamespaceoptionsvendor_public_key}
+
+Modify the site-option name used to cache the vendor's public key. Changing this will cause the cache to miss and the Client to re-fetch the key from the Connector; it will not change the key itself. Provided for disambiguation when a site runs multiple Client instances that must not share the cache.
+
+| Key                         | Type                  | Default                                 | Description                                                                            |
+|-----------------------------|-----------------------|-----------------------------------------|----------------------------------------------------------------------------------------|
+| `$vendor_public_key_option` | `string`              | `tl_{namespace}_vendor_public_key`      | The name used to store the cached vendor public key in the options table.              |
+| `$config`                   | `TrustedLogin\Config` | Current TrustedLogin configuration object | For namespace-aware extension.                                                         |
