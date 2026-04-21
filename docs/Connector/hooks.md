@@ -30,7 +30,7 @@ add_filter( 'trustedlogin/connector/trusted-proxies', function ( $ips ) {
 } );
 ```
 
-For Cloudflare, pull [the current edge IP list](https://www.cloudflare.com/ips/) and expand the CIDRs into individual `REMOTE_ADDR` values — only exact string matches against the incoming `REMOTE_ADDR` count.
+Entries can be exact IPs or CIDR ranges (`192.0.2.0/24`, `2a06:98c0::/29`). For Cloudflare specifically — and for a full walkthrough of **why** this filter is opt-in, **what breaks without it**, and a copy-paste snippet covering every Cloudflare edge CIDR — see [Running behind a reverse proxy or CDN](./running-behind-a-proxy.md).
 
 ### Disable Secrets rate limiting<br/>`trustedlogin/connector/secrets/rate-limit/enabled` {#secrets-rate-limit-enabled}
 

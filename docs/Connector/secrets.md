@@ -84,7 +84,9 @@ add_filter( 'trustedlogin/connector/trusted-proxies', function ( $ips ) {
 } );
 ```
 
-The filter expects **exact `REMOTE_ADDR` matches**, not CIDR ranges. For Cloudflare, pull [the current edge IP list](https://www.cloudflare.com/ips/) and expand it. Forwarded headers (`X-Forwarded-For`, `CF-Connecting-IP`) are only read when `REMOTE_ADDR` matches an entry here — this prevents unauthenticated clients from spoofing their IP to sidestep rate limits.
+Entries can be exact IP strings or CIDR ranges (e.g. `192.0.2.0/24`, `2a06:98c0::/29`). Forwarded headers (`X-Forwarded-For`, `CF-Connecting-IP`) are only read when `REMOTE_ADDR` matches an entry here — this prevents unauthenticated clients from spoofing their IP to sidestep rate limits.
+
+For Cloudflare specifically, along with a full explanation of the trust model, see [Running behind a reverse proxy or CDN](./running-behind-a-proxy.md) — it includes a copy-paste snippet covering all Cloudflare edge CIDRs and guidance for nginx / Apache / HAProxy / cloud load balancers.
 
 ## Hardening (Optional)
 
