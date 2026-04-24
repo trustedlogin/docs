@@ -66,6 +66,12 @@ const config = {
         items: [
           {
             type: 'doc',
+            label: 'Guides',
+            position: 'left',
+            docId: 'Guides/index',
+          },
+          {
+            type: 'doc',
             label: 'Client SDK',
             position: 'left',
             docId: 'Client/intro',
