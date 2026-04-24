@@ -7,15 +7,13 @@ sidebar_position: 2
 
 # Install the Connector and connect your team
 
-The Connector is a WordPress plugin you install on **your** site — not your customers' sites. It's the bridge between TrustedLogin and the WordPress installations your support team works from.
+The Connector is a WordPress plugin you install on **your** site — not your customers' sites. It's the bridge between TrustedLogin and the WordPress installations your support team works from. This guide walks through both halves of the setup: copying your API keys from TrustedLogin, then pasting them into the Connector plugin on your own site.
 
-This guide covers the TrustedLogin side of the setup: finding the three keys the Connector needs. The Connector plugin itself has [its own setup guide](../Connector/01-intro.md) for installation and configuration.
-
-## 1. Open your team settings
+## 1. Open your team settings on TrustedLogin
 
 Your dashboard lives at **trustedlogin.com/admin**. Once you're signed in, open **Team Settings** from the sidebar. Everything you'll paste into the Connector lives on this page.
 
-![Open your team settings](/img/guides/install-connector/01-open-your-team-settings.png)
+![Open your team settings on TrustedLogin](/img/guides/install-connector/01-open-your-team-settings-on-trustedlogin.png)
 
 <!-- Captured from http://localhost:8090/admin/team-settings -->
 
@@ -45,33 +43,65 @@ Each value has a **Copy** button next to it. Leave this tab open — you'll need
 
 <!-- Captured from http://localhost:8090/admin/team-settings -->
 
-## 4. Install the Connector plugin and paste the keys in
+## 4. Open TrustedLogin in your WordPress admin
 
-Download the latest Connector release from [the TrustedLogin Connector repository](https://github.com/trustedlogin/trustedlogin-connector/releases) and upload the zip to your WordPress site (**Plugins → Add New → Upload**). Activate it, then open **TrustedLogin** in the WordPress sidebar and paste in the three values you copied.
+Install the Connector plugin on the WordPress site you use for support (download the latest release from [the TrustedLogin Connector repository](https://github.com/trustedlogin/trustedlogin-connector/releases), upload the zip via **Plugins → Add New → Upload**, and activate).
 
-Pick the WordPress user roles that should be allowed to use TrustedLogin to log into customer sites — Administrators and Editors is a common choice. When the connection works, you'll see **All Teams Connected** at the top of the screen.
+After activation, **TrustedLogin** appears in your WordPress sidebar. On a fresh install it opens the **Create your first team** onboarding screen — this one form handles everything you need to paste from TrustedLogin.
 
-:::note
-Full screenshots of the Connector side of this flow live in [the TrustedLogin Connector setup guide](../Connector/01-intro.md).
-:::
+![Open TrustedLogin in your WordPress admin](/img/guides/install-connector/04-open-trustedlogin-in-your-wordpress-admin.png)
 
-![Install the Connector plugin and paste the keys in](/img/guides/install-connector/04-install-the-connector-plugin-and-paste-the-keys-in.png)
+<!-- Captured from http://localhost:8100/wp-admin/admin.php?page=trustedlogin-settings -->
 
-<!-- Captured from http://localhost:8090/admin/team-settings -->
+## 5. Paste your Account ID, Public Key, and Private Key
 
-## 5. Head back to your dashboard
+The onboarding form asks for the three values you just copied from your **Team Settings** page on TrustedLogin:
 
-Once the Connector says **All Teams Connected**, you're done with setup — your customers can now grant you secure access, and those grants will show up on your dashboard.
+- **Account ID**
+- **Public Key**
+- **Private Key**
+
+Paste each one into the matching field. A link next to the form — **Where can I find this info?** — takes you back to the right TrustedLogin page if you've lost the tab.
+
+![Paste your Account ID, Public Key, and Private Key](/img/guides/install-connector/05-paste-your-account-id-public-key-and-private-key.png)
+
+<!-- Captured from http://localhost:8100/wp-admin/admin.php?page=trustedlogin-settings -->
+
+## 6. Pick the support roles that can use TrustedLogin
+
+The **What Roles Provide Support?** picker controls which WordPress users on this site can click the Log-in button to reach a customer. Administrators and Editors is a common choice for a small support team; larger teams often create a dedicated **Support** role and limit TrustedLogin access to that.
+
+The **Help Desk** dropdown is optional — if you use Help Scout, Zendesk, or FreshDesk, picking one here enables the in-ticket login button. You can add it later; it's not required to finish onboarding.
+
+![Pick the support roles that can use TrustedLogin](/img/guides/install-connector/06-pick-the-support-roles-that-can-use-trustedlogin.png)
+
+<!-- Captured from http://localhost:8100/wp-admin/admin.php?page=trustedlogin-settings -->
+
+## 7. Confirm the connection
+
+Click **Continue**. The Connector contacts TrustedLogin with your keys and, if everything matches, shows **All Teams Connected** with your team listed.
+
+If you don't see that banner, the most common cause is a typo or extra whitespace in one of the pasted keys. The second most common is the REST API endpoint on the TrustedLogin side missing the trailing `/wp-json/`. Double-check both before digging further.
+
+![Confirm the connection](/img/guides/install-connector/07-confirm-the-connection.png)
+
+<!-- Captured from http://localhost:8100/wp-admin/admin.php?page=trustedlogin-settings -->
+
+## 8. You're done — head back to your dashboard
+
+Once the Connector says **All Teams Connected**, you're done with setup. Your customers can now grant you secure access, and those grants will show up on your dashboard here.
 
 You still need to add TrustedLogin to the plugin or theme your customers install on their own sites — that's the piece that puts the **Grant Support Access** button in front of them. See [the Client SDK guide](../Client/01-intro.md) for how to wire it in.
 
-![Head back to your dashboard](/img/guides/install-connector/05-head-back-to-your-dashboard.png)
+![You're done — head back to your dashboard](/img/guides/install-connector/08-you-re-done-head-back-to-your-dashboard.png)
 
 <!-- Captured from http://localhost:8090/admin/dashboard -->
 
 ## What if 'All Teams Connected' doesn't appear?
 
-Double-check that the **REST API endpoint** on your Team Settings page includes `/wp-json/` at the end. That single trailing segment is the most common cause of a failed connection.
+Three things to check, in order:
 
-If that checks out, open the Connector plugin settings, enable debug logging, reload the Teams page, and check the log file for the actual error. [The Connector troubleshooting guide](../Connector/troubleshooting.md) walks through the common failures.
+1. **The REST API endpoint** on your TrustedLogin Team Settings page must include `/wp-json/` at the end. This is the single most common cause.
+2. **The keys have no leading or trailing whitespace.** A browser-copied Private Key sometimes picks up an invisible character; paste into a plain text editor first if you're unsure.
+3. **The Connector site is reachable from the internet.** TrustedLogin's network needs to hit the REST API endpoint to complete the handshake — a dev install behind a VPN or firewall won't connect. [The Connector troubleshooting guide](../Connector/troubleshooting.md) walks through the less-common failures.
 
