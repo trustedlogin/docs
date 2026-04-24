@@ -7,37 +7,37 @@ sidebar_position: 5
 
 # Switch between teams
 
-If you're on more than one team — your own product team, a client's team you've been invited to, a team for a side project — switching between them is a one-click action. Your session, preferences, and sign-in stay the same; only the data you're looking at changes.
+If you're on more than one team — your own product team, a client's team you've been invited to, a team for a side project — switching between them is a one-click action. Your session and sign-in stay the same; only the data you're looking at changes.
 
 ## 1. Find your account pill in the sidebar
 
-Look at the bottom-left of the sidebar. Your email address and current role on the active team show there, with a small arrow next to them. That's your account pill — it's the entry point to team switching, not a link to your profile.
+Look at the bottom-left of the sidebar. Your email address and current role on the active team show there, with a small arrow next to them. That's your account pill — the entry point to team switching, not a link to your profile.
 
 ![Find your account pill in the sidebar](/img/guides/switch-team/01-find-your-account-pill-in-the-sidebar.png)
 
 <!-- Captured from http://localhost:8090/admin/dashboard -->
 
-## 2. Click to open the team switcher
+## 2. Open the team switcher
 
-Clicking the pill expands it into a list of every team you're a member of, including any your plan owns and any you've been invited to join from another account. Your current team is marked.
+Clicking the pill expands it into a list of every team you're a member of, including any your plan owns and any you've been invited to join from another account. Your current team is marked with a checkmark. The menu also has your profile link, theme toggle, and sign-out — one dropdown for every account-level action.
 
-![Click to open the team switcher](/img/guides/switch-team/02-click-to-open-the-team-switcher.png)
+![Open the team switcher](/img/guides/switch-team/02-open-the-team-switcher.png)
 
 <!-- Captured from http://localhost:8090/admin/dashboard -->
 
 ## 3. Click a team to switch
 
-Clicking any other team in the list switches you into it immediately. The page reloads onto that team's dashboard — you'll see the team name in the header change, and the sidebar navigation updates to reflect what you can do in the new team (regular members won't see Billing or Team Settings, for example).
+Clicking any other team in the list switches you into it immediately. The page reloads onto the new team — the team name in the header changes, and the sidebar updates to reflect what you can do on this team (regular members won't see Billing or Team Settings, for example).
 
 ![Click a team to switch](/img/guides/switch-team/03-click-a-team-to-switch.png)
 
 <!-- Captured from http://localhost:8090/admin/dashboard -->
 
-## 4. Or use ⌘K to jump
+## 4. Or press ⌘K to jump
 
-For the keyboard-first folks: press **⌘K** (Ctrl+K on Windows/Linux) from anywhere in TrustedLogin to open the command palette. Start typing a team name and the palette filters live — pick the team and Enter to switch. Same result as the sidebar pill, two seconds faster.
+For the keyboard-first folks: press **⌘K** (Ctrl+K on Windows/Linux) from anywhere in TrustedLogin to open the command palette. Start typing and the palette filters live — pages, settings, your teams, and (for super-admins) customer teams all appear in one list. Pick an entry and press Enter to jump. Same result as the sidebar pill, two seconds faster.
 
-![Or use ⌘K to jump](/img/guides/switch-team/04-or-use-k-to-jump.png)
+![Or press ⌘K to jump](/img/guides/switch-team/04-or-press-k-to-jump.png)
 
 <!-- Captured from http://localhost:8090/admin/dashboard -->
 
