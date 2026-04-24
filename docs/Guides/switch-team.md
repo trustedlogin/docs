@@ -25,19 +25,27 @@ Clicking the pill expands it into a list of every team you're a member of, inclu
 
 <!-- Captured from http://localhost:8090/admin/dashboard -->
 
-## 3. Click a team to switch
+## 3. Click the team you want
 
-Clicking any other team in the list switches you into it immediately. The page reloads onto the new team — the team name in the header changes, and the sidebar updates to reflect what you can do on this team (regular members won't see Billing or Team Settings, for example).
+In the list, click any team that isn't your current one. There's no confirm dialog — TrustedLogin switches you in and reloads the dashboard on the new team.
 
-![Click a team to switch](/img/guides/switch-team/03-click-a-team-to-switch.png)
+![Click the team you want](/img/guides/switch-team/03-click-the-team-you-want.png)
 
 <!-- Captured from http://localhost:8090/admin/dashboard -->
 
-## 4. Or press ⌘K to jump
+## 4. You're now on the new team
+
+The dashboard reloads on the team you picked. The team name in the header changes, and the sidebar updates to reflect what you can do on this team — regular members won't see Billing or Team Settings, for example. The pill in the bottom-left also shows your new role on this team (owner, admin, or member).
+
+![You're now on the new team](/img/guides/switch-team/04-you-re-now-on-the-new-team.png)
+
+<!-- Captured from http://localhost:8090/admin/dashboard -->
+
+## 5. Or press ⌘K to jump
 
 For the keyboard-first folks: press **⌘K** (Ctrl+K on Windows/Linux) from anywhere in TrustedLogin to open the command palette. Start typing and the palette filters live — pages, settings, your teams, and (for super-admins) customer teams all appear in one list. Pick an entry and press Enter to jump. Same result as the sidebar pill, two seconds faster.
 
-![Or press ⌘K to jump](/img/guides/switch-team/04-or-press-k-to-jump.png)
+![Or press ⌘K to jump](/img/guides/switch-team/05-or-press-k-to-jump.png)
 
 <!-- Captured from http://localhost:8090/admin/dashboard -->
 

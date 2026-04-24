@@ -81,3 +81,43 @@ Open browser developer tools (F12) and check the Console tab for errors like:
 ## Help Scout integration not working
 
 See [Help Scout integration documentation](./help-scout) for specific troubleshooting steps.
+
+## Enabling debug logs
+
+When diagnosing Connector issues, you can enable debug logging to capture detailed information about what the plugin is doing.
+
+### Turn logging on
+
+There are two ways to enable logging:
+
+1. **Settings toggle** — In the WordPress admin, go to **TrustedLogin → Settings** and enable **Error Logging**.
+2. **Constant** — Define `TRUSTEDLOGIN_DEBUG` in `wp-config.php`. This forces logging on regardless of the settings toggle:
+   ```php
+   define( 'TRUSTEDLOGIN_DEBUG', true );
+   ```
+
+### Where logs are stored
+
+Logs are written to the WordPress uploads directory:
+
+```
+wp-content/uploads/trustedlogin-logs/vendor-{hash}.log
+```
+
+- `{hash}` is a randomized SHA-256 string generated once per site and stored in the `trustedlogin_vendor_log_location` option, so the filename is not guessable.
+- The `trustedlogin-logs/` directory is created automatically and protected with an `index.html` file to prevent directory browsing.
+- If the random hash can't be generated for some reason, logs fall back to `wp-content/uploads/trustedlogin-connector.log`.
+
+### Reading the log
+
+Each line is formatted as:
+
+```
+[YYYY-MM-DD HH:MM:SS] [level] message {optional JSON context}
+```
+
+You can find the exact path for your site by checking the **TrustedLogin → Settings** screen, which displays the current log file location when logging is enabled.
+
+### Disable logging when done
+
+Debug logs may contain sensitive request data. Turn the setting off (or remove the `TRUSTEDLOGIN_DEBUG` constant) once you've finished troubleshooting, and delete the log file from the uploads directory.
