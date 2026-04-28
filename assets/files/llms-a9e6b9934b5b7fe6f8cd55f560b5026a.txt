@@ -1,0 +1,49 @@
+# TrustedLogin Documentation
+
+> Documentation for the TrustedLogin platform — Client SDK, Connector plugin, and SaaS application — for plugin and theme developers integrating secure, time-limited support access into WordPress.
+
+Every page on this site is also served as raw Markdown by appending `.md` to the URL.
+
+## Overview
+
+- [Support Access Diagrams](https://docs.trustedlogin.com/flows.md)
+- [For AI assistants & tools](https://docs.trustedlogin.com/for-ai-tools.md): How AI assistants and other tools can ingest TrustedLogin documentation. Per-page Markdown, llms.txt, and rel=alternate auto-discovery.
+- [Getting Started](https://docs.trustedlogin.com/getting-started.md)
+- [Security](https://docs.trustedlogin.com/security.md)
+
+## Client
+
+- [Client SDK Intro](https://docs.trustedlogin.com/Client/01-intro.md)
+- [Installation](https://docs.trustedlogin.com/Client/02-installation.md)
+- [Configuring the TrustedLogin Client SDK](https://docs.trustedlogin.com/Client/configuration.md)
+- [Template Customization](https://docs.trustedlogin.com/Client/customization.md)
+- [Developer FAQ](https://docs.trustedlogin.com/Client/dev-faq.md)
+- [User FAQ](https://docs.trustedlogin.com/Client/faq.md)
+- [Hooks](https://docs.trustedlogin.com/Client/hooks.md)
+- [AI Integration Prompt](https://docs.trustedlogin.com/Client/integration-prompt.md)
+- [Login-feedback flow](https://docs.trustedlogin.com/Client/login-feedback-flow.md)
+- [CSS Namespacing](https://docs.trustedlogin.com/Client/namespacing/css-namespacing.md)
+- [Namespacing](https://docs.trustedlogin.com/Client/namespacing/index.md)
+- [Merging into an existing composer.json](https://docs.trustedlogin.com/Client/namespacing/merging-into-existing-composer.md)
+- [Namespacing with PHP-Scoper](https://docs.trustedlogin.com/Client/namespacing/php-scoper.md)
+- [Namespacing with Strauss](https://docs.trustedlogin.com/Client/namespacing/strauss.md)
+- [Security Details](https://docs.trustedlogin.com/Client/security.md)
+- [Troubleshooting](https://docs.trustedlogin.com/Client/troubleshooting.md)
+- [Using TrustedLogin](https://docs.trustedlogin.com/Client/usage.md)
+
+## Connector
+
+- [TrustedLogin Connector Plugin](https://docs.trustedlogin.com/Connector/01-intro.md)
+- [Local Development](https://docs.trustedlogin.com/Connector/development.md)
+- [Encrypted Messages](https://docs.trustedlogin.com/Connector/encrypted-messages.md)
+- [Help Scout App](https://docs.trustedlogin.com/Connector/help-scout.md)
+- [WordPress Hooks](https://docs.trustedlogin.com/Connector/hooks.md)
+- [Running behind a reverse proxy or CDN](https://docs.trustedlogin.com/Connector/running-behind-a-proxy.md)
+- [One-Time Secrets](https://docs.trustedlogin.com/Connector/secrets.md)
+- [Troubleshooting](https://docs.trustedlogin.com/Connector/troubleshooting.md)
+
+## SaaS
+
+- [SaaS Intro](https://docs.trustedlogin.com/SaaS/01-intro.md)
+- [Data Storage](https://docs.trustedlogin.com/SaaS/data-storage.md)
+- [Subcontractors](https://docs.trustedlogin.com/SaaS/subcontractors.md)
