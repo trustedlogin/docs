@@ -27,6 +27,8 @@ We support two namespacing tools:
 
 If you're integrating into a plugin that already has its own `composer.json`, also see [Merging into an existing composer.json](/Client/namespacing/merging-into-existing-composer) for common host-side gotchas.
 
+If you're using an AI coding assistant (Claude Code, Cursor, etc.) for the integration, paste the [AI Integration Prompt](/Client/integration-prompt) into your assistant — it encodes the full workflow as a single self-contained recipe.
+
 ### 4. [Namespace the CSS files](/Client/namespacing/css-namespacing)
 
 TrustedLogin CSS files are namespaced so that they don't conflict with other plugins or themes that are using TrustedLogin.

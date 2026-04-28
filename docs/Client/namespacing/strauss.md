@@ -16,6 +16,8 @@ The examples below use "Pro Block Builder" / "Widgets, Co." as a placeholder. Us
 
 If you're integrating into a plugin that already has its own `composer.json`, also see [Merging into an existing composer.json](./merging-into-existing-composer) for common host-side gotchas.
 
+If you're using an AI coding assistant for the integration, see the [AI Integration Prompt](../integration-prompt) — it bundles this recipe with input collection, host-side conflict detection, and a verification checklist into a single self-contained prompt you paste into the assistant.
+
 ## Step 1. Add Strauss as a dev dependency
 
 You'll add `brianhenryie/strauss` to `require-dev` in your `composer.json` (see step 2 below). Composer installs Strauss at `vendor/bin/strauss`, so no manual `curl` of `strauss.phar` is needed.
