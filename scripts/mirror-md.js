@@ -57,18 +57,36 @@ const DOCUSAURUS_KEYS = new Set( [
 	'parse_number_prefixes',
 ] );
 
+// Strip Docusaurus-only link protocols that don't make sense in raw Markdown.
+// `pathname://` is a Docusaurus marker telling its MDX link resolver "this is
+// a literal URL, don't try to match it against doc IDs". The MDX renderer
+// strips it from rendered HTML, but if we copy the source verbatim into the
+// static mirror, AI consumers see `[label](pathname:///foo.md)` literally.
+// Strip it here so the public Markdown has clean URLs.
+function stripDocusaurusProtocols( body ) {
+	return body.replace( /pathname:\/\//g, '' );
+}
+
 function transformFrontmatter( content ) {
 	const m = content.match( /^---\n([\s\S]*?)\n---\n?/ );
-	if ( ! m ) return { fm: {}, body: content, transformed: content };
+	if ( ! m ) {
+		const cleaned = stripDocusaurusProtocols( content );
+		return { fm: {}, body: cleaned, transformed: cleaned };
+	}
 
 	let fm;
 	try { fm = yaml.load( m[ 1 ] ) || {}; }
-	catch { return { fm: {}, body: content, transformed: content }; }
+	catch {
+		const cleaned = stripDocusaurusProtocols( content );
+		return { fm: {}, body: cleaned, transformed: cleaned };
+	}
 
 	const cleaned = Object.fromEntries(
 		Object.entries( fm ).filter( ( [ k ] ) => ! DOCUSAURUS_KEYS.has( k ) )
 	);
-	const body = content.slice( m[ 0 ].length ).replace( /^\n+/, '' );
+	const body = stripDocusaurusProtocols(
+		content.slice( m[ 0 ].length ).replace( /^\n+/, '' )
+	);
 
 	let transformed;
 	if ( Object.keys( cleaned ).length === 0 ) {
@@ -143,6 +161,28 @@ if ( ! fs.existsSync( SRC ) ) {
 }
 
 walk( SRC );
+
+// /Client/ai-integration-prompt.md — pure prompt body, no frontmatter or
+// preamble. The /Client/integration-prompt page wraps the prompt with a
+// human-friendly "How to use it" intro; AI assistants want just the prompt
+// itself. Extract the body that follows the "## The prompt\n\n---\n" marker.
+{
+	const src = path.join( SRC, 'Client', 'integration-prompt.md' );
+	if ( fs.existsSync( src ) ) {
+		const raw = fs.readFileSync( src, 'utf-8' );
+		const noFrontmatter = raw.replace( /^---\n[\s\S]*?\n---\n?/, '' );
+		const m = noFrontmatter.match( /^## The prompt[\s\S]*?\n---\n+([\s\S]*)$/m );
+		if ( m ) {
+			const body = stripDocusaurusProtocols( m[ 1 ].trim() ) + '\n';
+			const out = path.join( DEST, 'Client', 'ai-integration-prompt.md' );
+			fs.mkdirSync( path.dirname( out ), { recursive: true } );
+			fs.writeFileSync( out, body );
+			console.log( `mirror-md: extracted pure prompt → ${ path.relative( ROOT, out ) }` );
+		} else {
+			console.warn( 'mirror-md: could not locate prompt body in integration-prompt.md (looked for "## The prompt" + separator)' );
+		}
+	}
+}
 
 // /llms.txt — site index for AI crawlers, llmstxt.org format.
 {
