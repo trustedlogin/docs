@@ -75,14 +75,15 @@ const config = {
         // navigates to `to`. Search engines treat it as a redirect (SEO
         // weight slightly less than a true 301, but functional for users).
         redirects: [
-          { from: '/SaaS/vault-sass-token', to: '/SaaS/intro' },
-          { from: '/SaaS/vault',            to: '/SaaS/intro' },
-          { from: '/SaaS/vault-client',     to: '/SaaS/intro' },
-          { from: '/SaaS/CI-CD',            to: '/SaaS/intro' },
-          { from: '/SaaS/server-setup',     to: '/SaaS/intro' },
-          { from: '/SaaS/cli',              to: '/SaaS/intro' },
-          { from: '/SaaS/elasticsearch',    to: '/SaaS/intro' },
-          { from: '/SaaS/webhooks',         to: '/SaaS/intro' },
+          { from: '/SaaS/vault-sass-token',          to: '/SaaS/intro' },
+          { from: '/SaaS/vault',                     to: '/SaaS/intro' },
+          { from: '/SaaS/vault-client',              to: '/SaaS/intro' },
+          { from: '/SaaS/CI-CD',                     to: '/SaaS/intro' },
+          { from: '/SaaS/server-setup',              to: '/SaaS/intro' },
+          { from: '/SaaS/cli',                       to: '/SaaS/intro' },
+          { from: '/SaaS/elasticsearch',             to: '/SaaS/intro' },
+          { from: '/SaaS/webhooks',                  to: '/SaaS/intro' },
+          { from: '/SaaS/user-remote-authentication', to: '/SaaS/intro' },
         ],
       },
     ],

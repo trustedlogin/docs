@@ -1,3 +1,7 @@
+---
+draft: true
+---
+
 # Remote User Authentication
 
 In the [TrustedLogin Connector plugin](../Connector/) (the support-side plugin), users must log into the SaaS app. This document explains how.
