@@ -183,8 +183,31 @@ assert "namespace declaration is HelloTrustedLogin\\TrustedLogin" \
 assert "vendor/trustedlogin/ does not exist (delete_vendor_packages)" \
     "[ ! -d vendor/trustedlogin ]"
 
-assert "CSS contains tl-hellotrustedlogin- selectors" \
-    "[ -f vendor-namespaced/trustedlogin/client/src/assets/trustedlogin.css ] && grep -q 'tl-hellotrustedlogin-' vendor-namespaced/trustedlogin/client/src/assets/trustedlogin.css"
+CSS_FILE=vendor-namespaced/trustedlogin/client/src/assets/trustedlogin.css
+
+assert "compiled CSS file exists" \
+    "[ -f \"$CSS_FILE\" ]"
+
+assert "compiled CSS is non-trivially sized (>= 5KB)" \
+    "[ \$(wc -c < \"$CSS_FILE\") -ge 5120 ]"
+
+assert "CSS has many prefixed selectors (>= 100 occurrences of tl-hellotrustedlogin-)" \
+    "[ \$(grep -o 'tl-hellotrustedlogin-' \"$CSS_FILE\" 2>/dev/null | wc -l | tr -d ' ') -ge 100 ]"
+
+assert "CSS contains .tl-hellotrustedlogin-auth (auth screen wrapper)" \
+    "grep -qE '\\.tl-hellotrustedlogin-auth([^a-z0-9_-]|$)' \"$CSS_FILE\""
+
+assert "CSS contains .tl-hellotrustedlogin-grant-access (CTA button)" \
+    "grep -q 'tl-hellotrustedlogin-grant-access' \"$CSS_FILE\""
+
+assert "CSS contains .button-trustedlogin-hellotrustedlogin (button class)" \
+    "grep -q 'button-trustedlogin-hellotrustedlogin' \"$CSS_FILE\""
+
+assert "CSS does NOT contain default un-prefixed tl-test- selectors" \
+    "! grep -qE 'tl-test-' \"$CSS_FILE\""
+
+assert "CSS does NOT contain default un-prefixed tl-auth selector" \
+    "! grep -qE '\\.tl-auth([^a-z0-9_-]|$)' \"$CSS_FILE\""
 
 assert "php -l clean on bootstrap" \
     "$PHP_BIN -l inc/trustedlogin-bootstrap.php > /dev/null 2>&1"

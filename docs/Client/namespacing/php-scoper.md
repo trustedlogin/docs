@@ -88,6 +88,7 @@ Add the `autoload.classmap` entry pointing at `build/`, the `classmap-authoritat
 },
 "scripts": {
     "php-scoper": [
+        "@php vendor/trustedlogin/client/bin/build-sass --namespace=ProBlockBuilder --assets_dir=vendor/trustedlogin/client/src/assets --export_dir=vendor/trustedlogin/client/src/assets",
         "vendor/bin/php-scoper add-prefix --prefix=ProBlockBuilder --force --quiet",
         "rm -rf vendor/trustedlogin",
         "@composer dump-autoload --classmap-authoritative"
@@ -123,12 +124,13 @@ composer install
 
 This installs the dependencies, then triggers the `php-scoper` script via `post-install-cmd`:
 
-1. PHP-Scoper writes prefixed files to `build/`.
-2. The shell command removes the un-namespaced original at `vendor/trustedlogin/`.
-3. `composer dump-autoload --classmap-authoritative` regenerates the autoload, scanning `build/` for the prefixed classes and skipping the (now missing) `vendor/trustedlogin/`.
+1. `build-sass` compiles the SDK's SCSS sources with your prefix, writing the namespaced CSS to `vendor/trustedlogin/client/src/assets/trustedlogin.css` (selectors like `.tl-proBlockBuilder-auth` instead of the default `.tl-test-auth`).
+2. PHP-Scoper copies the SDK (including the just-compiled CSS) into `build/`, rewriting PHP namespaces.
+3. The shell command removes the un-namespaced original at `vendor/trustedlogin/`.
+4. `composer dump-autoload --classmap-authoritative` regenerates the autoload, scanning `build/` for the prefixed classes and skipping the (now missing) `vendor/trustedlogin/`.
 
 After this completes:
-- `build/` contains the prefixed SDK.
+- `build/` contains the prefixed SDK with `build/src/assets/trustedlogin.css` carrying your prefixed selectors.
 - `vendor/trustedlogin/` is gone.
 - `vendor/composer/autoload_classmap.php` resolves your prefixed `\ProBlockBuilder\TrustedLogin\Client` to `build/src/Client.php`.
 

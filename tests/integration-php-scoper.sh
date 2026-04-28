@@ -166,6 +166,7 @@ cat > composer.json <<'JSON'
   },
   "scripts": {
     "tl-php-scoper": [
+      "@php vendor/trustedlogin/client/bin/build-sass --namespace=HelloTrustedLogin --assets_dir=vendor/trustedlogin/client/src/assets --export_dir=vendor/trustedlogin/client/src/assets",
       "vendor/bin/php-scoper add-prefix --prefix=HelloTrustedLogin --force --quiet",
       "rm -rf vendor/trustedlogin",
       "@composer dump-autoload --classmap-authoritative"
@@ -228,6 +229,34 @@ assert "Client.php declares namespace HelloTrustedLogin\\TrustedLogin" \
 
 assert "vendor/trustedlogin/ does not exist (post-install rm)" \
     "[ ! -d vendor/trustedlogin ]"
+
+# CSS assertions — build-sass runs against vendor/trustedlogin/ before
+# PHP-Scoper, then PHP-Scoper's finder copies *.css into build/.
+CSS_FILE=build/src/assets/trustedlogin.css
+
+assert "compiled CSS file exists in build/" \
+    "[ -f \"$CSS_FILE\" ]"
+
+assert "compiled CSS is non-trivially sized (>= 5KB)" \
+    "[ \$(wc -c < \"$CSS_FILE\") -ge 5120 ]"
+
+assert "CSS has many prefixed selectors (>= 100 occurrences of tl-hellotrustedlogin-)" \
+    "[ \$(grep -o 'tl-hellotrustedlogin-' \"$CSS_FILE\" 2>/dev/null | wc -l | tr -d ' ') -ge 100 ]"
+
+assert "CSS contains .tl-hellotrustedlogin-auth (auth screen wrapper)" \
+    "grep -qE '\\.tl-hellotrustedlogin-auth([^a-z0-9_-]|$)' \"$CSS_FILE\""
+
+assert "CSS contains .tl-hellotrustedlogin-grant-access (CTA button)" \
+    "grep -q 'tl-hellotrustedlogin-grant-access' \"$CSS_FILE\""
+
+assert "CSS contains .button-trustedlogin-hellotrustedlogin (button class)" \
+    "grep -q 'button-trustedlogin-hellotrustedlogin' \"$CSS_FILE\""
+
+assert "CSS does NOT contain default un-prefixed tl-test- selectors" \
+    "! grep -qE 'tl-test-' \"$CSS_FILE\""
+
+assert "CSS does NOT contain default un-prefixed tl-auth selector" \
+    "! grep -qE '\\.tl-auth([^a-z0-9_-]|$)' \"$CSS_FILE\""
 
 assert "php -l clean on bootstrap" \
     "$PHP_BIN -l inc/trustedlogin-bootstrap.php > /dev/null 2>&1"
