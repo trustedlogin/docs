@@ -10,6 +10,8 @@ A self-contained, end-to-end walkthrough for integrating the TrustedLogin Client
 
 **With an AI assistant:** Copy everything from "You are a senior WordPress plugin engineer" to the end of this page into a new chat and provide your plugin's repo (or have the assistant clone it). The prompt encodes the full integration workflow — input collection (interactive Q&A or batch YAML), host-side conflict detection, the bootstrap, and a verification checklist. It's self-contained.
 
+**Or fetch this page as raw Markdown.** Every doc on this site is also served at `<url>.md` — so you (or your AI assistant) can fetch [`/Client/integration-prompt.md`](./integration-prompt.md) directly to feed the prompt content into a tool that takes file/URL input. The `.md` form is the source-of-truth Markdown without HTML or styling. Same pattern works for every page on this site: append `.md` to any URL.
+
 **Without an AI assistant:** Read it top-to-bottom as a more thorough version of [Installation](./02-installation) + [Namespacing with Strauss](./namespacing/strauss) + [Configuration](./configuration) + [Merging into an existing composer.json](./namespacing/merging-into-existing-composer). The prompt was distilled from end-to-end testing across real plugins and captures gotchas the per-step docs don't dwell on.
 
 The recipe is verified end-to-end by the [integration tests](https://github.com/trustedlogin/docs/tree/main/tests) in this docs repo — if you follow this prompt and the result differs from what the tests assert, the tests are ground truth.
@@ -77,7 +79,7 @@ sodium_polyfill: false    # true ONLY if your plugin supports WP 4.1–5.1; see 
 
 2. **`title`** — human name shown to customers (e.g. "Pro Block Builder"). Required.
 
-3. **`display_name`** — optional. If set, the UI says "{title} {display_name}" (e.g. "Pro Block Builder Support").
+3. **`display_name`** — optional. If set, the UI says `"{title} {display_name}"` (e.g. "Pro Block Builder Support").
 
 4. **`email`** — support inbox. **Use plus-addressing with the literal `{hash}` token** (e.g. `support+{hash}@example.com`). The SDK substitutes `{hash}` with each grant's site-identifier hash so each grant arrives from a distinct sender — your help desk can match grants to tickets. Don't escape the braces.
 

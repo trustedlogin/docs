@@ -12,7 +12,10 @@
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
-    "docsearch:scrape": "docker run --rm -e APPLICATION_ID -e API_KEY -e CONFIG=\"$(cat docsearch-config.json | jq -r tostring)\" algolia/docsearch-scraper"
+    "docsearch:scrape": "docker run --rm -e APPLICATION_ID -e API_KEY -e CONFIG=\"$(cat docsearch-config.json | jq -r tostring)\" algolia/docsearch-scraper",
+    "mirror-md": "node scripts/mirror-md.js",
+    "prestart": "npm run mirror-md",
+    "prebuild": "npm run mirror-md"
   },
   "dependencies": {
     "@docusaurus/core": "^3.9.2",
