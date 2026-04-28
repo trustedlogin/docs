@@ -1,6 +1,7 @@
 ---
 title: CI/CD
 sidebar_position: 2
+draft: true
 ---
 # Continuous Integration and Continuous Deployment (CI/CD)
 

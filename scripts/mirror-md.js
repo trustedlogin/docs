@@ -112,6 +112,11 @@ function walk( dir ) {
 		const original = fs.readFileSync( full, 'utf-8' );
 		const { fm, body, transformed } = transformFrontmatter( original );
 
+		// Skip drafts entirely — Docusaurus excludes them from production
+		// builds, so they shouldn't be in the public Markdown mirror or
+		// the llms.txt index either.
+		if ( fm.draft === true ) continue;
+
 		fs.mkdirSync( path.dirname( out ), { recursive: true } );
 		fs.writeFileSync( out, transformed );
 		copied++;

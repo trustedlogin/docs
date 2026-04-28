@@ -1,3 +1,7 @@
+---
+draft: true
+---
+
 # The Vault SaaS Token
 
 When accessing Vault, this application uses a special, highly privileged token, we call the "SaaS token".
