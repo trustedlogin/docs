@@ -160,6 +160,66 @@ add_filter( 'trustedlogin/your-namespace/webhook/request_args', function( $args,
 If your webhook endpoint is already configured to receive form-encoded data, you may need to update it to parse JSON instead when switching formats.
 :::
 
+## Composer-related issues with the namespacing setup
+
+### Strauss isn't running — `vendor/bin/strauss` doesn't exist after `composer install`
+
+This is usually a stale `composer.lock`. Composer replays the existing lockfile and silently ignores newly-added requirements. Two fixes:
+
+- Delete `composer.lock` before running `composer install` so Composer re-resolves from scratch.
+- Or run `composer update brianhenryie/strauss scssphp/scssphp trustedlogin/client` to re-resolve only the packages you added.
+
+### `composer install` fails with "Your requirements could not be resolved" mentioning packages I didn't change
+
+Composer 2.9+ enforces security advisories at install time. If your plugin pins old major versions of dev dependencies (commonly `phpunit/phpunit ^7.5` or `yoast/phpunit-polyfills 1.x`) with known advisories, `composer install` fails with an error naming those packages — even though they're unrelated to your TrustedLogin integration.
+
+The error includes the advisory ID (e.g. `PKSA-z3gr-8qht-p93v`). Two fixes:
+
+- **Bump the offending dev dep** (preferred — addresses the actual security issue).
+- **Skip the specific advisory** in `composer.json`:
+
+  ```json
+  "config": {
+      "audit": {
+          "ignore": ["PKSA-z3gr-8qht-p93v"]
+      }
+  }
+  ```
+
+  Replace the advisory ID with whatever Composer reports.
+
+### Strauss runs but produces no output (exit 0)
+
+This is usually `config.classmap-authoritative: true` in your `composer.json`. Under classmap-authoritative, Composer ignores PSR-4 lookups, so Strauss can't resolve `Composer\Factory` and exits silently. Set:
+
+```json
+"config": {
+    "classmap-authoritative": false
+}
+```
+
+You can restore it after install if your release pipeline relies on it.
+
+### `composer install` fatals on plugin code that references WordPress classes
+
+Symptom: install fatals mid-Strauss-run with a confusing error like `Class WP_Widget not found`. This happens when your `composer.json` has `autoload.files` entries that reference WordPress-only classes — Composer eagerly loads `autoload.files` during install, *before* WordPress is loaded.
+
+**Don't add the TrustedLogin bootstrap to `autoload.files`.** Require it from your plugin's main file instead (which already has an ABSPATH check).
+
+If you have *other* `autoload.files` entries that reference WP classes, guard them:
+
+```php
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+    return;
+}
+// rest of file
+```
+
+Use `return;` (not `exit;`) — `exit` aborts the entire `composer install` process; `return;` just skips loading the one file.
+
+For a deeper walkthrough of these and other host-side gotchas, see [Merging into an existing composer.json](/Client/namespacing/merging-into-existing-composer).
+
 ### If scripts aren't loading, check for a No-Conflict mode {#no-conflict-mode}
 
 Some plugins like Gravity Forms and GravityView have a "no-conflict mode" to limit script and style conflicts. If you see
