@@ -28,3 +28,5 @@ docs/.obsidian/
 /static/SaaS/
 /static/Guides/
 /static/*.md
+/static/llms.txt
+/static/llms-full.txt
