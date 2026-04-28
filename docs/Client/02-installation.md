@@ -16,37 +16,44 @@ Run `composer require scssphp/scssphp --dev` to install `scssphp` as a dev depen
 
 This is used to generate and namespace the CSS used by TrustedLogin. If you already have `scssphp` installed, or are [using an alternative way to namespace the CSS](/Client/namespacing/css-namespacing), skip this step.
 
-### 3. Namespace the SDK using [Strauss](/Client/namespacing/strauss) or [PHP-Scoper](/Client/namespacing/php-scoper).
+### 3. Namespace the SDK using [Strauss](/Client/namespacing/strauss) or [PHP-Scoper](/Client/namespacing/php-scoper)
 
 In order to prevent conflicts with other plugins or themes that are using TrustedLogin, you must namespace the TrustedLogin Client SDK.
 
-We support two namespacing tools: Strauss and PHP-Scoper. Choose the one that best fits your needs: 
+We support two namespacing tools:
 
-- [Strauss](/Client/namespacing/strauss)
-- [PHP-Scoper](/Client/namespacing/php-scoper)
+- **[Strauss](/Client/namespacing/strauss) (recommended)** — Composer-installable, uses `delete_vendor_packages: true` to keep the un-namespaced source out of your dev tree.
+- [PHP-Scoper](/Client/namespacing/php-scoper) — alternative; rewrites the SDK into `build/`.
 
-### 4. [Namespace the CSS files](/Client/Namespacing/css-namespacing)
+If you're integrating into a plugin that already has its own `composer.json`, also see [Merging into an existing composer.json](/Client/namespacing/merging-into-existing-composer) for common host-side gotchas.
 
-TrustedLogin CSS files are namespaced so that they don't conflict with other plugins or themes that are using TrustedLogin. 
+### 4. [Namespace the CSS files](/Client/namespacing/css-namespacing)
+
+TrustedLogin CSS files are namespaced so that they don't conflict with other plugins or themes that are using TrustedLogin.
 
 Follow the [CSS Namespacing](/Client/namespacing/css-namespacing) guide.
 
-### 4. Include the autoloader
+### 5. Include the namespaced autoloader
 
-Make sure you have the Composer autoloader included in your plugin or theme. If you already have the autoloader included, you can skip this step.
+Load the namespaced autoloader on **every** page load (admin and front-end). The exact path depends on which namespacing tool you chose:
+
+- **Strauss:** `vendor-namespaced/autoload.php`
+- **PHP-Scoper:** `vendor/autoload.php` after the host classmap is configured (see the PHP-Scoper guide).
 
 ```php
-// Include the Composer autoloader.
-require_once trailingslashit( dirname( __FILE__ ) ) . 'vendor/autoload.php';
+// For a plugin or theme using Strauss:
+require_once trailingslashit( dirname( __FILE__ ) ) . 'vendor-namespaced/autoload.php';
 ```
 
-Make sure to **include the autoloader on all page loads** to ensure the TrustedLogin SDK is available when needed.
+:::warning
+**Don't load `vendor/autoload.php` for the SDK when using Strauss** — that resolves to the un-namespaced original (`\TrustedLogin\Client`) via Composer's classmap, which would defeat the namespacing. Strauss writes its own self-contained autoloader to `vendor-namespaced/`. If your plugin already loads `vendor/autoload.php` for its own dependencies, that's fine — both autoloaders can coexist.
+:::
 
-### 5. Customize the [TrustedLogin configuration](/Client/configuration) options
+### 6. Customize the [TrustedLogin configuration](/Client/configuration) options
 
 The configuration array is where you set up the TrustedLogin Client SDK to work with your plugin or theme. You can customize the configuration to match your needs.
 
-### 6. Instantiate the TrustedLogin Client
+### 7. Instantiate the TrustedLogin Client
 
 :::info
 The TrustedLogin client must be initialized on all page loads, both the front-end and the dashboard.
@@ -75,9 +82,9 @@ add_action( 'plugins_loaded', function() {
         ],
         'role' => 'editor',
     ];
-    
+
     try {
-        new \ProBlockBuilder\TrustedLogin\Client( 
+        new \ProBlockBuilder\TrustedLogin\Client(
             new \ProBlockBuilder\TrustedLogin\Config( $config )
         );
     } catch ( \Exception $exception ) {
@@ -106,43 +113,13 @@ TrustedLogin Client instantiation must be wrapped in a try/catch block. The Trus
 - The configuration is invalid.
 - TrustedLogin is globally disabled.
 - TrustedLogin is disabled for the namespace.
-- The current website lacks expected encryption functions (these _should_ be included in all WordPress installations as well as PHP 7.2).
+- The current website lacks expected encryption functions (these _should_ be included in WordPress 5.2+ and PHP 7.2+).
 
 Wrapping the instantiation in a try/catch block ensures that the site won't crash if TrustedLogin fails to initialize.
 
 ------
 
 ## Advanced
-
-### Vendor directory cleanup
-
-If you find the TrustedLogin directories in your `vendor/` directory to be undesirable for some reason, you may use this configuration for the `trustedlogin` script in Composer.
-
-:::info
-### When you see `ProBlockBuilder`, make sure to replace with your own namespace!
-In the examples below, we're going to pretend your plugin or theme is named "Pro Block Builder" and your business is named Widgets, Co. These should not be the names you use—make sure to update the sample code below to match your business and plugin/theme name!
-:::
-
-Replace this:
-
-```json
-"trustedlogin": [
-  "@php vendor/bin/build-sass --namespace=ProBlockBuilder"
- ],
-```
-
-With this:
-
-```json
-"trustedlogin": [
-  "@php vendor/bin/build-sass --namespace=ProBlockBuilder",
-   "[ -d 'vendor/trustedlogin' ] && rm -rf vendor/trustedlogin || true",
-   "[ -d 'vendor/scssphp' ] && rm -rf vendor/scssphp || true",
-   "[ -d 'vendor/bin' ] && rm -rf vendor/bin/build-sass && rm -rf vendor/bin/pscss || true"
- ],
-```
-
-The script modification will now remove the `trustedlogin`, `scssphp`, and TrustedLogin-related files inside `bin`.
 
 ### Testing on local environments {#testing-on-local-environments}
 
