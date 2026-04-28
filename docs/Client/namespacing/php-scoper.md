@@ -124,7 +124,7 @@ composer install
 
 This installs the dependencies, then triggers the `php-scoper` script via `post-install-cmd`:
 
-1. `build-sass` compiles the SDK's SCSS sources with your prefix, writing the namespaced CSS to `vendor/trustedlogin/client/src/assets/trustedlogin.css` (selectors like `.tl-proBlockBuilder-auth` instead of the default `.tl-test-auth`).
+1. `build-sass` compiles the SDK's SCSS sources with your prefix, writing the namespaced CSS to `vendor/trustedlogin/client/src/assets/trustedlogin.css` (selectors like `.tl-problockbuilder-auth` — `build-sass` lowercases the prefix — instead of the default `.tl-test-auth`).
 2. PHP-Scoper copies the SDK (including the just-compiled CSS) into `build/`, rewriting PHP namespaces.
 3. The shell command removes the un-namespaced original at `vendor/trustedlogin/`.
 4. `composer dump-autoload --classmap-authoritative` regenerates the autoload, scanning `build/` for the prefixed classes and skipping the (now missing) `vendor/trustedlogin/`.
