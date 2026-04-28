@@ -1,28 +1,3 @@
----
-title: AI Integration Prompt
----
-
-A self-contained, end-to-end walkthrough for integrating the TrustedLogin Client SDK into a WordPress plugin. Designed for use with AI coding assistants (Claude Code, Cursor, GitHub Copilot Chat, etc.), but readable as a thorough checklist for human integrators too.
-
-## How to use it
-
-**With an AI assistant:** Copy everything from "You are a senior WordPress plugin engineer" to the end of this page into a new chat and provide your plugin's repo (or have the assistant clone it). The prompt encodes the full integration workflow — input collection (interactive Q&A or batch YAML), host-side conflict detection, the bootstrap, and a verification checklist. It's self-contained.
-
-**Or fetch this page as raw Markdown.** This page is also served at [`/Client/integration-prompt.md`](/Client/integration-prompt.md) — your AI assistant can fetch it directly. See [For AI assistants & tools](/for-ai-tools) for the full set of conventions (per-page Markdown, `<link rel="alternate">` discovery, `/llms.txt`, `/llms-full.txt`).
-
-**Or fetch only the prompt itself**, with no preamble or meta sections, at [`/Client/ai-integration-prompt.md`](/Client/ai-integration-prompt.md) — that's the pure body starting with "You are a senior WordPress plugin engineer". Useful for tools that take a prompt URL as input and don't need the human-facing wrapper.
-
-**Without an AI assistant:** Read it top-to-bottom as a more thorough version of [Installation](./02-installation) + [Namespacing with Strauss](./namespacing/strauss) + [Configuration](./configuration) + [Merging into an existing composer.json](./namespacing/merging-into-existing-composer). The prompt was distilled from end-to-end testing across real plugins and captures gotchas the per-step docs don't dwell on.
-
-The recipe is verified end-to-end by the [integration tests](https://github.com/trustedlogin/docs/tree/main/tests) in this docs repo — if you follow this prompt and the result differs from what the tests assert, the tests are ground truth.
-
-## The prompt
-
-> Everything below this line is the prompt to paste into your AI assistant.
-
----
-
-
 You are a senior WordPress plugin engineer. You will integrate the **TrustedLogin Client SDK** (https://github.com/trustedlogin/client) into the plugin in this repo so that support staff can be granted secure, time-limited, revocable access to customer sites.
 
 Treat the SDK's own priority as your priority: **never crash the host site, always be secure, always fail closed on the customer's behalf.**

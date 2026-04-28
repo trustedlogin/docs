@@ -1223,7 +1223,9 @@ A self-contained, end-to-end walkthrough for integrating the TrustedLogin Client
 
 **With an AI assistant:** Copy everything from "You are a senior WordPress plugin engineer" to the end of this page into a new chat and provide your plugin's repo (or have the assistant clone it). The prompt encodes the full integration workflow — input collection (interactive Q&A or batch YAML), host-side conflict detection, the bootstrap, and a verification checklist. It's self-contained.
 
-**Or fetch this page as raw Markdown.** This page is also served at [`/Client/integration-prompt.md`](pathname:///Client/integration-prompt.md) — your AI assistant can fetch it directly. See [For AI assistants & tools](/for-ai-tools) for the full set of conventions (per-page Markdown, `<link rel="alternate">` discovery, `/llms.txt`, `/llms-full.txt`).
+**Or fetch this page as raw Markdown.** This page is also served at [`/Client/integration-prompt.md`](/Client/integration-prompt.md) — your AI assistant can fetch it directly. See [For AI assistants & tools](/for-ai-tools) for the full set of conventions (per-page Markdown, `<link rel="alternate">` discovery, `/llms.txt`, `/llms-full.txt`).
+
+**Or fetch only the prompt itself**, with no preamble or meta sections, at [`/Client/ai-integration-prompt.md`](/Client/ai-integration-prompt.md) — that's the pure body starting with "You are a senior WordPress plugin engineer". Useful for tools that take a prompt URL as input and don't need the human-facing wrapper.
 
 **Without an AI assistant:** Read it top-to-bottom as a more thorough version of [Installation](./02-installation) + [Namespacing with Strauss](./namespacing/strauss) + [Configuration](./configuration) + [Merging into an existing composer.json](./namespacing/merging-into-existing-composer). The prompt was distilled from end-to-end testing across real plugins and captures gotchas the per-step docs don't dwell on.
 
@@ -3784,9 +3786,9 @@ Append `.md` to any URL on this site to fetch the raw Markdown source instead of
 
 | Rendered HTML | Raw Markdown |
 | --- | --- |
-| [`/Client/intro`](/Client/intro) | [`/Client/intro.md`](pathname:///Client/intro.md) |
-| [`/Client/integration-prompt`](/Client/integration-prompt) | [`/Client/integration-prompt.md`](pathname:///Client/integration-prompt.md) |
-| [`/Client/troubleshooting`](/Client/troubleshooting) | [`/Client/troubleshooting.md`](pathname:///Client/troubleshooting.md) |
+| [`/Client/intro`](/Client/intro) | [`/Client/intro.md`](/Client/intro.md) |
+| [`/Client/integration-prompt`](/Client/integration-prompt) | [`/Client/integration-prompt.md`](/Client/integration-prompt.md) |
+| [`/Client/troubleshooting`](/Client/troubleshooting) | [`/Client/troubleshooting.md`](/Client/troubleshooting.md) |
 
 The Markdown form has the same content as the rendered page, with public-friendly frontmatter (`title`, `description`, `keywords` only — Docusaurus-internal fields like `sidebar_position` are stripped). Admonitions like `:::tip` and `:::warning` are preserved verbatim — most Markdown parsers handle them transparently.
 
@@ -3813,7 +3815,7 @@ Both files are regenerated on every site build, so they're always in sync with t
 
 If you're an AI assistant integrating TrustedLogin into a customer's plugin:
 
-1. **For a focused integration task:** fetch [`/Client/integration-prompt.md`](pathname:///Client/integration-prompt.md) — it's a self-contained walkthrough including input collection, host-side conflict detection, the bootstrap, and a verification checklist.
+1. **For a focused integration task:** fetch [`/Client/ai-integration-prompt.md`](/Client/ai-integration-prompt.md) — pure prompt body, no preamble. Self-contained walkthrough including input collection, host-side conflict detection, the bootstrap, and a verification checklist. (The same page wrapped with human-friendly intro is at [`/Client/integration-prompt.md`](/Client/integration-prompt.md).)
 2. **For broader context (multiple docs):** fetch [`/llms-full.txt`](/llms-full.txt) — single fetch, full corpus.
 3. **For navigation and discovery:** fetch [`/llms.txt`](/llms.txt) and follow the per-section links.
 
