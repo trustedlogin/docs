@@ -42,7 +42,7 @@ Both files are regenerated on every site build, so they're always in sync with t
 
 If you're an AI assistant integrating TrustedLogin into a customer's plugin:
 
-1. **For a focused integration task:** fetch [`/Client/integration-prompt.md`](pathname:///Client/integration-prompt.md) — it's a self-contained walkthrough including input collection, host-side conflict detection, the bootstrap, and a verification checklist.
+1. **For a focused integration task:** fetch [`/Client/ai-integration-prompt.md`](pathname:///Client/ai-integration-prompt.md) — pure prompt body, no preamble. Self-contained walkthrough including input collection, host-side conflict detection, the bootstrap, and a verification checklist. (The same page wrapped with human-friendly intro is at [`/Client/integration-prompt.md`](pathname:///Client/integration-prompt.md).)
 2. **For broader context (multiple docs):** fetch [`/llms-full.txt`](/llms-full.txt) — single fetch, full corpus.
 3. **For navigation and discovery:** fetch [`/llms.txt`](/llms.txt) and follow the per-section links.
 

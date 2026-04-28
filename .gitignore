@@ -30,3 +30,4 @@ docs/.obsidian/
 /static/*.md
 /static/llms.txt
 /static/llms-full.txt
+/static/Client/ai-integration-prompt.md
