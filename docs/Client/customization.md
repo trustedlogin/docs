@@ -167,7 +167,7 @@ Here is sample HTML output for the button:
 
 ### `{{reference}}` placeholder
 
-If reference IDs are being displayed (controlled by the [`trustedlogin/{namespace}/template/auth/display_reference`](#trustedloginnamespacetemplateauthdisplay_reference) filter, render the reference ouput.
+If reference IDs are being displayed (controlled by the [`trustedlogin/{namespace}/template/auth/display_reference`](hooks#trustedloginnamespacetemplateauthdisplay_reference) filter, render the reference ouput.
 
 ```html 
 <div class="tl-{{ns}}-auth__ref"><p><span class="tl-{{ns}}-auth_ref__id">{{reference_text}}</span></p></div>
