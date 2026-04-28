@@ -1,3 +1,7 @@
+---
+draft: true
+---
+
 # Elasticsearch
 
 Elasticsearch is used to log access and usage data, as well as to display that data in the UI.

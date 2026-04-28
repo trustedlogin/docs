@@ -1,3 +1,7 @@
+---
+draft: true
+---
+
 # Working with Vault
 
 An instance of [HashiCorp Vault](https://www.vaultproject.io) is used to store all sensitive data about customer sites.

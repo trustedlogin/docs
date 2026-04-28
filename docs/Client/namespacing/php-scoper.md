@@ -5,26 +5,39 @@ sidebar: auto
 sidebar_position: 2
 ---
 
-## Using PHP-Scoper
+# Namespacing with PHP-Scoper
 
-PHP-Scoper may be used for namespacing the TrustedLogin client to prevent conflicts with other plugins or themes that are using TrustedLogin.
+PHP-Scoper is an alternative to [Strauss](./strauss) for namespacing the TrustedLogin Client SDK. Both achieve the same goal: prevent class collisions when multiple plugins ship the SDK.
 
-### 1. Install PHP-Scoper
+PHP-Scoper rewrites the SDK into a `build/` directory with a prefixed namespace, leaving the original `vendor/` alone. You'll then point Composer's classmap at `build/`, regenerate the autoloader, and remove the un-namespaced original from `vendor/`.
 
-Follow the instructions in the [PHP-Scoper documentation](https://github.com/humbug/php-scoper/blob/main/docs/installation.md#installation) to install PHP-Scoper.
+:::info
+### When you see `ProBlockBuilder`, replace with your own namespace
+The examples below use "Pro Block Builder" / "Widgets, Co." as a placeholder. Use a unique prefix for your business or plugin.
+:::
 
-### 2. Install the TrustedLogin Client SDK
+If you're integrating into a plugin that already has its own `composer.json`, also see [Merging into an existing composer.json](./merging-into-existing-composer) for common host-side gotchas.
 
-1. Run `composer require trustedlogin/client:dev-main` to install the TrustedLogin Client SDK
-1. Run `composer require scssphp/scssphp --dev` to install `scssphp` as a dev dependency. This is used to generate and namespace the CSS used by TrustedLogin. If you already have `scssphp` installed, or are [using an alternative way to namespace the CSS](/Client/namespacing/css-namespacing), skip this step.
+## Step 1. Install PHP-Scoper
 
-## Create or modify the PHP-Scoper Configuration
+```bash
+composer require --dev humbug/php-scoper
+```
 
-When using PHP-Scoper to prefix the TrustedLogin client, you will need to update the configuration to include additional files or classes that should not be prefixed.
+This installs PHP-Scoper at `vendor/bin/php-scoper`.
 
-To update the PHP-Scoper configuration, you create a `scoper.inc.php` file in the root of your project. This file should return an array with the configuration options for PHP-Scoper.
+## Step 2. Install the TrustedLogin Client SDK
 
-Here is an example of a PHP-Scoper configuration file that includes additional files and classes that should not be prefixed in TrustedLogin:
+```bash
+composer require trustedlogin/client:dev-main
+composer require scssphp/scssphp --dev
+```
+
+`scssphp` is used to namespace the bundled CSS. Skip if you've already installed it or are [using an alternative way to namespace CSS](/Client/namespacing/css-namespacing).
+
+## Step 3. Create `scoper.inc.php`
+
+Create `scoper.inc.php` in your project root:
 
 ```php
 <?php
@@ -34,148 +47,109 @@ declare( strict_types=1 );
 use Isolated\Symfony\Component\Finder\Finder;
 
 return [
-
-	/*
-	 * By default when running php-scoper add-prefix, it will prefix all relevant code found in the current working
-	 * directory. You can however define which files should be scoped by defining a collection of Finders in the
-	 * following configuration key.
-	 *
-	 * For more see: https://github.com/humbug/php-scoper#finders-and-paths
-	 */
-	'finders'                    => [
-		Finder::create()->files()->in( 'vendor/trustedlogin/client' )->name( [
-			'LICENSE',
-			'composer.json'
-		] ),
-		Finder::create()->files()->in( 'vendor/trustedlogin/client/src' )->name( [
-			'*.php',
-			'*.css',
-			'*.js',
-		] ),
-	],
-
-	/*
-	 * When scoping PHP files, there will be scenarios where some of the code being scoped indirectly references the
-	 * original namespace. These will include, for example, strings or string manipulations. PHP-Scoper has limited
-	 * support for prefixing such strings. To circumvent that, you can define patchers to manipulate the file to your
-	 * heart contents.
-	 *
-	 * For more see: https://github.com/humbug/php-scoper#patchers
-	 */
-	'patchers' => [
-		/**
-		 * Replaces the Adapter prefixed versions with the original ones.
-		 *
-		 * @param string $filePath The path of the current file.
-		 * @param string $prefix   The prefix to be used.
-		 * @param string $content  The content of the specific file.
-		 *
-		 * @return string The modified content.
-		 */
-		function( $file_path, $prefix, $content ) {
-
-            // This is a list of classes and functions that TrustedLogin uses that should not be prefixed.
-			$trustedlogin_allowlist = [
-				'DateTime',
-				'Exception',
-				'ImagickException',
-				'RuntimeException',
-				'WP_Admin_Bar',
-				'WP_Debug_Data',
-				'WP_Error',
-				'WP_Filesystem_Base',
-				'WP_Filesystem',
-				'wp_get_environment_type',
-				'WP_User',
-			];
-
-			foreach ( $trustedlogin_allowlist as $class ) {
-				$content = str_replace( [
-					$prefix . '\\' . $class, // Adapter-prefixed.
-					$prefix . '\\\\' . $class // Catch double-escaped classes.
-				], $class, $content );
-			}
-
-			return $content;
-		},
-	],
+    'finders' => [
+        Finder::create()->files()->in( 'vendor/trustedlogin/client' )->name( [ 'LICENSE', 'composer.json' ] ),
+        Finder::create()->files()->in( 'vendor/trustedlogin/client/src' )->name( [ '*.php', '*.css', '*.js' ] ),
+    ],
+    'patchers' => [
+        function ( $file_path, $prefix, $content ) {
+            // Classes and functions that TrustedLogin uses that should NOT be prefixed.
+            $allowlist = [
+                'DateTime', 'Exception', 'ImagickException', 'RuntimeException',
+                'WP_Admin_Bar', 'WP_Debug_Data', 'WP_Error', 'WP_Filesystem_Base',
+                'WP_Filesystem', 'WP_User', 'wp_get_environment_type',
+            ];
+            foreach ( $allowlist as $class ) {
+                $content = str_replace(
+                    [ $prefix . '\\' . $class, $prefix . '\\\\' . $class ],
+                    $class,
+                    $content
+                );
+            }
+            return $content;
+        },
+    ],
 ];
 ```
 
-## 3. Run PHP-Scoper
+## Step 4. Update your `composer.json`
 
-After you have created or updated the PHP-Scoper configuration, you can run PHP-Scoper to prefix the TrustedLogin client. Run the following command:
-
-:::info
-### When you see `ProBlockBuilder`, make sure to replace with your own namespace! {#when-you-see-problockbuilder-make-sure-to-replace-with-your-own-namespace}
-In the examples below, we're going to pretend your plugin or theme is named "Pro Block Builder" and your business is named Widgets, Co. These should not be the names you use—make sure to update the sample code below to match your business and plugin/theme name!
-:::
-
-### Using the PHP-Scoper Phar
-
-```bash
-php php-scoper.phar add-prefix --prefix=ProBlockBuilder
-```
-
-### Using the PHP-Scoper Composer Package
-
-```bash
-composer php-scoper add-prefix --prefix=ProBlockBuilder
-```
-
-### Using phive-installed PHP-Scoper
-
-```bash
-tools/php-scoper add-prefix --prefix="ProBlockBuilder"
-```
-
-PHP-Scoper will prefix the TrustedLogin client files and generate a `build/` directory.
-
-## 4. Update the Composer Autoloader
-
-After PHP-Scoper has prefixed the TrustedLogin client files, you will need to update the Composer autoloader to include the new `build/` directory. To do this, add the following to your `composer.json` file:
+Add the `autoload.classmap` entry pointing at `build/`, the `classmap-authoritative` setting (so bare-namespace lookups can't fall through to PSR-4), and the build script:
 
 ```json
 "autoload": {
-    "classmap": [
-        "vendor",
-        "build"
-    ]
-}
-```
-
-After updating the Composer autoloader, run `composer dump-autoload` to update the autoloader.
-
-### 5. Include the autoloader
-
-When using Composer, you likely already have added an autoloader to your code, using something like `require_once 'vendor/autoload.php';`.
-
-If your PHP-Scoper build isn't picked up by the autoloader, you may need to include the autoloader in your code.
-
-```php
-// For a plugin or theme:
-include_once trailingslashit( dirname( __FILE__ ) ) . 'build/autoload.php';
-```
-
-## 6. Add a Composer Script
-
-You can also add a Composer script to run PHP-Scoper automatically when you run `composer install` or `composer update`. To do this, add the following to your `composer.json` file:
-
-```json
+    "classmap": ["build"]
+},
+"config": {
+    "allow-plugins": {
+        "composer/installers": true
+    },
+    "classmap-authoritative": true
+},
 "scripts": {
     "php-scoper": [
-        "@php php-scoper.phar add-prefix --prefix=ProBlockBuilder",
-        "composer dump-autoload --working-dir build --classmap-authoritative"
+        "@php vendor/trustedlogin/client/bin/build-sass --namespace=ProBlockBuilder --assets_dir=vendor/trustedlogin/client/src/assets --export_dir=vendor/trustedlogin/client/src/assets",
+        "vendor/bin/php-scoper add-prefix --prefix=ProBlockBuilder --force --quiet",
+        "rm -rf vendor/trustedlogin",
+        "@composer dump-autoload --classmap-authoritative"
     ],
-    "post-install-cmd": [
-        "@php-scoper"
-    ],
-    "post-update-cmd": [
-        "@php-scoper"
-    ]
+    "post-install-cmd": [ "@php-scoper" ],
+    "post-update-cmd": [ "@php-scoper" ]
 }
 ```
 
-That will run PHP-Scoper and update the autoloader after you run `composer install` or `composer update`. Read more [on the PHP-Scoper documentation](https://github.com/humbug/php-scoper/tree/main?tab=readme-ov-file#step-2-run-php-scoper).
+:::warning
+**Do not include `"vendor"` in this classmap.** Adding `vendor` re-exposes the bare un-namespaced `\TrustedLogin\` classes alongside your prefixed ones, defeating the namespacing. Point the classmap at `build/` only.
+:::
 
-### 6. Follow [these directions to configure and instantiate the client](../configuration)
+:::note Cross-platform note
+The `rm -rf vendor/trustedlogin` line is shell, not PHP, so it requires Mac/Linux/WSL. On native Windows you'll need to substitute the equivalent (`rmdir /S /Q vendor\trustedlogin` from `cmd`, or `Remove-Item -Recurse -Force vendor\trustedlogin` from PowerShell), or replace it with a small PHP cleanup script committed to your plugin.
+:::
+
+## Step 5. Create the empty `build/` directory before the first install
+
+Composer's autoload generation scans the `autoload.classmap` entries during `composer install`, *before* `post-install-cmd` runs. If `build/` doesn't exist on the first install, the scan errors out. Create it once:
+
+```bash
+mkdir -p build
+```
+
+(After the first run, `build/` is populated by PHP-Scoper and stays present across subsequent installs. The `mkdir` is only needed once per fresh checkout.)
+
+## Step 6. Run `composer install`
+
+```bash
+composer install
+```
+
+This installs the dependencies, then triggers the `php-scoper` script via `post-install-cmd`:
+
+1. `build-sass` compiles the SDK's SCSS sources with your prefix, writing the namespaced CSS to `vendor/trustedlogin/client/src/assets/trustedlogin.css` (selectors like `.tl-problockbuilder-auth` — `build-sass` lowercases the prefix — instead of the default `.tl-test-auth`).
+2. PHP-Scoper copies the SDK (including the just-compiled CSS) into `build/`, rewriting PHP namespaces.
+3. The shell command removes the un-namespaced original at `vendor/trustedlogin/`.
+4. `composer dump-autoload --classmap-authoritative` regenerates the autoload, scanning `build/` for the prefixed classes and skipping the (now missing) `vendor/trustedlogin/`.
+
+After this completes:
+- `build/` contains the prefixed SDK with `build/src/assets/trustedlogin.css` carrying your prefixed selectors.
+- `vendor/trustedlogin/` is gone.
+- `vendor/composer/autoload_classmap.php` resolves your prefixed `\ProBlockBuilder\TrustedLogin\Client` to `build/src/Client.php`.
+
+## Step 7. Include the autoloader
+
+In your plugin's bootstrap:
+
+```php
+require_once trailingslashit( dirname( __FILE__ ) ) . 'vendor/autoload.php';
+```
+
+After steps 4–6, `vendor/autoload.php` resolves your prefixed classes (via the classmap pointing at `build/`) and the bare un-namespaced classes are unreachable (because `vendor/trustedlogin/` is gone and `classmap-authoritative` disables PSR-4 fallback).
+
+## Step 8. Configure and instantiate the Client
+
+Follow [the directions to configure and instantiate the client](../configuration). Use your prefix:
+
+```php
+new \ProBlockBuilder\TrustedLogin\Client(
+    new \ProBlockBuilder\TrustedLogin\Config( $config )
+);
+```

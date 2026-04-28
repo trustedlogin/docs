@@ -1,3 +1,7 @@
+---
+draft: true
+---
+
 # Vault API Client
 
 The Vault API client is used to make HTTP requests to the Vault instance.

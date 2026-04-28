@@ -2,6 +2,7 @@
 title: Server Setup
 sidebar: auto
 sidebar_position: 2
+draft: true
 ---
 
 # TrustedLogin SaaS Server Setup

@@ -1,6 +1,7 @@
 ---
 title: CLI
 sidebar_position: 3
+draft: true
 ---
 # Command Line Interface
 

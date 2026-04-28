@@ -53,6 +53,42 @@ const config = {
     ],
   ],
 
+  // Adds <link rel="alternate" type="text/markdown" href="<path>.md"> on every
+  // page so AI crawlers can auto-discover the raw Markdown form mirrored by
+  // scripts/mirror-md.js. See /for-ai-tools for the full ingestion conventions.
+  clientModules: [
+    require.resolve('./src/clientModules/markdownAlternate.js'),
+  ],
+
+  plugins: [
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        // SaaS internal infrastructure pages were previously published. They
+        // describe Vault tokens, Kubernetes secrets, deployment internals,
+        // etc. and shouldn't be public — they're now drafted (so they 404 in
+        // production) but old bookmarks and external links still exist.
+        // Redirect each to /SaaS/intro (the public SaaS overview).
+        //
+        // Note: GitHub Pages can't issue real HTTP 301s, so this plugin emits
+        // a small HTML page at each `from` URL that meta-refreshes + JS
+        // navigates to `to`. Search engines treat it as a redirect (SEO
+        // weight slightly less than a true 301, but functional for users).
+        redirects: [
+          { from: '/SaaS/vault-sass-token',          to: '/SaaS/intro' },
+          { from: '/SaaS/vault',                     to: '/SaaS/intro' },
+          { from: '/SaaS/vault-client',              to: '/SaaS/intro' },
+          { from: '/SaaS/CI-CD',                     to: '/SaaS/intro' },
+          { from: '/SaaS/server-setup',              to: '/SaaS/intro' },
+          { from: '/SaaS/cli',                       to: '/SaaS/intro' },
+          { from: '/SaaS/elasticsearch',             to: '/SaaS/intro' },
+          { from: '/SaaS/webhooks',                  to: '/SaaS/intro' },
+          { from: '/SaaS/user-remote-authentication', to: '/SaaS/intro' },
+        ],
+      },
+    ],
+  ],
+
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
@@ -64,12 +100,8 @@ const config = {
           srcDark: 'img/TrustedLogin-Horizontal-White.svg',
         },
         items: [
-          {
-            type: 'doc',
-            label: 'Guides',
-            position: 'left',
-            docId: 'Guides/index',
-          },
+          // Guides nav item removed — content kept on disk at docs/Guides/
+          // but not surfaced until the section is ready to ship.
           {
             type: 'doc',
             label: 'Client SDK',
@@ -122,6 +154,10 @@ const config = {
               {
                 label: 'GitHub',
                 href: 'https://github.com/trustedlogin/',
+              },
+              {
+                label: 'For AI assistants & tools',
+                to: '/for-ai-tools',
               },
             ],
           },
