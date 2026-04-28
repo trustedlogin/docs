@@ -64,12 +64,8 @@ const config = {
           srcDark: 'img/TrustedLogin-Horizontal-White.svg',
         },
         items: [
-          {
-            type: 'doc',
-            label: 'Guides',
-            position: 'left',
-            docId: 'Guides/index',
-          },
+          // Guides nav item removed — content kept on disk at docs/Guides/
+          // but not surfaced until the section is ready to ship.
           {
             type: 'doc',
             label: 'Client SDK',
