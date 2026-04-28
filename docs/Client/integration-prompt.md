@@ -10,7 +10,7 @@ A self-contained, end-to-end walkthrough for integrating the TrustedLogin Client
 
 **With an AI assistant:** Copy everything from "You are a senior WordPress plugin engineer" to the end of this page into a new chat and provide your plugin's repo (or have the assistant clone it). The prompt encodes the full integration workflow — input collection (interactive Q&A or batch YAML), host-side conflict detection, the bootstrap, and a verification checklist. It's self-contained.
 
-**Or fetch this page as raw Markdown.** Every doc on this site is also served at `<url>.md` — so you (or your AI assistant) can fetch [`/Client/integration-prompt.md`](./integration-prompt.md) directly to feed the prompt content into a tool that takes file/URL input. The `.md` form is the source-of-truth Markdown without HTML or styling. Same pattern works for every page on this site: append `.md` to any URL.
+**Or fetch this page as raw Markdown.** This page is also served at [`/Client/integration-prompt.md`](pathname:///Client/integration-prompt.md) — your AI assistant can fetch it directly. See [For AI assistants & tools](/for-ai-tools) for the full set of conventions (per-page Markdown, `<link rel="alternate">` discovery, `/llms.txt`, `/llms-full.txt`).
 
 **Without an AI assistant:** Read it top-to-bottom as a more thorough version of [Installation](./02-installation) + [Namespacing with Strauss](./namespacing/strauss) + [Configuration](./configuration) + [Merging into an existing composer.json](./namespacing/merging-into-existing-composer). The prompt was distilled from end-to-end testing across real plugins and captures gotchas the per-step docs don't dwell on.
 

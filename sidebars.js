@@ -26,6 +26,10 @@ const sidebars = {
 			type: 'doc',
 			id: 'flows',
 		},
+		{
+			type: 'doc',
+			id: 'for-ai-tools',
+		},
 	],
 	// Guides sidebar removed — content kept on disk at docs/Guides/ but
 	// not surfaced in nav until the section is ready to ship. To restore,

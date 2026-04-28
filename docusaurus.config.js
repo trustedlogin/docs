@@ -53,6 +53,13 @@ const config = {
     ],
   ],
 
+  // Adds <link rel="alternate" type="text/markdown" href="<path>.md"> on every
+  // page so AI crawlers can auto-discover the raw Markdown form mirrored by
+  // scripts/mirror-md.js. See /for-ai-tools for the full ingestion conventions.
+  clientModules: [
+    require.resolve('./src/clientModules/markdownAlternate.js'),
+  ],
+
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
@@ -118,6 +125,10 @@ const config = {
               {
                 label: 'GitHub',
                 href: 'https://github.com/trustedlogin/',
+              },
+              {
+                label: 'For AI assistants & tools',
+                to: '/for-ai-tools',
               },
             ],
           },
