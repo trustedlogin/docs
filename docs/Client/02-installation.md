@@ -4,6 +4,10 @@ sidebar: auto
 sidebar_position: 2
 ---
 
+:::tip Using an AI coding assistant?
+Paste the [AI Integration Prompt](./integration-prompt) into Claude Code, Cursor, GitHub Copilot Chat, etc. It bundles every step on this page (plus host-side conflict detection for plugins with an existing `composer.json`, and a verification checklist) into a single self-contained recipe. Distilled from end-to-end testing across real plugins. Also reads as a thorough manual checklist if you want the deepest walkthrough.
+:::
+
 ## Including in your plugin or theme {#including-in-your-plugin-or-theme}
 
 ### 1. Install the TrustedLogin SDK using Composer
