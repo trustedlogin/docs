@@ -5,7 +5,7 @@ sidebar_position: 8
 
 # Envelope Signature Verification
 
-When a customer grants you support access, TrustedLogin's SaaS hands your Connector an **envelope** — an encrypted blob carrying the bearer identifier your Connector will use to sign the support session into the customer site. Your Connector decrypts the envelope, then redirects the support agent into the customer site.
+When a customer grants you support access, TrustedLogin's SaaS hands your Connector an **envelope** — an encrypted blob carrying the bearer identifier your Connector will use to sign the support session into the customer site. Your Connector decrypts the envelope and redirects the support agent into the customer site.
 
 Envelope **signature verification** is the additional check that proves the envelope you're decrypting actually came from TrustedLogin's SaaS and was not tampered with in transit. The SaaS signs every envelope with an Ed25519 secret key; your Connector verifies the signature with the matching public key before doing anything with the envelope.
 
@@ -19,25 +19,43 @@ With signature verification configured:
 - A swapped or tampered envelope is rejected before any decryption happens.
 - A compromised SaaS cannot trick your Connector into granting access to a site you didn't ask about.
 
-## How to enable it
+## How it works (the happy path)
 
-You need three things:
+You don't have to do anything. As soon as TrustedLogin's SaaS publishes a signing key, your Connector fetches it on the next envelope verification, pins it in the `trustedlogin_vendor_saas_envelope_public_key` option, and verifies every subsequent envelope against that pinned key.
 
-1. **The TrustedLogin SaaS public key.** Find it in your TrustedLogin account settings under **Vendor Site → Envelope Signing Key**. It's a 64-character hex string.
-2. **A way to store the key on the Connector.** Either save it as a WordPress option named `trustedlogin_vendor_saas_envelope_public_key`, or return it from the `trustedlogin/connector/envelope/saas-public-key` filter.
-3. **Confirmation that hard-mode enforcement is on.** This is the default whenever a key is configured — you don't have to do anything else.
+If TrustedLogin ever rotates the signing key (rare, manually-driven event), the Connector detects the change on the next verification, pins the new key, and continues. The rotation is logged for your records.
 
-### Storing the key as an option
+This is the default. Most integrators never need to touch any setting.
 
-The simplest approach. Save the key once via WP-CLI:
+## When you'll see the admin notice
+
+If your Connector cannot verify envelope signatures — for example, because TrustedLogin's SaaS isn't publishing a signing key, or because your Connector couldn't reach the SaaS to fetch one — the TrustedLogin admin pages display a persistent warning:
+
+> **Envelope signature verification is off.** Your Connector currently accepts envelopes from TrustedLogin's SaaS without verifying their signatures. Anyone who could substitute or tamper with an envelope in transit could redirect support sessions to the wrong site.
+
+If you see this notice and TrustedLogin's SaaS *is* signing envelopes, your Connector probably hit a network issue at activation. The next successful envelope verification will retry the fetch and the notice will clear.
+
+## Manually setting the key
+
+You only need to do this if:
+
+- You've disabled automatic key fetching (see below) and want strict out-of-band trust establishment.
+- You're running a self-hosted SaaS that publishes the key somewhere other than the standard endpoint.
+
+Two ways to set the key by hand:
+
+### Via WP-CLI
 
 ```bash
-wp option update trustedlogin_vendor_saas_envelope_public_key 'a1b2c3d4...your 64-char hex key here...'
+# Fetch the SaaS's currently-published key.
+curl https://app.trustedlogin.com/api/v1/envelope-signing-public-key
+# {"publicKey":"a1b2c3...your 64-char hex key here..."}
+
+# Pin it on the Connector.
+wp option update trustedlogin_vendor_saas_envelope_public_key 'a1b2c3...'
 ```
 
-After that, every envelope verification on the Connector reads from this option.
-
-### Storing the key in code
+### Via the saas-public-key filter
 
 If you'd rather keep the key out of the database (e.g. you store it in environment variables alongside other secrets), wire it via the filter:
 
@@ -52,15 +70,15 @@ add_filter(
 
 The filter takes precedence over the option when both are set.
 
-## What happens when verification is disabled
+## Disabling automatic key fetching
 
-If no key is configured (no option, no filter), your Connector cannot enforce signatures it has nothing to verify against — so signed envelopes are accepted on trust.
+If you want strict out-of-band trust establishment — e.g. you require a human to verify the key fingerprint before the Connector trusts it — you can disable both the trust-on-first-use fetch and the rotation refetch:
 
-When this is the case, the TrustedLogin admin pages display a persistent warning:
+```php
+add_filter( 'trustedlogin/connector/envelope/auto-fetch-key', '__return_false' );
+```
 
-> **Envelope signature verification is off.** Your Connector currently accepts envelopes from TrustedLogin's SaaS without verifying their signatures. Anyone who could substitute or tamper with an envelope in transit could redirect support sessions to the wrong site.
-
-The warning links back to this page. It only shows on TrustedLogin admin pages and is only visible to administrators.
+With this filter in place, you must set the key manually via WP-CLI or the `saas-public-key` filter. Rotations also become manual: when TrustedLogin announces a key rotation, you set the new key by hand.
 
 ## Soft-mode rollout (escape hatch)
 
@@ -88,4 +106,12 @@ Filters whether envelopes must carry a valid signature before the Connector will
 
 | Parameter | Type | Description |
 |---|---|---|
-| `$enforce` | `bool` | Defaults to `true` whenever a verification key is configured (i.e. whenever `EnvelopeVerifier::is_enabled()` returns true). Defaults to `false` when no key is configured (you cannot enforce what you cannot verify). Return `false` explicitly to opt back into soft-mode during a rollout. |
+| `$enforce` | `bool` | Defaults to `true` whenever a verification key is configured. Defaults to `false` when no key is configured (you cannot enforce what you cannot verify). Return `false` explicitly to opt back into soft-mode during a rollout. |
+
+### `trustedlogin/connector/envelope/auto-fetch-key`
+
+Filters whether the Connector may fetch the SaaS envelope-signing public key automatically.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `$enabled` | `bool` | Defaults to `true`. Both trust-on-first-use and the rotation-detection refetch are gated on this filter. Return `false` to require manual key delivery via the option or the `saas-public-key` filter. |
