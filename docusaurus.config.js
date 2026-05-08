@@ -159,7 +159,12 @@ const config = {
           { from: '/Developers/Client/namespacing/strauss',            to: '/Client/namespacing/strauss' },
           { from: '/Developers/Connector-development',                 to: '/Connector/Developers/development' },
           { from: '/Developers/Connector-hooks',                       to: '/Connector/Developers/hooks' },
-          { from: '/Developers/Connector-encrypted-messages',          to: '/Connector/Developers/encrypted-messages' },
+          // /Developers/Connector-encrypted-messages used to redirect to
+          // /Connector/Developers/encrypted-messages, but the page has
+          // been pulled — Encrypted Messages was documented before it
+          // shipped. Land on /Connector/intro instead.
+          { from: '/Developers/Connector-encrypted-messages',          to: '/Connector/intro' },
+          { from: '/Connector/encrypted-messages',                     to: '/Connector/intro' },
           { from: '/Developers/Connector-envelope-signature-verification', to: '/Connector/Developers/envelope-signature-verification' },
           { from: '/Developers/Connector-running-behind-a-proxy',      to: '/Connector/Developers/running-behind-a-proxy' },
           { from: '/Developers/Connector-secrets',                     to: '/Connector/secrets' },
