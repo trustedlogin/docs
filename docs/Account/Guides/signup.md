@@ -7,7 +7,7 @@ sidebar_position: 1
 
 # Getting started: your first sign-up
 
-This walkthrough covers everything from creating your TrustedLogin account through seeing your first dashboard and turning on two-factor authentication. If you get stuck at any step, check [the Getting Started guide](../../getting-started.md) or reach out through the support link in your account.
+This walkthrough covers everything from creating your TrustedLogin account through seeing your first dashboard and turning on two-factor authentication. If you get stuck at any step, check [the Getting Started guide](../getting-started.md) or reach out through the support link in your account.
 
 ## 1. Create your account
 
@@ -37,35 +37,33 @@ Didn't get the email? Check spam, then use **Resend verification email** to send
 
 <!-- Captured from http://localhost:8090/email/verify -->
 
-## 4. Welcome to your dashboard
+## 4. Enable two-factor authentication
 
-This is your team's home. We've already created a personal team for you (named after you) on our free plan — 3 connected sites and 10 support logins per billing cycle, no credit card needed.
+TrustedLogin requires two-factor authentication on every account, so the moment your email is verified you'll land here. Scan the QR code with any authenticator app — 1Password, Authy, Google Authenticator, Microsoft Authenticator all work the same way. Your app will start showing a six-digit code that changes every 30 seconds.
+
+Enter the current code from your app into the **Token** field and click **Enable 2FA**. From then on, you'll enter a code from your authenticator app every time you sign in.
+
+![Enable two-factor authentication](/img/guides/signup/04-enable-two-factor-authentication.png)
+
+<!-- Captured from http://localhost:8090/2fa-enable -->
+
+## 5. Welcome to your dashboard
+
+Once 2FA is set up, this is your team's home. We've already created a personal team for you (named after you) on our free plan — 3 connected sites and 10 support logins per billing cycle, no credit card needed.
 
 You don't have any sites yet, so the **Recent support access** card is empty. Your next step is to install the TrustedLogin Connector plugin on a WordPress site — the link in that card walks you through it.
 
-![Welcome to your dashboard](/img/guides/signup/04-welcome-to-your-dashboard.png)
+![Welcome to your dashboard](/img/guides/signup/05-welcome-to-your-dashboard.png)
 
 <!-- Captured from http://localhost:8090/admin/dashboard -->
 
-## 5. Set up your profile
+## 6. Set up your profile
 
-Click your avatar or the **User settings** link to update your name, email, or password. Two-factor authentication (2FA) is also enabled here.
+Click your avatar or the **User settings** link to update your name, email, or password whenever you need to. This is also where you regenerate 2FA recovery codes if you ever lose the device with your authenticator app — keep them somewhere safe, because losing both is the only thing that can lock you out of your own account.
 
-2FA is a second step when you sign in — a six-digit code from an authenticator app — so even if someone gets your password they can't get into your account. **2FA is required on TrustedLogin; you can't turn it off once you enable it.**
-
-![Set up your profile](/img/guides/signup/05-set-up-your-profile.png)
+![Set up your profile](/img/guides/signup/06-set-up-your-profile.png)
 
 <!-- Captured from http://localhost:8090/admin/user-settings -->
-
-## 6. Enable two-factor authentication
-
-Scan the QR code with any authenticator app — 1Password, Authy, Google Authenticator, Microsoft Authenticator all work the same way. Your app will start showing a six-digit code that changes every 30 seconds.
-
-Enter the current code from your app into the **Token** field and click **Enable 2FA**. That's it — from now on, you'll enter a code from your authenticator app every time you sign in.
-
-![Enable two-factor authentication](/img/guides/signup/06-enable-two-factor-authentication.png)
-
-<!-- Captured from http://localhost:8090/2fa-enable -->
 
 ## 7. See your plan and buy extra credits
 
@@ -79,6 +77,6 @@ If you'd rather not think about topping up, scroll to the **auto-reload** sectio
 
 ## What to do next
 
-1. **[Install the Connector plugin](../../Connector/01-intro.md)** on the WordPress site where you'll receive support requests.
-2. **[Add TrustedLogin to your plugin or theme](../../Client/01-intro.md)** so your customers can grant you secure access.
-3. **[Review our security model](../../security.md)** to understand how we protect credentials in transit and at rest.
+1. **[Install the Connector plugin](../Connector/01-intro.md)** on the WordPress site where you'll receive support requests.
+2. **[Add TrustedLogin to your plugin or theme](../Client/01-intro.md)** so your customers can grant you secure access.
+3. **[Review our security model](../security.md)** to understand how we protect credentials in transit and at rest.

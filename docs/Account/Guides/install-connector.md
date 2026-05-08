@@ -44,5 +44,3 @@ Each value has a **Copy** button next to it. Leave this tab open — you'll need
 ![Copy your API credentials](/img/guides/install-connector/03-copy-your-api-credentials.png)
 
 <!-- Captured from http://localhost:8090/admin/team-settings -->
-
-> _The Connector half of this guide regenerates against a docker-bootstrapped Connector install. If your local :8100 is a different WordPress install, set `PLAYWRIGHT_CONNECTOR_URL`, `PLAYWRIGHT_CONNECTOR_ADMIN`, and `PLAYWRIGHT_CONNECTOR_PW` to point at it._

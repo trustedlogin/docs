@@ -35,9 +35,3 @@ The TrustedLogin API is [documented on the TrustedLogin website](https://app.tru
 - [Sites API](https://app.trustedlogin.com/docs/api/#sites-api)
 
 There's also a [Postman collection](https://app.trustedlogin.com/docs/collection.json) available.
-
-## Server Setup {#server-setup}
-
-The TrustedLogin application is powered by Laravel and run on a Dockerized, high-availability, Kubernetes cluster.
-
-**[Learn more about the Server Setup](./server-setup)**
