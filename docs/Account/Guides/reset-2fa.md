@@ -51,7 +51,7 @@ If your phone is gone and you can't get a code anymore, you're locked out of you
 
 To request a reset:
 
-1. Email **[email protected]** from the address on your TrustedLogin account. We cross-check the address before acting — if you email from somewhere else we may ask you to prove you own the account.
+1. Email **support@trustedlogin.com** from the address on your TrustedLogin account. We cross-check the address before acting — if you email from somewhere else we may ask you to prove you own the account.
 2. Include your account email and the name of your team.
 3. Be ready for a short identity-verification step — either a reply from the address on file or a quick video call, depending on the account's sensitivity.
 

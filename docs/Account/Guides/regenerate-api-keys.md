@@ -1,5 +1,5 @@
 ---
-sidebar_label: Regenerate API keys
+sidebar_label: Manage API keys
 sidebar_position: 10
 ---
 

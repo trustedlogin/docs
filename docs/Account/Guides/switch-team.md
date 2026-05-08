@@ -43,7 +43,7 @@ The dashboard reloads on the team you picked. The team name in the header is the
 
 ## 5. Or press ⌘K to jump
 
-For the keyboard-first folks: press **⌘K** (Ctrl+K on Windows/Linux) from anywhere to open the command palette. Start typing and the palette filters live — pages, settings, your teams, and (for super-admins) customer teams all appear in one list. Pick an entry and press Enter to jump.
+For the keyboard-first folks: press <kbd>⌘K</kbd> (<kbd>Ctrl+K</kbd> on Windows/Linux) from anywhere to open the command palette. Start typing and the palette filters live — pages, settings, your teams, and (for super-admins) customer teams all appear in one list. Pick an entry and press Enter to jump.
 
 ![Or press ⌘K to jump](/img/guides/switch-team/05-or-press-k-to-jump.png)
 

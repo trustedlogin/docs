@@ -7,7 +7,7 @@ sidebar_position: 1
 
 # Getting started: your first sign-up
 
-This walkthrough covers everything from creating your TrustedLogin account through seeing your first dashboard and turning on two-factor authentication. If you get stuck at any step, check [the Getting Started guide](../getting-started.md) or reach out through the support link in your account.
+This walkthrough covers everything from creating your TrustedLogin account through seeing your first dashboard and turning on two-factor authentication. If you get stuck at any step, check [the Getting Started guide](../../getting-started.md) or reach out through the support link in your account.
 
 ## 1. Create your account
 
@@ -77,6 +77,6 @@ If you'd rather not think about topping up, scroll to the **auto-reload** sectio
 
 ## What to do next
 
-1. **[Install the Connector plugin](../Connector/01-intro.md)** on the WordPress site where you'll receive support requests.
-2. **[Add TrustedLogin to your plugin or theme](../Client/01-intro.md)** so your customers can grant you secure access.
-3. **[Review our security model](../security.md)** to understand how we protect credentials in transit and at rest.
+1. **[Install the Connector plugin](../../Connector/01-intro.md)** on the WordPress site where you'll receive support requests.
+2. **[Add TrustedLogin to your plugin or theme](../../Client/01-intro.md)** so your customers can grant you secure access.
+3. **[Review our security model](../../security.md)** to understand how we protect credentials in transit and at rest.

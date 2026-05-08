@@ -39,13 +39,13 @@ You're signed in automatically — no extra password to enter. When you're done,
 
 <!-- Captured from http://localhost:8090/admin/team-subscription -->
 
-## 4. Or pick a new plan in the picker — upgrades are atomic
+## 4. Or switch plans in the picker
 
 Below the plan summary, every public tier is listed as a card with its sites / logins caps, monthly price, and overage rates. Click **Upgrade to Team / Agency** to switch up, **Switch to Free** to downgrade. Upgrades go through Stripe Checkout if you don't have a card on file yet, OR swap your existing subscription's price in place if you do — either way, you never end up paying two subscriptions concurrently.
 
 Mid-cycle changes prorate: upgrades charge the per-day difference now, downgrades credit the difference toward your next invoice.
 
-![Or pick a new plan in the picker — upgrades are atomic](/img/guides/change-plan/04-or-pick-a-new-plan-in-the-picker-upgrades-are-atomic.png)
+![Or switch plans in the picker](/img/guides/change-plan/04-or-switch-plans-in-the-picker.png)
 
 <!-- Captured from http://localhost:8090/admin/team-subscription -->
 
