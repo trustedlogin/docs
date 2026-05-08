@@ -45,7 +45,7 @@ The **Log in to site** button at the top does the same thing as the row affordan
 
 ![See the full site record](/img/guides/log-in-to-site/04-see-the-full-site-record.png)
 
-<!-- Captured from http://localhost:8090/admin/sites/91/edit -->
+<!-- Captured from http://localhost:8090/admin/sites/24/edit -->
 
 ## 5. Click Log in to site
 
@@ -55,7 +55,15 @@ When you arrive in the customer admin, your activity is logged on both sides: Tr
 
 ![Click Log in to site](/img/guides/log-in-to-site/05-click-log-in-to-site.png)
 
-<!-- Captured from http://localhost:8090/admin/sites/91/edit -->
+<!-- Captured from http://localhost:8090/admin/sites/24/edit -->
+
+## 6. Revoke access if something feels wrong
+
+Grants expire on their own, so you rarely need to revoke them manually. When you do — a customer asks, a teammate leaves, something on the access trail feels wrong — scroll to the **Danger zone** at the bottom of the site's edit page and click **Revoke access**. The access key stops working immediately, and the action is irreversible: the customer needs to grant a fresh key for any future logins to that site.
+
+![Revoke access if something feels wrong](/img/guides/log-in-to-site/06-revoke-access-if-something-feels-wrong.png)
+
+<!-- Captured from http://localhost:8090/admin/sites/24/edit -->
 
 ## Logging in from the customer's WordPress admin
 
@@ -68,7 +76,3 @@ Use the dashboard path when you're chasing a ticket and know which customer it i
 The first thing to check is whether the grant is still active. If the row says **Expired**, the customer needs to generate a new grant — the old one isn't recoverable.
 
 If the grant shows as active but the Log in button takes you to a WordPress login form instead of landing you signed in, something on the customer's end is wrong: the Connector plugin is likely inactive or the identifier TrustedLogin uses to route the login doesn't match. [The Connector troubleshooting guide](../../Connector/troubleshooting.md) covers the common causes.
-
-## Revoking access
-
-Grants expire on their own, so you rarely need to revoke them manually. If you do (a customer asks, a teammate leaves, something feels wrong), scroll to the **Danger zone** on the site detail page and click **Revoke access** — the access key stops working immediately and irreversibly.

@@ -17,7 +17,7 @@ Step-by-step walkthroughs for the things you'll do most often in your TrustedLog
 - **[Log in to a customer site](./Guides/log-in-to-site)**
 - **[Invite a teammate](./Guides/invite-teammate)** &middot; **[Switch between teams](./Guides/switch-team)**
 - **[Buy credits](./Guides/buy-credits)** &middot; **[Set up auto-reload](./Guides/auto-reload)** &middot; **[Change plan or cancel](./Guides/change-plan)**
-- **[Reset two-factor authentication](./Guides/reset-2fa)** &middot; **[Regenerate your API keys](./Guides/regenerate-api-keys)**
+- **[Reset two-factor authentication](./Guides/reset-2fa)** &middot; **[Manage your API keys](./Guides/regenerate-api-keys)**
 
 See [the full list of guides](./Guides) for the same content grouped by topic.
 
@@ -25,13 +25,4 @@ See [the full list of guides](./Guides) for the same content grouped by topic.
 
 We have a 99.99% uptime commitment for our Enterprise-level customers. Please [read the SLA on our website](https://www.trustedlogin.com/service-level-agreement/).
 
-## HTTP API {#http-api}
-
-The TrustedLogin API is [documented on the TrustedLogin website](https://app.trustedlogin.com/docs/api/):
-
-- [Authenticating requests](https://app.trustedlogin.com/docs/api/#authenticating-requests)
-- [Accounts API](https://app.trustedlogin.com/docs/api/#accounts-api)
-- [Endpoints](https://app.trustedlogin.com/docs/api/#endpoints)
-- [Sites API](https://app.trustedlogin.com/docs/api/#sites-api)
-
-There's also a [Postman collection](https://app.trustedlogin.com/docs/collection.json) available.
+If you're building automation or custom integrations on top of TrustedLogin, the [HTTP API reference](../api-reference) covers authentication, endpoints, and a Postman collection.

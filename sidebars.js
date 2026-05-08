@@ -28,6 +28,10 @@ const sidebars = {
 		},
 		{
 			type: 'doc',
+			id: 'api-reference',
+		},
+		{
+			type: 'doc',
 			id: 'for-ai-tools',
 		},
 	],
