@@ -56,4 +56,3 @@ Most TrustedLogin accounts only need one team — one product, one set of custom
 - Support **two separate products** with different branding. Each team has its own name, REST endpoint, and plan, so a customer granting access sees the right name.
 - Run a **client services business** where each client gets their own team name and branding. Each client team can have its own billing — useful if clients pay their own subscription costs.
 - Want **separation of duties** between a staging and production support operation, though most teams just use different Connector installs for that.
-

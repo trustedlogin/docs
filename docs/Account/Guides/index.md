@@ -1,12 +1,7 @@
 ---
+title: Task guides
 sidebar_label: Overview
 sidebar_position: 0
-slug: /Guides
----
-
----
-title: Task guides
-sidebar_label: Task guides
 ---
 
 # Common things you'll do in TrustedLogin
@@ -39,12 +34,3 @@ them.
 
 - [Reset two-factor authentication](reset-2fa.md)
 - [Regenerate your API keys](regenerate-api-keys.md)
-
----
-
-<!--
-Each page in this folder is auto-generated from a Playwright spec in
-tests/Browser/docs/. Edit the spec to change the doc — direct edits
-here are overwritten on the next run. See tests/Browser/docs/TONE.md
-for the voice guide.
--->
