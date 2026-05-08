@@ -78,5 +78,5 @@ If you'd rather not think about topping up, scroll to the **auto-reload** sectio
 ## What to do next
 
 1. **[Install the Connector plugin](../../Connector/01-intro.md)** on the WordPress site where you'll receive support requests.
-2. **[Add TrustedLogin to your plugin or theme](../../Client/01-intro.md)** so your customers can grant you secure access.
+2. **[Add TrustedLogin to your plugin or theme](../../Developers/Client/01-intro.md)** so your customers can grant you secure access.
 3. **[Review our security model](../../security.md)** to understand how we protect credentials in transit and at rest.

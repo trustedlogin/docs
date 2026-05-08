@@ -7,7 +7,7 @@ sidebar_position: 3
 
 # Log in to a customer site
 
-Logging into a customer's WordPress site is the reason TrustedLogin exists. Once a customer has granted you access from their side (see [the Client SDK guide](../../Client/01-intro.md) for how that button appears on their end), the grant shows up on your Sites list and you're one click away from being inside their admin.
+Logging into a customer's WordPress site is the reason TrustedLogin exists. Once a customer has granted you access from their side (see [the Client SDK guide](../../Developers/Client/01-intro.md) for how that button appears on their end), the grant shows up on your Sites list and you're one click away from being inside their admin.
 
 ## 1. Open the Sites list
 

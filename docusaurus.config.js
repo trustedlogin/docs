@@ -129,6 +129,36 @@ const config = {
           { from: '/Guides/change-plan',              to: '/Account/Guides/change-plan' },
           { from: '/Guides/reset-2fa',                to: '/Account/Guides/reset-2fa' },
           { from: '/Guides/regenerate-api-keys',      to: '/Account/Guides/regenerate-api-keys' },
+
+          // Group 4: developer-facing topics consolidated under
+          // /Developers/. The Client SDK moved wholesale; the
+          // engineer-audience subset of /Connector/ and the HTTP
+          // API page came along too.
+          { from: '/Client',                                  to: '/Developers/Client/intro' },
+          { from: '/Client/intro',                            to: '/Developers/Client/intro' },
+          { from: '/Client/installation',                     to: '/Developers/Client/installation' },
+          { from: '/Client/configuration',                    to: '/Developers/Client/configuration' },
+          { from: '/Client/customization',                    to: '/Developers/Client/customization' },
+          { from: '/Client/dev-faq',                          to: '/Developers/Client/dev-faq' },
+          { from: '/Client/faq',                              to: '/Developers/Client/faq' },
+          { from: '/Client/hooks',                            to: '/Developers/Client/hooks' },
+          { from: '/Client/integration-prompt',               to: '/Developers/Client/integration-prompt' },
+          { from: '/Client/login-feedback-flow',              to: '/Developers/Client/login-feedback-flow' },
+          { from: '/Client/security',                         to: '/Developers/Client/security' },
+          { from: '/Client/troubleshooting',                  to: '/Developers/Client/troubleshooting' },
+          { from: '/Client/usage',                            to: '/Developers/Client/usage' },
+          { from: '/Client/namespacing',                      to: '/Developers/Client/namespacing' },
+          { from: '/Client/namespacing/css-namespacing',      to: '/Developers/Client/namespacing/css-namespacing' },
+          { from: '/Client/namespacing/merging-into-existing-composer', to: '/Developers/Client/namespacing/merging-into-existing-composer' },
+          { from: '/Client/namespacing/php-scoper',           to: '/Developers/Client/namespacing/php-scoper' },
+          { from: '/Client/namespacing/strauss',              to: '/Developers/Client/namespacing/strauss' },
+          { from: '/Connector/development',                   to: '/Developers/Connector-development' },
+          { from: '/Connector/hooks',                         to: '/Developers/Connector-hooks' },
+          { from: '/Connector/encrypted-messages',            to: '/Developers/Connector-encrypted-messages' },
+          { from: '/Connector/envelope-signature-verification', to: '/Developers/Connector-envelope-signature-verification' },
+          { from: '/Connector/secrets',                       to: '/Developers/Connector-secrets' },
+          { from: '/Connector/running-behind-a-proxy',        to: '/Developers/Connector-running-behind-a-proxy' },
+          { from: '/api-reference',                           to: '/Developers/http-api' },
         ],
       },
     ],
@@ -150,19 +180,19 @@ const config = {
           // item — readers reach them via the Account dropdown.
           {
             type: 'doc',
-            label: 'Client SDK',
-            position: 'left',
-            docId: 'Client/intro',
-          },
-          {
-            type: 'doc',
             label: 'Self-Hosted WordPress Plugin',
+            position: 'left',
             docId: 'Connector/intro',
           },
           {
             type: 'doc',
             label: 'Account',
             docId: 'Account/intro',
+          },
+          {
+            type: 'doc',
+            label: 'Developers',
+            docId: 'Developers/intro',
           },
         ],
       },
@@ -173,16 +203,16 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Client SDK',
-                to: '/docs/Client/intro',
-              },
-              {
                 label: 'Connector Plugin',
                 to: '/docs/Connector/intro',
               },
               {
                 label: 'Account',
                 to: '/docs/Account/intro',
+              },
+              {
+                label: 'Developers',
+                to: '/docs/Developers/intro',
               },
             ],
           },

@@ -7,7 +7,7 @@ sidebar_position: 2
 # Security
 
 :::info
-For Client SDK security, see [Client SDK](/Client/security).
+For Client SDK security, see [Client SDK](/Developers/Client/security).
 :::
 
 ## Encryption {#encryption}

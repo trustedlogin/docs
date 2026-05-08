@@ -1,6 +1,6 @@
 # Help Scout App
 
-Note: The TrustedLogin Help Scout app only works when a license key is passed using [the `auth/license_key` configuration setting](../Client/configuration).
+Note: The TrustedLogin Help Scout app only works when a license key is passed using [the `auth/license_key` configuration setting](../Developers/Client/configuration).
 
 The email in Help Scout is matched against active licenses on your website. If matching licenses are found, the license key is used as a search key for access that has been granted. 
 
