@@ -53,10 +53,10 @@ No. The webhook is part of how TrustedLogin works and isn't going anywhere. Encr
 
 No. Encrypted messages are an additional transport — they don't replace help-desk integrations. Once your Connector decrypts a message, it fires the same `trustedlogin_connector/message_received` action your Help Scout or FreeScout integration already hooks into.
 
-### What if the TrustedLogin SaaS is down?
+### What if app.trustedlogin.com is down?
 
-Messages are buffered on the SaaS for up to 30 days. If the SaaS is temporarily unreachable, the customer's site logs the failure and the access grant still succeeds — only the message delivery is delayed.
+Messages are buffered on TrustedLogin's servers for up to 30 days. If the application is temporarily unreachable, the customer's site logs the failure and the access grant still succeeds — only the message delivery is delayed.
 
 ### Can TrustedLogin read my messages?
 
-No. The SaaS stores encrypted bytes it cannot decrypt. Only your Connector's private key can open them.
+No. TrustedLogin stores encrypted bytes it cannot decrypt. Only your Connector's private key can open them.

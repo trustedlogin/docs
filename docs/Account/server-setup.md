@@ -5,7 +5,7 @@ sidebar_position: 2
 draft: true
 ---
 
-# TrustedLogin SaaS Server Setup
+# TrustedLogin Server Setup
 
 The TrustedLogin application is powered by Laravel and run on a Dockerized, high-availability, Kubernetes cluster.
 
@@ -71,7 +71,7 @@ The Laravel Spark database uses Digital Ocean Managed MySQL with High Availabili
 
 ### [Elasticsearch](https://www.elastic.co/products/elasticsearch) {#elasticsearch}
 
-Logs stripped of PII are added to Elasticsearch for later analysis. [See Elasticsearch documentation](/SaaS/elasticsearch) for more information.
+Logs stripped of PII are added to Elasticsearch for later analysis.
 
 ### [Redis](https://redis.io/) {#redis}
 

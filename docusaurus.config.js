@@ -64,26 +64,56 @@ const config = {
     [
       '@docusaurus/plugin-client-redirects',
       {
-        // SaaS internal infrastructure pages were previously published. They
-        // describe Vault tokens, Kubernetes secrets, deployment internals,
-        // etc. and shouldn't be public — they're now drafted (so they 404 in
-        // production) but old bookmarks and external links still exist.
-        // Redirect each to /SaaS/intro (the public SaaS overview).
+        // Two redirect groups:
         //
-        // Note: GitHub Pages can't issue real HTTP 301s, so this plugin emits
-        // a small HTML page at each `from` URL that meta-refreshes + JS
-        // navigates to `to`. Search engines treat it as a redirect (SEO
-        // weight slightly less than a true 301, but functional for users).
+        // 1. /SaaS/* → /Account/* — the section was renamed from
+        //    "SaaS" (architecture jargon) to "Account" (what users
+        //    actually call it). External links and search-engine
+        //    indexes pointing at the old paths are preserved.
+        //
+        // 2. The internal-infrastructure pages (Vault, K8s secrets,
+        //    deployment internals, etc.) that used to live in this
+        //    section. Drafted out of production but old bookmarks
+        //    still exist; they all collapse to /Account/intro now.
+        //
+        // GitHub Pages can't issue real HTTP 301s, so this plugin
+        // emits a small HTML page at each `from` URL that meta-
+        // refreshes + JS-navigates to `to`. Search engines treat it
+        // as a redirect (SEO weight slightly less than a true 301,
+        // but functional for users).
         redirects: [
-          { from: '/SaaS/vault-sass-token',          to: '/SaaS/intro' },
-          { from: '/SaaS/vault',                     to: '/SaaS/intro' },
-          { from: '/SaaS/vault-client',              to: '/SaaS/intro' },
-          { from: '/SaaS/CI-CD',                     to: '/SaaS/intro' },
-          { from: '/SaaS/server-setup',              to: '/SaaS/intro' },
-          { from: '/SaaS/cli',                       to: '/SaaS/intro' },
-          { from: '/SaaS/elasticsearch',             to: '/SaaS/intro' },
-          { from: '/SaaS/webhooks',                  to: '/SaaS/intro' },
-          { from: '/SaaS/user-remote-authentication', to: '/SaaS/intro' },
+          // Group 1: section rename, page-by-page identity map
+          { from: '/SaaS/intro',                     to: '/Account/intro' },
+          { from: '/SaaS/data-storage',              to: '/Account/data-storage' },
+          { from: '/SaaS/subcontractors',            to: '/Account/subcontractors' },
+
+          // Group 2: zombies, all to /Account/intro (preserved
+          // typo entry for vault-sass-token covers an old misspelled
+          // bookmark in the wild)
+          { from: '/SaaS/vault-sass-token',          to: '/Account/intro' },
+          { from: '/SaaS/vault-saas-token',          to: '/Account/intro' },
+          { from: '/SaaS/vault',                     to: '/Account/intro' },
+          { from: '/SaaS/vault-client',              to: '/Account/intro' },
+          { from: '/SaaS/CI-CD',                     to: '/Account/intro' },
+          { from: '/SaaS/server-setup',              to: '/Account/intro' },
+          { from: '/SaaS/cli',                       to: '/Account/intro' },
+          { from: '/SaaS/elasticsearch',             to: '/Account/intro' },
+          { from: '/SaaS/webhooks',                  to: '/Account/intro' },
+          { from: '/SaaS/user-remote-authentication', to: '/Account/intro' },
+
+          // Drop the now-deprecated /Account/* internal pages too
+          // (they remain on disk but should not surface as
+          // navigable URLs once the audit-and-relocate follow-up
+          // happens).
+          { from: '/Account/vault-saas-token',       to: '/Account/intro' },
+          { from: '/Account/vault',                  to: '/Account/intro' },
+          { from: '/Account/vault-client',           to: '/Account/intro' },
+          { from: '/Account/CI-CD',                  to: '/Account/intro' },
+          { from: '/Account/server-setup',           to: '/Account/intro' },
+          { from: '/Account/cli',                    to: '/Account/intro' },
+          { from: '/Account/elasticsearch',          to: '/Account/intro' },
+          { from: '/Account/webhooks',               to: '/Account/intro' },
+          { from: '/Account/user-remote-authentication', to: '/Account/intro' },
         ],
       },
     ],
@@ -115,8 +145,8 @@ const config = {
           },
           {
             type: 'doc',
-            label: 'TrustedLogin SaaS',
-            docId: 'SaaS/intro',
+            label: 'Account',
+            docId: 'Account/intro',
           },
         ],
       },
@@ -135,8 +165,8 @@ const config = {
                 to: '/docs/Connector/intro',
               },
               {
-                label: 'SaaS Application',
-                to: '/docs/SaaS/intro',
+                label: 'Account',
+                to: '/docs/Account/intro',
               },
             ],
           },

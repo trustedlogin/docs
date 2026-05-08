@@ -60,7 +60,7 @@ On the Client site, verify:
 - Access was actually granted (check the TrustedLogin admin screen)
 - The access hasn't been revoked
 - The access period hasn't expired
-- The Client site can reach the TrustedLogin SaaS (https://app.trustedlogin.com)
+- The Client site can reach the TrustedLogin application (https://app.trustedlogin.com)
 
 ## Access key login shows "Redirecting..." but never completes
 

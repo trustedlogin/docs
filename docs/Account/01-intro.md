@@ -1,12 +1,12 @@
 ---
-title: SaaS Intro
+title: Account
 sidebar: auto
 sidebar_position: 1
 ---
 
-# TrustedLogin SaaS (Hosted Application)
+# Your TrustedLogin Account
 
-The application handles account management, profiles, and billing. The SaaS receives and **processes login and validation requests** from the [Client SDK](../Client/intro) and [TrustedLogin Connector plugin](../Connector/intro).
+The TrustedLogin application at [app.trustedlogin.com](https://app.trustedlogin.com) handles account management, profiles, and billing. It receives and **processes login and validation requests** from the [Client SDK](../Client/intro) and [TrustedLogin Connector plugin](../Connector/intro).
 
 ## SLA {#service-level-agreement}
 
