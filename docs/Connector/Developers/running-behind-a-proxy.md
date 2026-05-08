@@ -142,11 +142,11 @@ Only if one entry matches does the plugin go on to read `CF-Connecting-IP` and t
 
 ## Pairing with rate-limit configuration
 
-The [`trustedlogin/connector/secrets/rate-limit/enabled`](./Connector-hooks.md#secrets-rate-limit-enabled) filter is **not** a substitute for configuring trusted proxies. Disabling rate limits removes your primary brute-force defense on passphrase-protected secrets. Configure trusted proxies so rate limits bucket correctly instead.
+The [`trustedlogin/connector/secrets/rate-limit/enabled`](./hooks.md#secrets-rate-limit-enabled) filter is **not** a substitute for configuring trusted proxies. Disabling rate limits removes your primary brute-force defense on passphrase-protected secrets. Configure trusted proxies so rate limits bucket correctly instead.
 
 ## See also
 
-- [`trustedlogin/connector/trusted-proxies` filter reference](./Connector-hooks.md#trusted-proxies)
-- [`trustedlogin/connector/secrets/rate-limit/enabled` filter reference](./Connector-hooks.md#secrets-rate-limit-enabled)
-- [Secrets overview](./Connector-secrets.md)
+- [`trustedlogin/connector/trusted-proxies` filter reference](./hooks.md#trusted-proxies)
+- [`trustedlogin/connector/secrets/rate-limit/enabled` filter reference](./hooks.md#secrets-rate-limit-enabled)
+- [Secrets overview](../secrets.md)
 - [Cloudflare IP Ranges](https://www.cloudflare.com/ips/)

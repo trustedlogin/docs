@@ -130,35 +130,41 @@ const config = {
           { from: '/Guides/reset-2fa',                to: '/Account/Guides/reset-2fa' },
           { from: '/Guides/regenerate-api-keys',      to: '/Account/Guides/regenerate-api-keys' },
 
-          // Group 4: developer-facing topics consolidated under
-          // /Developers/. The Client SDK moved wholesale; the
-          // engineer-audience subset of /Connector/ and the HTTP
-          // API page came along too.
-          { from: '/Client',                                  to: '/Developers/Client/intro' },
-          { from: '/Client/intro',                            to: '/Developers/Client/intro' },
-          { from: '/Client/installation',                     to: '/Developers/Client/installation' },
-          { from: '/Client/configuration',                    to: '/Developers/Client/configuration' },
-          { from: '/Client/customization',                    to: '/Developers/Client/customization' },
-          { from: '/Client/dev-faq',                          to: '/Developers/Client/dev-faq' },
-          { from: '/Client/faq',                              to: '/Developers/Client/faq' },
-          { from: '/Client/hooks',                            to: '/Developers/Client/hooks' },
-          { from: '/Client/integration-prompt',               to: '/Developers/Client/integration-prompt' },
-          { from: '/Client/login-feedback-flow',              to: '/Developers/Client/login-feedback-flow' },
-          { from: '/Client/security',                         to: '/Developers/Client/security' },
-          { from: '/Client/troubleshooting',                  to: '/Developers/Client/troubleshooting' },
-          { from: '/Client/usage',                            to: '/Developers/Client/usage' },
-          { from: '/Client/namespacing',                      to: '/Developers/Client/namespacing' },
-          { from: '/Client/namespacing/css-namespacing',      to: '/Developers/Client/namespacing/css-namespacing' },
-          { from: '/Client/namespacing/merging-into-existing-composer', to: '/Developers/Client/namespacing/merging-into-existing-composer' },
-          { from: '/Client/namespacing/php-scoper',           to: '/Developers/Client/namespacing/php-scoper' },
-          { from: '/Client/namespacing/strauss',              to: '/Developers/Client/namespacing/strauss' },
-          { from: '/Connector/development',                   to: '/Developers/Connector-development' },
-          { from: '/Connector/hooks',                         to: '/Developers/Connector-hooks' },
-          { from: '/Connector/encrypted-messages',            to: '/Developers/Connector-encrypted-messages' },
-          { from: '/Connector/envelope-signature-verification', to: '/Developers/Connector-envelope-signature-verification' },
-          { from: '/Connector/secrets',                       to: '/Developers/Connector-secrets' },
-          { from: '/Connector/running-behind-a-proxy',        to: '/Developers/Connector-running-behind-a-proxy' },
-          { from: '/api-reference',                           to: '/Developers/http-api' },
+          // Group 4: brief detour through a top-level /Developers/
+          // section was reverted. Client SDK is back at /Client/*,
+          // Connector internals live in /Connector/Developers/*, the
+          // user-facing Connector secrets doc is back at /Connector/
+          // secrets, and the HTTP API page sits under /Account/
+          // Developers/. These redirects catch any link that was
+          // grabbed during that brief window.
+          { from: '/Developers',                                       to: '/Client/intro' },
+          { from: '/Developers/intro',                                 to: '/Client/intro' },
+          { from: '/Developers/Client',                                to: '/Client/intro' },
+          { from: '/Developers/Client/intro',                          to: '/Client/intro' },
+          { from: '/Developers/Client/installation',                   to: '/Client/installation' },
+          { from: '/Developers/Client/configuration',                  to: '/Client/configuration' },
+          { from: '/Developers/Client/customization',                  to: '/Client/customization' },
+          { from: '/Developers/Client/dev-faq',                        to: '/Client/dev-faq' },
+          { from: '/Developers/Client/faq',                            to: '/Client/faq' },
+          { from: '/Developers/Client/hooks',                          to: '/Client/hooks' },
+          { from: '/Developers/Client/integration-prompt',             to: '/Client/integration-prompt' },
+          { from: '/Developers/Client/login-feedback-flow',            to: '/Client/login-feedback-flow' },
+          { from: '/Developers/Client/security',                       to: '/Client/security' },
+          { from: '/Developers/Client/troubleshooting',                to: '/Client/troubleshooting' },
+          { from: '/Developers/Client/usage',                          to: '/Client/usage' },
+          { from: '/Developers/Client/namespacing',                    to: '/Client/namespacing' },
+          { from: '/Developers/Client/namespacing/css-namespacing',    to: '/Client/namespacing/css-namespacing' },
+          { from: '/Developers/Client/namespacing/merging-into-existing-composer', to: '/Client/namespacing/merging-into-existing-composer' },
+          { from: '/Developers/Client/namespacing/php-scoper',         to: '/Client/namespacing/php-scoper' },
+          { from: '/Developers/Client/namespacing/strauss',            to: '/Client/namespacing/strauss' },
+          { from: '/Developers/Connector-development',                 to: '/Connector/Developers/development' },
+          { from: '/Developers/Connector-hooks',                       to: '/Connector/Developers/hooks' },
+          { from: '/Developers/Connector-encrypted-messages',          to: '/Connector/Developers/encrypted-messages' },
+          { from: '/Developers/Connector-envelope-signature-verification', to: '/Connector/Developers/envelope-signature-verification' },
+          { from: '/Developers/Connector-running-behind-a-proxy',      to: '/Connector/Developers/running-behind-a-proxy' },
+          { from: '/Developers/Connector-secrets',                     to: '/Connector/secrets' },
+          { from: '/Developers/http-api',                              to: '/Account/Developers/http-api' },
+          { from: '/api-reference',                                    to: '/Account/Developers/http-api' },
         ],
       },
     ],
@@ -180,19 +186,19 @@ const config = {
           // item — readers reach them via the Account dropdown.
           {
             type: 'doc',
-            label: 'Self-Hosted WordPress Plugin',
+            label: 'Client SDK',
             position: 'left',
+            docId: 'Client/intro',
+          },
+          {
+            type: 'doc',
+            label: 'Self-Hosted WordPress Plugin',
             docId: 'Connector/intro',
           },
           {
             type: 'doc',
             label: 'Account',
             docId: 'Account/intro',
-          },
-          {
-            type: 'doc',
-            label: 'Developers',
-            docId: 'Developers/intro',
           },
         ],
       },
@@ -203,16 +209,16 @@ const config = {
             title: 'Docs',
             items: [
               {
+                label: 'Client SDK',
+                to: '/docs/Client/intro',
+              },
+              {
                 label: 'Connector Plugin',
                 to: '/docs/Connector/intro',
               },
               {
                 label: 'Account',
                 to: '/docs/Account/intro',
-              },
-              {
-                label: 'Developers',
-                to: '/docs/Developers/intro',
               },
             ],
           },

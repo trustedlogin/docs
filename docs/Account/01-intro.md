@@ -6,7 +6,7 @@ sidebar_position: 1
 
 # Your TrustedLogin Account
 
-The TrustedLogin application at [app.trustedlogin.com](https://app.trustedlogin.com) handles account management, profiles, and billing. It receives and **processes login and validation requests** from the [Client SDK](../Developers/Client/intro) and [TrustedLogin Connector plugin](../Connector/intro).
+The TrustedLogin application at [app.trustedlogin.com](https://app.trustedlogin.com) handles account management, profiles, and billing. It receives and **processes login and validation requests** from the [Client SDK](../Client/intro) and [TrustedLogin Connector plugin](../Connector/intro).
 
 ## Task guides {#guides}
 

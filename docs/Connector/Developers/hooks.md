@@ -30,7 +30,7 @@ add_filter( 'trustedlogin/connector/trusted-proxies', function ( $ips ) {
 } );
 ```
 
-Entries can be exact IPs or CIDR ranges (`192.0.2.0/24`, `2a06:98c0::/29`). For Cloudflare specifically — and for a full walkthrough of **why** this filter is opt-in, **what breaks without it**, and a copy-paste snippet covering every Cloudflare edge CIDR — see [Running behind a reverse proxy or CDN](./Connector-running-behind-a-proxy.md).
+Entries can be exact IPs or CIDR ranges (`192.0.2.0/24`, `2a06:98c0::/29`). For Cloudflare specifically — and for a full walkthrough of **why** this filter is opt-in, **what breaks without it**, and a copy-paste snippet covering every Cloudflare edge CIDR — see [Running behind a reverse proxy or CDN](./running-behind-a-proxy.md).
 
 ### Disable Secrets rate limiting<br/>`trustedlogin/connector/secrets/rate-limit/enabled` {#secrets-rate-limit-enabled}
 
