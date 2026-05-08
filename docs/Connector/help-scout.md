@@ -26,7 +26,7 @@ Now, switch to your website where you're running the TrustedLogin Connector plug
 
 ## Grab the configuration values from the TrustedLogin plugin {#grab-the-configuration-values-from-the-trustedlogin-plugin}
 
-If you haven't added any teams to the TrustedLogin Connector plugin yet, [do that first!](../01-intro)
+If you haven't added any teams to the TrustedLogin Connector plugin yet, [do that first!](./01-intro.md)
 
 Then, on the TrustedLogin Teams page, click on the Configure Help Desk link.
 

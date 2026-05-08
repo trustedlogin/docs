@@ -24,5 +24,5 @@ Customer support is a critical part of any business. TrustedLogin makes it easy 
 
 Two paths, same destination:
 
-- **Step-by-step:** Start with the [Installation guide](./02-installation) and walk through each piece (Composer, namespacing, configuration, bootstrap). Best when you want to learn the system as you go.
-- **AI-assisted (or comprehensive checklist):** Paste the [AI Integration Prompt](./integration-prompt) into your AI coding assistant (Claude Code, Cursor, GitHub Copilot Chat, etc.) — it bundles every step into a single self-contained recipe with input collection, host-side conflict detection, and a verification checklist. Distilled from end-to-end testing across real plugins. Also works as the most thorough walkthrough for humans who want the deepest version of the docs.
+- **Step-by-step:** Start with the [Installation guide](./02-installation.md) and walk through each piece (Composer, namespacing, configuration, bootstrap). Best when you want to learn the system as you go.
+- **AI-assisted (or comprehensive checklist):** Paste the [AI Integration Prompt](./integration-prompt.md) into your AI coding assistant (Claude Code, Cursor, GitHub Copilot Chat, etc.) — it bundles every step into a single self-contained recipe with input collection, host-side conflict detection, and a verification checklist. Distilled from end-to-end testing across real plugins. Also works as the most thorough walkthrough for humans who want the deepest version of the docs.
