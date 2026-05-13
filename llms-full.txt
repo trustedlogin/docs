@@ -1159,6 +1159,25 @@ helpful to have a filter to override this behavior.
 |-----------|--------|--------------------------------------|------------------------------------------|
 | `$return` | `bool` | `is_ssl() && $config['require_ssl']` | Does this site meet the SSL requirement? |
 
+### `trustedlogin/{namespace}/in_local_development` {#trustedloginnamespacein_local_development}
+
+Overrides whether the SDK considers the current site to be a local-development environment. When `true`, lockdown
+and brute-force enforcement are bypassed. The default is computed from the `TRUSTEDLOGIN_TESTING_{NAMESPACE}` constant
+and `wp_get_environment_type()` (treated as local when it returns `'local'` or `'development'`).
+
+Primary use case: the SDK's own PHPUnit suite, where the WordPress test harness pins `WP_ENVIRONMENT_TYPE=local` and
+the brute-force tests need the real check to fire.
+
+| Key         | Type                  | Default                                 | Description                                                                  |
+|-------------|-----------------------|-----------------------------------------|------------------------------------------------------------------------------|
+| `$is_local` | `bool`                | Computed from env type + testing const  | `true` if the SDK considers this a local/dev environment, `false` otherwise. |
+| `$config`   | `TrustedLogin\Config` | Current TrustedLogin configuration      | For namespace-aware extension.                                               |
+
+:::warning
+These filters should not be used in production code. They are included here as helpful developer reference only, and
+they may change.
+:::
+
 ### `trustedlogin/{namespace}/api_url` {#trustedloginnamespaceapi_url}
 
 Modifies the endpoint URL for the TrustedLogin service. This allows pointing requests to test servers.
