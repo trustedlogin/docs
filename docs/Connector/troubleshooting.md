@@ -60,7 +60,7 @@ On the Client site, verify:
 - Access was actually granted (check the TrustedLogin admin screen)
 - The access hasn't been revoked
 - The access period hasn't expired
-- The Client site can reach the TrustedLogin SaaS (https://app.trustedlogin.com)
+- The Client site can reach the TrustedLogin application (https://app.trustedlogin.com)
 
 ## Access key login shows "Redirecting..." but never completes
 
@@ -69,7 +69,7 @@ This usually indicates the POST request to the Client site failed.
 **Common causes:**
 1. **DNS/hosts file issue** - See [Cannot reach domain](#cannot-reach-staging) above
 2. **Firewall blocking POST request** - Check firewall rules
-3. **Client SDK not initialized** - Client SDK must be initialized early enough (see [Client troubleshooting](/Client/troubleshooting))
+3. **Client SDK not initialized** - Client SDK must be initialized early enough (see [Client troubleshooting](/Developers/Client/troubleshooting))
 4. **Network timeout** - Client site takes too long to respond
 
 **Check browser console:**

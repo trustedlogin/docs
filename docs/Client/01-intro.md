@@ -8,7 +8,7 @@ sidebar_position: 1
 
 Easily and securely log in to your customers sites when providing support.
 
-## Our priority: Be secure and  [don't crash sites](https://www.bugsnag.com/blog/sdks-should-not-crash-apps) {#our-priority-sdks-should-not-crash-sites}
+## Our priority: Be secure and don't crash sites {#our-priority-sdks-should-not-crash-sites}
 
 When you integrate TrustedLogin into your project (theme, plugin, or custom code), you are counting on us not to mess up your customer or clients' sites. We take that extremely seriously.
 

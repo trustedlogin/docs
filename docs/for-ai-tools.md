@@ -13,9 +13,9 @@ Append `.md` to any URL on this site to fetch the raw Markdown source instead of
 
 | Rendered HTML | Raw Markdown |
 | --- | --- |
-| [`/Client/intro`](/Client/intro) | [`/Client/intro.md`](pathname:///Client/intro.md) |
-| [`/Client/integration-prompt`](/Client/integration-prompt) | [`/Client/integration-prompt.md`](pathname:///Client/integration-prompt.md) |
-| [`/Client/troubleshooting`](/Client/troubleshooting) | [`/Client/troubleshooting.md`](pathname:///Client/troubleshooting.md) |
+| [`/Client/intro`](/Developers/Client/intro) | [`/Client/intro.md`](pathname:///Client/intro.md) |
+| [`/Client/integration-prompt`](/Developers/Client/integration-prompt) | [`/Client/integration-prompt.md`](pathname:///Client/integration-prompt.md) |
+| [`/Client/troubleshooting`](/Developers/Client/troubleshooting) | [`/Client/troubleshooting.md`](pathname:///Client/troubleshooting.md) |
 
 The Markdown form has the same content as the rendered page, with public-friendly frontmatter (`title`, `description`, `keywords` only — Docusaurus-internal fields like `sidebar_position` are stripped). Admonitions like `:::tip` and `:::warning` are preserved verbatim — most Markdown parsers handle them transparently.
 

@@ -64,26 +64,112 @@ const config = {
     [
       '@docusaurus/plugin-client-redirects',
       {
-        // SaaS internal infrastructure pages were previously published. They
-        // describe Vault tokens, Kubernetes secrets, deployment internals,
-        // etc. and shouldn't be public — they're now drafted (so they 404 in
-        // production) but old bookmarks and external links still exist.
-        // Redirect each to /SaaS/intro (the public SaaS overview).
+        // Two redirect groups:
         //
-        // Note: GitHub Pages can't issue real HTTP 301s, so this plugin emits
-        // a small HTML page at each `from` URL that meta-refreshes + JS
-        // navigates to `to`. Search engines treat it as a redirect (SEO
-        // weight slightly less than a true 301, but functional for users).
+        // 1. /SaaS/* → /Account/* — the section was renamed from
+        //    "SaaS" (architecture jargon) to "Account" (what users
+        //    actually call it). External links and search-engine
+        //    indexes pointing at the old paths are preserved.
+        //
+        // 2. The internal-infrastructure pages (Vault, K8s secrets,
+        //    deployment internals, etc.) that used to live in this
+        //    section. Drafted out of production but old bookmarks
+        //    still exist; they all collapse to /Account/intro now.
+        //
+        // GitHub Pages can't issue real HTTP 301s, so this plugin
+        // emits a small HTML page at each `from` URL that meta-
+        // refreshes + JS-navigates to `to`. Search engines treat it
+        // as a redirect (SEO weight slightly less than a true 301,
+        // but functional for users).
         redirects: [
-          { from: '/SaaS/vault-sass-token',          to: '/SaaS/intro' },
-          { from: '/SaaS/vault',                     to: '/SaaS/intro' },
-          { from: '/SaaS/vault-client',              to: '/SaaS/intro' },
-          { from: '/SaaS/CI-CD',                     to: '/SaaS/intro' },
-          { from: '/SaaS/server-setup',              to: '/SaaS/intro' },
-          { from: '/SaaS/cli',                       to: '/SaaS/intro' },
-          { from: '/SaaS/elasticsearch',             to: '/SaaS/intro' },
-          { from: '/SaaS/webhooks',                  to: '/SaaS/intro' },
-          { from: '/SaaS/user-remote-authentication', to: '/SaaS/intro' },
+          // Group 1: section rename, page-by-page identity map
+          { from: '/SaaS/intro',                     to: '/Account/intro' },
+          { from: '/SaaS/data-storage',              to: '/Account/data-storage' },
+          { from: '/SaaS/subcontractors',            to: '/Account/subcontractors' },
+
+          // Group 2: zombies, all to /Account/intro (preserved
+          // typo entry for vault-sass-token covers an old misspelled
+          // bookmark in the wild)
+          { from: '/SaaS/vault-sass-token',          to: '/Account/intro' },
+          { from: '/SaaS/vault-saas-token',          to: '/Account/intro' },
+          { from: '/SaaS/vault',                     to: '/Account/intro' },
+          { from: '/SaaS/vault-client',              to: '/Account/intro' },
+          { from: '/SaaS/CI-CD',                     to: '/Account/intro' },
+          { from: '/SaaS/server-setup',              to: '/Account/intro' },
+          { from: '/SaaS/cli',                       to: '/Account/intro' },
+          { from: '/SaaS/elasticsearch',             to: '/Account/intro' },
+          { from: '/SaaS/webhooks',                  to: '/Account/intro' },
+          { from: '/SaaS/user-remote-authentication', to: '/Account/intro' },
+
+          // Drop the now-deprecated /Account/* internal pages too
+          // (they remain on disk but should not surface as
+          // navigable URLs once the audit-and-relocate follow-up
+          // happens).
+          { from: '/Account/vault-saas-token',       to: '/Account/intro' },
+          { from: '/Account/vault',                  to: '/Account/intro' },
+          { from: '/Account/vault-client',           to: '/Account/intro' },
+          { from: '/Account/CI-CD',                  to: '/Account/intro' },
+          { from: '/Account/server-setup',           to: '/Account/intro' },
+          { from: '/Account/cli',                    to: '/Account/intro' },
+          { from: '/Account/elasticsearch',          to: '/Account/intro' },
+          { from: '/Account/webhooks',               to: '/Account/intro' },
+          { from: '/Account/user-remote-authentication', to: '/Account/intro' },
+
+          // Group 3: Guides moved from /Guides/* (top-level, drafted but
+          // never published) into /Account/Guides/*. Redirects are
+          // belt-and-suspenders for any leaked link.
+          { from: '/Guides',                          to: '/Account/Guides' },
+          { from: '/Guides/signup',                   to: '/Account/Guides/signup' },
+          { from: '/Guides/install-connector',        to: '/Account/Guides/install-connector' },
+          { from: '/Guides/log-in-to-site',           to: '/Account/Guides/log-in-to-site' },
+          { from: '/Guides/invite-teammate',          to: '/Account/Guides/invite-teammate' },
+          { from: '/Guides/switch-team',              to: '/Account/Guides/switch-team' },
+          { from: '/Guides/buy-credits',              to: '/Account/Guides/buy-credits' },
+          { from: '/Guides/auto-reload',              to: '/Account/Guides/auto-reload' },
+          { from: '/Guides/change-plan',              to: '/Account/Guides/change-plan' },
+          { from: '/Guides/reset-2fa',                to: '/Account/Guides/reset-2fa' },
+          { from: '/Guides/regenerate-api-keys',      to: '/Account/Guides/regenerate-api-keys' },
+
+          // Group 4: brief detour through a top-level /Developers/
+          // section was reverted. Client SDK is back at /Client/*,
+          // Connector internals live in /Connector/Developers/*, the
+          // user-facing Connector secrets doc is back at /Connector/
+          // secrets, and the HTTP API page sits under /Account/
+          // Developers/. These redirects catch any link that was
+          // grabbed during that brief window.
+          { from: '/Developers',                                       to: '/Client/intro' },
+          { from: '/Developers/intro',                                 to: '/Client/intro' },
+          { from: '/Developers/Client',                                to: '/Client/intro' },
+          { from: '/Developers/Client/intro',                          to: '/Client/intro' },
+          { from: '/Developers/Client/installation',                   to: '/Client/installation' },
+          { from: '/Developers/Client/configuration',                  to: '/Client/configuration' },
+          { from: '/Developers/Client/customization',                  to: '/Client/customization' },
+          { from: '/Developers/Client/dev-faq',                        to: '/Client/dev-faq' },
+          { from: '/Developers/Client/faq',                            to: '/Client/faq' },
+          { from: '/Developers/Client/hooks',                          to: '/Client/hooks' },
+          { from: '/Developers/Client/integration-prompt',             to: '/Client/integration-prompt' },
+          { from: '/Developers/Client/login-feedback-flow',            to: '/Client/login-feedback-flow' },
+          { from: '/Developers/Client/security',                       to: '/Client/security' },
+          { from: '/Developers/Client/troubleshooting',                to: '/Client/troubleshooting' },
+          { from: '/Developers/Client/usage',                          to: '/Client/usage' },
+          { from: '/Developers/Client/namespacing',                    to: '/Client/namespacing' },
+          { from: '/Developers/Client/namespacing/css-namespacing',    to: '/Client/namespacing/css-namespacing' },
+          { from: '/Developers/Client/namespacing/merging-into-existing-composer', to: '/Client/namespacing/merging-into-existing-composer' },
+          { from: '/Developers/Client/namespacing/php-scoper',         to: '/Client/namespacing/php-scoper' },
+          { from: '/Developers/Client/namespacing/strauss',            to: '/Client/namespacing/strauss' },
+          { from: '/Developers/Connector-development',                 to: '/Connector/Developers/development' },
+          { from: '/Developers/Connector-hooks',                       to: '/Connector/Developers/hooks' },
+          // /Developers/Connector-encrypted-messages used to redirect to
+          // /Connector/Developers/encrypted-messages, but the page has
+          // been pulled — Encrypted Messages was documented before it
+          // shipped. Land on /Connector/intro instead.
+          { from: '/Developers/Connector-encrypted-messages',          to: '/Connector/intro' },
+          { from: '/Connector/encrypted-messages',                     to: '/Connector/intro' },
+          { from: '/Developers/Connector-envelope-signature-verification', to: '/Connector/Developers/envelope-signature-verification' },
+          { from: '/Developers/Connector-running-behind-a-proxy',      to: '/Connector/Developers/running-behind-a-proxy' },
+          { from: '/Developers/Connector-secrets',                     to: '/Connector/secrets' },
+          { from: '/Developers/http-api',                              to: '/Account/Developers/http-api' },
+          { from: '/api-reference',                                    to: '/Account/Developers/http-api' },
         ],
       },
     ],
@@ -100,8 +186,9 @@ const config = {
           srcDark: 'img/TrustedLogin-Horizontal-White.svg',
         },
         items: [
-          // Guides nav item removed — content kept on disk at docs/Guides/
-          // but not surfaced until the section is ready to ship.
+          // Guides surface inside the Account section now (autogenerated
+          // sidebar picks up docs/Account/Guides/), so no separate navbar
+          // item — readers reach them via the Account dropdown.
           {
             type: 'doc',
             label: 'Client SDK',
@@ -115,8 +202,8 @@ const config = {
           },
           {
             type: 'doc',
-            label: 'TrustedLogin SaaS',
-            docId: 'SaaS/intro',
+            label: 'Account',
+            docId: 'Account/intro',
           },
         ],
       },
@@ -135,8 +222,8 @@ const config = {
                 to: '/docs/Connector/intro',
               },
               {
-                label: 'SaaS Application',
-                to: '/docs/SaaS/intro',
+                label: 'Account',
+                to: '/docs/Account/intro',
               },
             ],
           },

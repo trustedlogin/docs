@@ -13,7 +13,7 @@ The `build-sass` script accepts the following arguments:
 - `--assets_dir`: The path to the TrustedLogin client directory, used locate the SCSS source files. Optional. Default: `(vendor-namespaced|vendor-prefixed)/trustedlogin/client/src/assets/`.
 - `--export_dir`: The path to the output directory where the generated CSS will be saved. Optional. Default: to `(vendor-namespaced|vendor-prefixed)/trustedlogin/client/src/assets/`.
 
-The default way to namespace files is [as a Composer script](/Client/01-intro.md), but this may not work with your build process: the default implementation shown adds the required SCSS package (`scssphp/scssphp`) to the `require-dev` array, which may not work with your release flow. If you move `scssphp/scssphp` to the `require` array, the scssphp library will be included in your autoloader, which adds bloat for something that should be used one-time.
+The default way to namespace files is [as a Composer script](/Client/intro), but this may not work with your build process: the default implementation shown adds the required SCSS package (`scssphp/scssphp`) to the `require-dev` array, which may not work with your release flow. If you move `scssphp/scssphp` to the `require` array, the scssphp library will be included in your autoloader, which adds bloat for something that should be used one-time.
 
 :::info
 ### When you see `ProBlockBuilder`, make sure to replace with your own namespace! {#when-you-see-problockbuilder-make-sure-to-replace-with-your-own-namespace}
