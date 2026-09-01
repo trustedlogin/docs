@@ -32,7 +32,7 @@ Scroll down to the **API credentials** card. You need three values to paste into
 
 ## 4. Open TrustedLogin in your WordPress admin
 
-Install the Connector plugin on the WordPress site your support team works from (download the latest release from [the TrustedLogin Connector repository](https://github.com/trustedlogin/trustedlogin-connector/releases), upload the zip via **Plugins → Add New → Upload**, and activate).
+Install the Connector plugin on the WordPress site your support team works from: search for **TrustedLogin Connector** under **Plugins → Add New**, or [download it from WordPress.org](https://wordpress.org/plugins/trustedlogin-connector/) and upload the zip via **Plugins → Add New → Upload**. Activate it once installed.
 
 After activation, **TrustedLogin** appears in your WordPress sidebar. On a fresh install it opens the **Create your first team** onboarding screen — one form covers everything you'll paste from TrustedLogin.
 
