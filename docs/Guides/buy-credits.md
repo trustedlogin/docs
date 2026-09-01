@@ -62,6 +62,17 @@ If you'd rather have this happen automatically from now on, set up [auto-reload]
 
 <!-- Captured from http://localhost:8090/admin/team-subscription -->
 
+<!-- MANUAL ADDITION (September 2026) — not part of the auto-generated
+     doc-flow output above. Documents the Pricing 2.0 hard site cap
+     from PR #1060 in trustedlogin-ecommerce; no matching doc-flow
+     spec step exists yet. -->
+
+## What credits cover — and what they don't
+
+Credits cover **support-login overage** on the Support, Growth, and Scale plans: logins beyond your plan's monthly allotment are billed from your balance instead of stopping you. (Free has no overage — it stops serving logins at its allotment instead, and can't buy credits.)
+
+Credits do **not** cover connecting more **sites** than your plan includes. Sites are a hard cap on every plan — if you're at your limit, connecting another site is blocked until you upgrade, regardless of your credit balance. See [Change plan or cancel](change-plan.md) for the current site and login caps per plan.
+
 ## Which bundle should I buy?
 
 Count your team's typical weekly login burn and multiply by four to six weeks. That's the bundle that keeps you from thinking about top-ups for a while without leaving money on the table. Smaller teams usually land on **Standard** ($25) or **Plus** ($50); larger teams buying ahead of a busy season often go straight to **Growth** ($100) or higher for the bonus credits.

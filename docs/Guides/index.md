@@ -34,6 +34,9 @@ them.
 - [Buy credits (one-time bundle)](buy-credits.md)
 - [Set up auto-reload](auto-reload.md)
 - [Change plan or cancel](change-plan.md)
+- [Request Enterprise access](request-enterprise-access.md)
+- [Trial reminder emails](trial-ending-reminders.md)
+- [Monthly value digest](monthly-value-digest.md)
 
 ## Security
 
