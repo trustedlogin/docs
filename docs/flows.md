@@ -3,6 +3,10 @@ sidebar_label: Login Flow Diagrams
 ---
 # Support Access Diagrams
 
+:::note Snapshot
+Connector code snippets on this page are inlined from **trustedlogin-connector 2.0.2** (August 19, 2026). The Connector source repo is private; these snippets are the citable record going forward and won't auto-update — if the referenced function changes materially in a later release, this page should be refreshed alongside it.
+:::
+
 TrustedLogin is designed to be simple, secure, and easy way for users to grant access to a support team. Thanks to the design of the service, **login credentials are end-to-end encrypted** and unable to be accessed by TrustedLogin.
 
 Below are simplified visualizations of the flow of data between the various components of TrustedLogin.
@@ -41,7 +45,63 @@ The public key is fetched by default from the [URL defined in the `vendor/websit
 
 ### Step 3: Public Key is Generated {#step-3-public-key-is-generated}
 
-The public key request is handled by [`\TrustedLogin\Vendor\Endpoints\PublicKey::get()`](https://plugins.trac.wordpress.org/browser/trustedlogin-connector/trunk/php/Endpoints/PublicKey.php#L19), which uses [`\TrustedLogin\Vendor\Encryption::generateKeys()`](https://plugins.trac.wordpress.org/browser/trustedlogin-connector/trunk/php/Encryption.php#L222) to generate two sets of encryption keys (`crypto_sign` and `crypto_box` key pairs) but only returns the `crypto_box` public key.
+The public key request is handled by `\TrustedLogin\Vendor\Endpoints\PublicKey::get()`, which uses `\TrustedLogin\Vendor\Encryption::generateKeys()` to generate two sets of encryption keys (`crypto_sign` and `crypto_box` key pairs) but only returns the `crypto_box` public key.
+
+<details>
+<summary><code>Endpoints/PublicKey.php</code> — <code>get()</code></summary>
+
+```php
+public function get( \WP_REST_Request $request ) {
+	$public_key = \trustedlogin_connector()->getPublicKey();
+
+	$response = new \WP_REST_Response();
+
+	if ( ! is_wp_error( $public_key ) ) {
+		$data = array(
+			'publicKey' => $public_key,
+		);
+		$response->set_data( $data );
+		$response->set_status( self::PUBLIC_KEY_SUCCESS_STATUS );
+	} else {
+		$response->set_status( self::PUBLIC_KEY_ERROR_STATUS );
+	}
+
+	return $response;
+}
+```
+
+</details>
+
+<details>
+<summary><code>Encryption.php</code> — <code>generateKeys()</code> (key generation, trimmed)</summary>
+
+```php
+private function generateKeys( $update = true ) {
+
+	if ( ! function_exists( 'sodium_crypto_box_keypair' ) ) {
+		return new WP_Error( 'sodium_not_exists', 'Sodium isn\'t loaded. Upgrade to PHP 7.0 or WordPress 5.2 or higher.' );
+	}
+
+	try {
+		$bob_box_kp        = \sodium_crypto_box_keypair();
+		$bob_box_secretkey = \sodium_crypto_box_secretkey( $bob_box_kp );
+		$bob_box_publickey = \sodium_crypto_box_publickey( $bob_box_kp );
+
+		$bob_sign_kp        = \sodium_crypto_sign_keypair();
+		$bob_sign_publickey = \sodium_crypto_sign_publickey( $bob_sign_kp );
+		$bob_sign_secretkey = \sodium_crypto_sign_secretkey( $bob_sign_kp );
+
+		$keys = (object) array(
+			'private_key'      => \sodium_bin2hex( $bob_box_secretkey ),
+			'public_key'       => \sodium_bin2hex( $bob_box_publickey ),
+			'sign_private_key' => \sodium_bin2hex( $bob_sign_secretkey ),
+			'sign_public_key'  => \sodium_bin2hex( $bob_sign_publickey ),
+		);
+		// … persists $keys (and demotes the prior keypair to a
+		// short-lived historical keyring) when $update is true.
+```
+
+</details>
 
 ### Step 4: Envelope Created & Encrypted {#step-4-envelope-created--encrypted}
 
@@ -81,11 +141,103 @@ The **unsuccessful** response is:
 
 ![Site Access Key login form](/img/flows/login/step-01.png)
 
-The form submits a `POST` HTTP request via AJAX that is received by the [`TrustedLogin\Vendor\AccessKeyLogin::handle()`](https://plugins.trac.wordpress.org/browser/trustedlogin-connector/trunk/php/AccessKeyLogin.php#L171) method.
+The form submits a `POST` HTTP request via AJAX that is received by the `TrustedLogin\Vendor\AccessKeyLogin::handle()` method.
 
-Receiving that request, [`TrustedLogin\Vendor\AccessKeyLogin::verifyGrantAccessRequest()`](https://plugins.trac.wordpress.org/browser/trustedlogin-connector/trunk/php/AccessKeyLogin.php#L305) verifies that the nonce is valid and that the request is coming from inside the site.
+Receiving that request, `TrustedLogin\Vendor\AccessKeyLogin::verifyGrantAccessRequest()` verifies that the nonce is valid and that the request is coming from inside the site.
 
-In addition, [`TrustedLogin\Vendor\Traits\VerifyUser::verifyUserRole()`](https://plugins.trac.wordpress.org/browser/trustedlogin-connector/trunk/php/Traits/VerifyUser.php#L17) checks to make sure the user is logged-in and has one or more of the roles that are required to access the site.
+In addition, `TrustedLogin\Vendor\Traits\VerifyUser::verifyUserRole()` checks to make sure the user is logged-in and has one or more of the roles that are required to access the site.
+
+<details>
+<summary><code>AccessKeyLogin.php</code> — <code>handle()</code> (request verification + role gate, trimmed)</summary>
+
+```php
+public function handle( array $args = array(), bool $trusted = false ) {
+	if ( ! $trusted ) {
+		$verified = $this->verifyGrantAccessRequest();
+
+		if ( is_wp_error( $verified ) ) {
+			return $verified;
+		}
+	}
+
+	// … reads/sanitizes the access key + account ID from $args or
+	// request superglobals, then validates the access key length.
+
+	if ( ! $this->verifyUserRole( $teamSettings ) ) {
+		return new \WP_Error(
+			self::SLUG_INVALID_USER_ROLE,
+			esc_html__( 'You do not have a role that is allowed to provide support for this team.', 'trustedlogin-connector' ),
+			// …
+```
+
+</details>
+
+<details>
+<summary><code>AccessKeyLogin.php</code> — <code>verifyGrantAccessRequest()</code></summary>
+
+```php
+public function verifyGrantAccessRequest() {
+
+	if ( ! Helpers::get_post_or_get( self::ACCESS_KEY_INPUT_NAME ) ) {
+		$this->log( 'No access key sent.', __METHOD__, 'error' );
+		return new \WP_Error( 'no_access_key', esc_html__( 'No access key was sent with the request.', 'trustedlogin-connector' ) );
+	}
+
+	if ( ! Helpers::get_post_or_get( self::ACCOUNT_ID_INPUT_NAME ) ) {
+		$this->log( 'No account id sent.', __METHOD__, 'error' );
+		return new \WP_Error( 'no_account_id', esc_html__( 'No account id was sent with the request.', 'trustedlogin-connector' ) );
+	}
+
+	$nonce = Helpers::get_post_or_get( self::NONCE_NAME, 'sanitize_text_field' );
+
+	if ( ! $nonce ) {
+		$this->log( 'No nonce set. Insecure request.', __METHOD__, 'error' );
+		return new \WP_Error( 'no_nonce', esc_html__( 'No nonce was sent with the request.', 'trustedlogin-connector' ) );
+	}
+
+	$valid = wp_verify_nonce( $nonce, self::NONCE_ACTION );
+
+	if ( ! $valid ) {
+		$this->log( 'Nonce is invalid; could be insecure request. Refresh the page and try again.', __METHOD__, 'error' );
+		return new \WP_Error( 'bad_nonce', esc_html__( 'The nonce sent with the request was invalid or expired. Refresh the page and try again.', 'trustedlogin-connector' ) );
+	}
+
+	return true;
+}
+```
+
+</details>
+
+<details>
+<summary><code>Traits/VerifyUser.php</code> — <code>verifyUserRole()</code></summary>
+
+```php
+public function verifyUserRole( TeamSettings $settings ) {
+
+	if ( ! is_user_logged_in() ) {
+		return false;
+	}
+
+	$_usr       = get_userdata( get_current_user_id() );
+	$user_roles = $_usr->roles;
+
+	if ( ! is_array( $user_roles ) ) {
+		return false;
+	}
+
+	$required_roles = $settings->get( 'approved_roles' );
+
+	$intersect = array_intersect( $required_roles, $user_roles );
+
+	if ( 0 < count( $intersect ) ) {
+		return true;
+	}
+
+	return false;
+}
+```
+
+</details>
 
 ### Step 2: Vendor Requests List of Matching Site IDs {#step-2-vendor-requests-list-of-matching-site-ids}
 
@@ -129,13 +281,92 @@ An array of Secret IDs is returned. These are not the envelope itself; Secret ID
 
 The Connector plugin uses the Secret IDs to retrieve the envelopes from the Vault.
 
-In addition to the Bearer token, the request generates a signed nonce in [`TrustedLogin\Vendor\Encryption::createIdentityNonce()`](https://plugins.trac.wordpress.org/browser/trustedlogin-connector/trunk/php/Encryption.php#L863). The method:
+In addition to the Bearer token, the request generates a signed nonce in `TrustedLogin\Vendor\Encryption::createIdentityNonce()`. The method:
 
-- Generates a cryptographic nonce (in [`TrustedLogin\Vendor\Encryption::generateNonce()`](https://plugins.trac.wordpress.org/browser/trustedlogin-connector/trunk/php/Encryption.php#L953) using `random_bytes()`), 
-- Signs the nonce with the `sign_private_key` pair (in [`TrustedLogin\Vendor\Encryption::sign()`](https://plugins.trac.wordpress.org/browser/trustedlogin-connector/trunk/php/Encryption.php#L979), using `sodium_crypto_sign_detached()`), and 
+- Generates a cryptographic nonce (in `TrustedLogin\Vendor\Encryption::generateNonce()` using `random_bytes()`), 
+- Signs the nonce with the `sign_private_key` pair (in `TrustedLogin\Vendor\Encryption::sign()`, using `sodium_crypto_sign_detached()`), and 
 - Verifies that the signed nonce has been properly generated (using `sodium_crypto_sign_verify_detached()`)
 
 The nonce and signed nonce are both sent in the request, helping to verify that this site is indeed the sender of the data.
+
+<details>
+<summary><code>Encryption.php</code> — <code>createIdentityNonce()</code></summary>
+
+```php
+public function createIdentityNonce() {
+
+	$unsigned_nonce = $this->generateNonce();
+
+	if ( is_wp_error( $unsigned_nonce ) ) {
+		return $unsigned_nonce;
+	}
+
+	$key = $this->getPrivateKey( 'sign_private_key' );
+
+	if ( is_wp_error( $key ) ) {
+		return $key;
+	}
+
+	$signed_nonce = $this->sign( $unsigned_nonce, $key );
+
+	if ( is_wp_error( $signed_nonce ) ) {
+		return $signed_nonce;
+	}
+
+	$verified = $this->verifySignature( $signed_nonce, $unsigned_nonce );
+
+	if ( is_wp_error( $verified ) ) {
+		return $verified;
+	}
+
+	$identity = array();
+	$identity['nonce']  = base64_encode( $unsigned_nonce ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+	$identity['signed'] = base64_encode( $signed_nonce ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+
+	return $identity;
+}
+```
+
+</details>
+
+<details>
+<summary><code>Encryption.php</code> — <code>generateNonce()</code> and <code>sign()</code></summary>
+
+```php
+private function generateNonce() {
+
+	if ( ! function_exists( 'sodium_bin2hex' ) ) {
+		return new WP_Error( 'sodium_not_exists', 'Sodium isn\'t loaded. Upgrade to PHP 7.0 or WordPress 5.2 or higher.' );
+	}
+
+	try {
+		return \sodium_bin2hex( \random_bytes( SODIUM_CRYPTO_BOX_NONCEBYTES ) );
+	} catch ( \SodiumException $e ) {
+		return new WP_Error( 'sodium-error', $e->getMessage() );
+	}
+}
+
+private function sign( $data, $key ) {
+
+	try {
+		if ( empty( $data ) || empty( $key ) ) {
+			return new WP_Error( 'no_data', 'No data provided.' );
+		}
+
+		if ( ! function_exists( 'sodium_crypto_sign_detached' ) ) {
+			return new WP_Error( 'sodium_not_exists', 'Sodium isn\'t loaded. Upgrade to PHP 7.0 or WordPress 5.2 or higher.' );
+		}
+
+		$signed = \sodium_crypto_sign_detached( $data, \sodium_hex2bin( $key ) );
+
+		return $signed;
+	} catch ( \SodiumException $e ) {
+		return new WP_Error( 'sodium-error', $e->getMessage() );
+	}
+}
+```
+
+</details>
 
 A `POST` request is made to `sites/{account_id}/{secret_id}/get-envelope` to retrieve the envelope from the Vault. The Bearer token is passed in the `Authorization` header, and a `X-TL-TOKEN` header is also sent. The `X-TL-TOKEN` header is a hash of the Vendor private and public keys.
 
@@ -155,13 +386,112 @@ The envelope with encrypted credentials is returned to the Vendor.
 
 The Connector plugin receives the envelope. It includes the Site URL associated with the Site Access Key but not the endpoint, which is required to log in.
 
-The Connector plugin decrypts the envelope and extracts the credentials, then cryptographically generates the URL to access Client site (using [`TrustedLogin\Vendor\TrustedLoginService::envelope_to_url()`](https://plugins.trac.wordpress.org/browser/trustedlogin-connector/trunk/php/TrustedLoginService.php#L808)).
+The Connector plugin decrypts the envelope and extracts the credentials, then cryptographically generates the URL to access Client site (using `TrustedLogin\Vendor\TrustedLoginService::envelope_to_url()`).
+
+<details>
+<summary><code>TrustedLoginService.php</code> — <code>envelope_to_url()</code> (signature, decrypt call, and URL assembly; the historical-keyring fallback and logging in between are trimmed)</summary>
+
+```php
+public function envelope_to_url( $envelope, $return_parts = false ) {
+
+	if ( is_wp_error( $this->verify_envelope( $envelope ) ) ) {
+		return new \WP_Error( 'malformed_envelope', 'The data received is not formatted correctly' );
+	}
+
+	$trustedlogin_encryption = $this->plugin->getEncryption();
+
+	try {
+		$decrypted_identifier = $trustedlogin_encryption->decryptCryptoBox( $envelope['identifier'], $envelope['nonce'], $envelope['publicKey'] );
+
+		// … on decryption_failed, walks Encryption::getKeypairHistory()
+		// for a retired keypair still inside its 20-minute retention
+		// window, so a client that cached our public key across a
+		// rotation can still complete the login.
+
+		if ( is_wp_error( $decrypted_identifier ) ) {
+			return $decrypted_identifier;
+		}
+
+		// Validate the envelope's siteUrl against the integrator's
+		// configured return-host allowlist before using it for redirects.
+		$site_url_check = $this->validate_return_site_url( (string) $envelope['siteUrl'] );
+
+		if ( is_wp_error( $site_url_check ) ) {
+			return $site_url_check;
+		}
+
+		$parts = array(
+			'siteurl'    => $site_url_check,
+			'identifier' => $decrypted_identifier,
+		);
+	} catch ( \Exception $e ) {
+		return new \WP_Error( $e->getCode(), $e->getMessage() );
+	}
+
+	$endpoint = $trustedlogin_encryption::hash( $parts['siteurl'] . $parts['identifier'] );
+
+	if ( is_wp_error( $endpoint ) ) {
+		return $endpoint;
+	}
+
+	$loginurl = $parts['siteurl'] . '/' . $endpoint . '/' . $parts['identifier'];
+
+	if ( $return_parts ) {
+		return array(
+			'siteurl'    => $parts['siteurl'],
+			'loginurl'   => $loginurl,
+			'endpoint'   => $endpoint,
+			'identifier' => $parts['identifier'],
+		);
+	}
+
+	return $loginurl;
+}
+```
+
+</details>
 
 The site URL and the access parts are returned as an AJAX response, completing the request started in Step 1.
 
 ### Step 7: Connector Plugin `POST`s to Client Site {#step-7-connector-plugin-posts-to-client-site}
 
-A temporary form [is created using JavaScript](https://plugins.trac.wordpress.org/browser/trustedlogin-connector/trunk/src/components/AccessKeyForm.js#L253) with the Client Site URL set as the form `action` property. A `POST` request is submitted, preventing the submitted data from being logged. 
+A temporary form is created using JavaScript with the Client Site URL set as the form `action` property. A `POST` request is submitted, preventing the submitted data from being logged. 
+
+<details>
+<summary><code>components/AccessKeyForm.js</code> — form submit</summary>
+
+```jsx
+<form
+    aria-label={__("Log In Using Access Key", "trustedlogin-connector")}
+    onSubmit={handler}
+    id="access-key-form"
+    method={"POST"}
+    action={redirectSite ? redirectSite.siteurl : null}
+    className="flex flex-col py-6 space-y-6 justify-center">
+```
+
+```js
+// Once we have redirectSite, submit the form.
+useEffect(() => {
+  if (!redirectSite) {
+    return;
+  }
+  // Native form.submit() bypasses the onSubmit handler entirely —
+  // the browser POSTs directly to the form's `action`
+  // (redirectSite.siteurl). Re-run the same scheme guard the manual
+  // submit path uses, so an attacker who can shape redirectSite can't
+  // route the admin's session cookies to a non-http(s) destination.
+  if (!httpUrl(redirectSite.siteurl) || !httpUrl(redirectSite.loginurl)) {
+    setErrorMessage(
+      __("Invalid redirect target. Refusing to log in.", "trustedlogin-connector")
+    );
+    return;
+  }
+  document.getElementById("access-key-form").submit();
+}, [redirectSite]);
+```
+
+</details>
 
 The form submits the following to the Client Site URL:
 
