@@ -6,6 +6,7 @@ Every page on this site is also served as raw Markdown by appending `.md` to the
 
 ## Overview
 
+- [Continuity & Failure Modes](https://docs.trustedlogin.com/continuity-and-failure-modes.md): What still works if TrustedLogin's service is unreachable — or if the company stopped operating it — and what that depends on.
 - [Support Access Diagrams](https://docs.trustedlogin.com/flows.md)
 - [For AI assistants & tools](https://docs.trustedlogin.com/for-ai-tools.md): How AI assistants and other tools can ingest TrustedLogin documentation. Per-page Markdown, llms.txt, and rel=alternate auto-discovery.
 - [Getting Started](https://docs.trustedlogin.com/getting-started.md)
