@@ -22,15 +22,11 @@ Because cryptobox encryption cannot verify the identity of the sender, during de
 
 Secrets are encrypted and stored using the [Sodium Secret Box](https://libsodium.gitbook.io/doc/public-key_cryptography/sealed_boxes) algorithm in the Hashicorp Vault.
 
-:::note
-For more information around data storage, see [SaaS Data Storage](/SaaS/data-storage).
-:::
-
 ## SaaS application security {#saas-application-security}
 
 ### IP restrictions {#ip-restrictions}
 
-The SaaS Vault, Elasticsearch, and Kibana are protected behind IP restrictions using Traefik. [See how Traefik is used](/SaaS/server-setup#traefik).
+The SaaS Vault, Elasticsearch, and Kibana are protected behind IP restrictions using Traefik.
 
 ### Strong-password policy {#strong-password-policy}
 
