@@ -73,6 +73,6 @@ Per [Security: Encryption](/security#encryption), the following is stored **unen
 Also visible to the SaaS, separately from the encrypted envelope itself:
 
 - Login-attempt records — who logged in, to which site, and when — retained for a 90-day window by default, then pruned nightly
-- The IP address of the person logging in with a Site Access Key, in application logs (see [Data Storage](/SaaS/data-storage#application-logs))
+- The IP address of the person logging in with a Site Access Key, in application logs
 
 **Not visible at any point:** the plaintext login credential itself. There's no step in the flow where it passes through anything TrustedLogin operates — decryption happens only inside the Connector plugin, on the vendor's own site.
