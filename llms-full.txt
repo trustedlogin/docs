@@ -3418,120 +3418,6 @@ Debug logs may contain sensitive request data. Turn the setting off (or remove t
 
 ---
 
-# SaaS Intro
-
-Source: https://docs.trustedlogin.com/SaaS/intro  
-Markdown: https://docs.trustedlogin.com/SaaS/01-intro.md
-
-# TrustedLogin SaaS (Hosted Application)
-
-The application handles account management, profiles, and billing. The SaaS receives and **processes login and validation requests** from the [Client SDK](../Client/intro) and [TrustedLogin Connector plugin](../Connector/intro).
-
-## SLA {#service-level-agreement}
-
-We have a 99.99% uptime commitment for our Enterprise-level customers. Please [read the SLA on our website](https://www.trustedlogin.com/service-level-agreement/).
-
-## HTTP API {#http-api}
-
-The TrustedLogin API is [documented on the TrustedLogin website](https://app.trustedlogin.com/docs/api/):
-
-- [Authenticating requests](https://app.trustedlogin.com/docs/api/#authenticating-requests)
-- [Accounts API](https://app.trustedlogin.com/docs/api/#accounts-api)
-- [Endpoints](https://app.trustedlogin.com/docs/api/#endpoints)
-- [Sites API](https://app.trustedlogin.com/docs/api/#sites-api)
-
-There's also a [Postman collection](https://app.trustedlogin.com/docs/collection.json) available.
-
-## Server Setup {#server-setup}
-
-The TrustedLogin application is powered by Laravel and run on a Dockerized, high-availability, Kubernetes cluster.
-
-**[Learn more about the Server Setup](./server-setup)**
-
----
-
-# Data Storage
-
-Source: https://docs.trustedlogin.com/SaaS/data-storage  
-Markdown: https://docs.trustedlogin.com/SaaS/data-storage.md
-
-# Data Storage
-
-## Application {#application}
-
-The following PII (or potentially identifiable) data is stored in the MySQL database: 
-
-- The site URL where access has been granted
-- The license key of software connected to granted access
-- User data
-  - Email
-  - Phone
-  - Address
-
-## Application Logs {#application-logs}
-
-Logs are sent to [Datadog](https://www.datadoghq.com/).
-
-The limited PII sent to Datadog includes: 
-
-- The URL of the website where access has been granted
-  - The User ID of the user who granted access
-- The IP address of the support person logging into sites using the Site Access Key
-
-## Backups {#backups}
-
-Kubernetes cluster backups are kept for 3 days (72 hours), then are deleted. 
-
-Backups are managed using Velero and are stored on Digital Ocean Spaces.
-
-## Data Retention {#data-retention}
-
-Please refer to Our [Privacy Policy](https://www.trustedlogin.com/privacy-policy/#retention) for details.
-
----
-
-# Subcontractors
-
-Source: https://docs.trustedlogin.com/SaaS/subcontractors  
-Markdown: https://docs.trustedlogin.com/SaaS/subcontractors.md
-
-# Subcontractors
-
-## What subcontractors does TrustedLogin use? {#what-subcontractors-does-trustedlogin-use}
-
-### TrustedLogin marketing site {#trustedlogin-marketing-site}
-
-| Service          | URL                              | Description                                                |
-|------------------|----------------------------------|------------------------------------------------------------|
-| Digital Ocean    | https://www.digitalocean.com/    | Web hosting                                                |
-| SpinupWP         | https://spinupwp.com/            | WordPress hosting management                               |
-| Cloudflare       | https://www.cloudflare.com/      | DNS and CDN                                                |
-| Google Analytics | https://www.google.com/analytics/ | Analytics                                                  |
-| Help Scout       | https://www.helpscout.net/       | Customer support.                                          |
-| Google Fonts     | https://fonts.google.com/        | Fonts                                                      |
-| BetterStack      | https://betterstack.com          | Uptime monitoring & reporting                              |
-| Jetpack          | https://jetpack.com/             | WordPress security, spam filtering, and account management |
-| EasyDMARC        | https://easydmarc.com            | Email DMARC report monitoring                              |
-
-### TrustedLogin Application {#trustedlogin-application}
-
-| Service          | URL                            | Description                                                  |
-|------------------|--------------------------------|--------------------------------------------------------------|
-| Digital Ocean    | https://www.digitalocean.com/  | Managed Kubernetes hosting                                   |
-| Cloudflare       | https://www.cloudflare.com/    | DNS and CDN                                                  |
-| Google Fonts     | https://fonts.google.com/      | Fonts                                                        |
-| Mailgun          | https://mailgun.com/           | Email                                                        |
-| ip2c.org         | https://ip2c.org/              | IP to Country                                                |
-| Help Scout       | https://www.helpscout.net/     | Customer support                                             |
-| GitHub           | https://www.github.com         | Source code repository, automated testing, docs site hosting |
-| Google Workspace | https://workspace.google.com   | Organization email, docs, calendar                           |
-| Oh Dear!         | https://www.ohdear.co/         | Uptime monitoring                                            |
-| BetterStack      | https://betterstack.com        | Uptime monitoring & reporting                                |
-| Datadog          | https://www.datadoghq.com/     | Logs                                                         |
-| EasyDMARC        | https://easydmarc.com          | Email DMARC report monitoring                                |
-
----
-
 # Continuity & Failure Modes
 
 Source: https://docs.trustedlogin.com/continuity-and-failure-modes  
@@ -3606,7 +3492,7 @@ Per [Security: Encryption](/security#encryption), the following is stored **unen
 Also visible to the SaaS, separately from the encrypted envelope itself:
 
 - Login-attempt records — who logged in, to which site, and when — retained for a 90-day window by default, then pruned nightly
-- The IP address of the person logging in with a Site Access Key, in application logs (see [Data Storage](/SaaS/data-storage#application-logs))
+- The IP address of the person logging in with a Site Access Key, in application logs
 
 **Not visible at any point:** the plaintext login credential itself. There's no step in the flow where it passes through anything TrustedLogin operates — decryption happens only inside the Connector plugin, on the vendor's own site.
 
@@ -3629,7 +3515,7 @@ Below are simplified visualizations of the flow of data between the various comp
 
 **The three parts of TrustedLogin:**
 
-1. [**TrustedLogin service**](Saas/intro), running on [app.trustedlogin.com](https://app.trustedlogin.com)
+1. **TrustedLogin service**, running on [app.trustedlogin.com](https://app.trustedlogin.com)
 2. [**Connector plugin**](Connector/intro), running on the software provider's website
 3. [**Client**](Client/intro), either as a stand-alone TrustedLogin plugin or the SDK integrated with a WordPress plugin or theme
 
@@ -4379,15 +4265,11 @@ Because cryptobox encryption cannot verify the identity of the sender, during de
 
 Secrets are encrypted and stored using the [Sodium Secret Box](https://libsodium.gitbook.io/doc/public-key_cryptography/sealed_boxes) algorithm in the Hashicorp Vault.
 
-:::note
-For more information around data storage, see [SaaS Data Storage](/SaaS/data-storage).
-:::
-
 ## SaaS application security {#saas-application-security}
 
 ### IP restrictions {#ip-restrictions}
 
-The SaaS Vault, Elasticsearch, and Kibana are protected behind IP restrictions using Traefik. [See how Traefik is used](/SaaS/server-setup#traefik).
+The SaaS Vault, Elasticsearch, and Kibana are protected behind IP restrictions using Traefik.
 
 ### Strong-password policy {#strong-password-policy}
 

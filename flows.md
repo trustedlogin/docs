@@ -10,7 +10,7 @@ Below are simplified visualizations of the flow of data between the various comp
 
 **The three parts of TrustedLogin:**
 
-1. [**TrustedLogin service**](Saas/intro), running on [app.trustedlogin.com](https://app.trustedlogin.com)
+1. **TrustedLogin service**, running on [app.trustedlogin.com](https://app.trustedlogin.com)
 2. [**Connector plugin**](Connector/intro), running on the software provider's website
 3. [**Client**](Client/intro), either as a stand-alone TrustedLogin plugin or the SDK integrated with a WordPress plugin or theme
 

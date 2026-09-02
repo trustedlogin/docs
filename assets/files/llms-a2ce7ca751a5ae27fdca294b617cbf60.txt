@@ -42,9 +42,3 @@ Every page on this site is also served as raw Markdown by appending `.md` to the
 - [Running behind a reverse proxy or CDN](https://docs.trustedlogin.com/Connector/running-behind-a-proxy.md)
 - [One-Time Secrets](https://docs.trustedlogin.com/Connector/secrets.md)
 - [Troubleshooting](https://docs.trustedlogin.com/Connector/troubleshooting.md)
-
-## SaaS
-
-- [SaaS Intro](https://docs.trustedlogin.com/SaaS/01-intro.md)
-- [Data Storage](https://docs.trustedlogin.com/SaaS/data-storage.md)
-- [Subcontractors](https://docs.trustedlogin.com/SaaS/subcontractors.md)
