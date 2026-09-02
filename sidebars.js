@@ -28,6 +28,10 @@ const sidebars = {
 		},
 		{
 			type: 'doc',
+			id: 'continuity-and-failure-modes',
+		},
+		{
+			type: 'doc',
 			id: 'for-ai-tools',
 		},
 	],

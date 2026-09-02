@@ -7,7 +7,7 @@ sidebar_position: 2
 # Security
 
 :::info
-For Client SDK security, see [Client SDK](/Client/security).
+For Client SDK security, see [Client SDK](/Client/security). For what still works if TrustedLogin's service is unreachable — or shut down entirely — see [Continuity & Failure Modes](/continuity-and-failure-modes).
 :::
 
 ## Encryption {#encryption}
