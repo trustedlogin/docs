@@ -76,6 +76,8 @@ const config = {
         // weight slightly less than a true 301, but functional for users).
         redirects: [
           { from: '/SaaS/intro',                     to: '/security' },
+          { from: '/SaaS/data-storage',              to: '/security' },
+          { from: '/SaaS/subcontractors',            to: '/security' },
           { from: '/SaaS/vault-sass-token',          to: '/security' },
           { from: '/SaaS/vault',                     to: '/security' },
           { from: '/SaaS/vault-client',              to: '/security' },
