@@ -30,6 +30,7 @@ Every page on this site is also served as raw Markdown by appending `.md` to the
 - [Namespacing with Strauss](https://docs.trustedlogin.com/Client/namespacing/strauss.md)
 - [Security Details](https://docs.trustedlogin.com/Client/security.md)
 - [Troubleshooting](https://docs.trustedlogin.com/Client/troubleshooting.md)
+- [Cleaning up on uninstall](https://docs.trustedlogin.com/Client/uninstall.md)
 - [Using TrustedLogin](https://docs.trustedlogin.com/Client/usage.md)
 
 ## Connector
